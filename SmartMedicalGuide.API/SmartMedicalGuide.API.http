@@ -1,0 +1,6 @@
+@SmartMedicalGuide.API_HostAddress = http://localhost:5114
+
+GET {{SmartMedicalGuide.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
