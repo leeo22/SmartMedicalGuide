@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+using AutoMapper;
+
 
 namespace SmartMedicalGuide.Core.Mapping.Patients
 {

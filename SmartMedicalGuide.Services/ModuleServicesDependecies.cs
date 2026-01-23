@@ -9,6 +9,7 @@ namespace SmartMedicalGuide.Services
         public static IServiceCollection AddServicesDependecies(this IServiceCollection services)
         {
             services.AddTransient<IPatientServices, PatientServices>();
+
             services.AddTransient<IDoctorServices, DoctorServices>();
             return services;
         }
