@@ -10,6 +10,7 @@ namespace SmartMedicalGuide.Core.Mapping.Patients
             GetPatientListMapping();
             GetPatientByIDMapping();
             AddPatientMappung();
+            EditPatientCommandMapping();
         }
     }
 }

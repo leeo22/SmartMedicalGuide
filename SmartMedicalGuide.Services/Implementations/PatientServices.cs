@@ -1,4 +1,5 @@
-﻿using SmartMedicalGuide.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Infrastructure.Abstracts;
 using SmartMedicalGuide.Services.Abstracts;
 
@@ -50,6 +51,37 @@ namespace SmartMedicalGuide.Services.Implementations
             if (patient == null) return false;
             return true;
 
+        }
+
+        public async Task<bool> IsPhoneExistExcludeSelf(string phone, int Id)
+        {
+            var patient = await _patientRepository.GetTableNoTracking()
+                                                  .Where(x => x.Phone.Equals(phone) & !x.PatientID.Equals(Id))
+                                                  .FirstOrDefaultAsync();
+            if (patient == null) return false;
+            return true;
+        }
+
+        public async Task<string> EditAsync(Patient patient)
+        {
+            await _patientRepository.UpdateAsync(patient);
+            return "Success";
+        }
+
+        public async Task<string> DeleteAsync(Patient patient)
+        {
+            var trans = _patientRepository.BeginTransaction();
+            try
+            {
+                await _patientRepository.DeleteAsync(patient);
+                await trans.CommitAsync();
+                return "Success";
+            }
+            catch
+            {
+                await trans.RollbackAsync();
+                return "Falied";
+            }
 
 
 

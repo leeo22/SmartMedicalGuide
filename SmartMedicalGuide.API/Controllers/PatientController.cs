@@ -39,6 +39,20 @@ namespace SmartMedicalGuide.API.Controllers
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
+
+        [HttpPut(Router.PatientRouting.Edit)]
+        public async Task<IActionResult> Edit([FromBody] EditPatientCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return NewResult(response);
+        }
+
+        [HttpDelete(Router.PatientRouting.Delete)]
+        public async Task<IActionResult> Delete([FromBody] DeletePatientCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return NewResult(response);
+        }
         #endregion
 
 
