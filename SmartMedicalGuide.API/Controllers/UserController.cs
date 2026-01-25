@@ -7,9 +7,9 @@ namespace SmartMedicalGuide.API.Controllers
 {
 
     [ApiController]
-    public class DoctorController : AppControllerBase
+    public class UserController : AppControllerBase
     {
-        [HttpGet(Router.DoctorRouting.List)]
+        [HttpGet(Router.UserRouting.List)]
         public async Task<IActionResult> GetUserList()
         {
             var response = await Mediator.Send(new GetUserListQuery());

@@ -25,5 +25,14 @@
 
         }
 
+        public static class UserRouting
+        {
+            public const string Prefix = Rule + "USer/";
+            public const string List = Prefix + "List";
+            public const string GetByID = Prefix + SingleRoute;
+            public const string Create = Prefix + "Create";
+
+        }
+
     }
 }
