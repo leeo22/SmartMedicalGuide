@@ -1,21 +1,25 @@
-﻿namespace SmartMedicalGuide.Data.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SmartMedicalGuide.Data.Entities
 {
     public class Patient
     {
-        public int PatientID { get; set; }
-        public string FullName { get; set; }
-        public int Age { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public int PatientId { get; set; }
 
-        public ICollection<Appointment> Appointments { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
-        public ICollection<Notification> Notifications { get; set; }
-        public ICollection<SymptomAnalysis> SymptomAnalyses { get; set; }
-        public ICollection<Chat> Chats { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
+
+        [Required]
+        public string Gender { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
+
+        [MaxLength(250)]
+        public string Address { get; set; }
+
+        public ICollection<DoctorAppointment> DoctorAppointments { get; set; }
+        public ICollection<LabAppointment> LabAppointments { get; set; }
     }
+
 
 }

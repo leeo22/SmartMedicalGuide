@@ -2,14 +2,14 @@
 {
     public class Prescription
     {
-        public int PrescriptionID { get; set; }
-        public string MedicationDetails { get; set; }
-        public string Notes { get; set; }
-        public DateTime IssuedAt { get; set; }
+        public int PrescriptionId { get; set; }
 
-        public int AppointmentID { get; set; }
-        public Appointment Appointment { get; set; }
+        public int AppointmentId { get; set; }
+        public int DoctorId { get; set; }
+        public int PatientId { get; set; }
+
+        public string Description { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
-
 
 }

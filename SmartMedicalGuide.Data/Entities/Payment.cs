@@ -2,14 +2,19 @@
 {
     public class Payment
     {
-        public int PaymentID { get; set; }
-        public decimal Amount { get; set; }
-        public string PaymentMethod { get; set; }
-        public string PaymentStatus { get; set; }
-        public DateTime PaidAt { get; set; }
+        public int PaymentId { get; set; }
 
-        public int AppointmentID { get; set; }
-        public Appointment Appointment { get; set; }
+        public string AppointmentType { get; set; }
+        public int AppointmentId { get; set; }
+
+        public string PaymentMethod { get; set; }
+        public string WalletType { get; set; }
+        public string ReceiverName { get; set; }
+        public string ReceiverNumber { get; set; }
+        public string TransferImagePath { get; set; }
+
+        public string PaymentStatus { get; set; }
+        public DateTime PaymentDate { get; set; }
     }
 
 }
