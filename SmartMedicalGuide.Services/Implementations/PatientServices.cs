@@ -29,7 +29,7 @@ namespace SmartMedicalGuide.Services.Implementations
         public async Task<Patient> GetPatientByIdAsync(int id)
         {
             var patient = _patientRepository.GetTableNoTracking()
-                                            .Where(x => x.PatientID.Equals(id))
+                                            .Where(x => x.PatientId.Equals(id))
                                             .FirstOrDefault();
             return patient;
         }
@@ -46,7 +46,7 @@ namespace SmartMedicalGuide.Services.Implementations
         public async Task<bool> IsPhoneExist(string phone)
         {
             var patient = _patientRepository.GetTableNoTracking()
-                                                  .Where(x => x.Phone.Equals(phone))
+                                                  .Where(x => x.UserId.Equals(phone))
                                                   .FirstOrDefault();
             if (patient == null) return false;
             return true;
@@ -56,7 +56,7 @@ namespace SmartMedicalGuide.Services.Implementations
         public async Task<bool> IsPhoneExistExcludeSelf(string phone, int Id)
         {
             var patient = await _patientRepository.GetTableNoTracking()
-                                                  .Where(x => x.Phone.Equals(phone) & !x.PatientID.Equals(Id))
+                                                  .Where(x => x.UserId.Equals(phone) & !x.PatientId.Equals(Id))
                                                   .FirstOrDefaultAsync();
             if (patient == null) return false;
             return true;

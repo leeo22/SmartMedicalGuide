@@ -24,19 +24,19 @@ namespace SmartMedicalGuide.Core.Features.Patients.Commands.Validatiors
         #region Actions
         public void ApplyValidationsRules()
         {
-            RuleFor(x => x.FullName)
+            RuleFor(x => x.Gender)
                 .NotEmpty().WithMessage("Name Must Not Be Empty")
                 .NotNull().WithMessage("Name Must Not Be Null")
                 .MinimumLength(10).WithMessage("MinimumLength is 10");
 
 
-            RuleFor(x => x.Age)
+            RuleFor(x => x.Address)
                 .NotEmpty().WithMessage("{PropertyName}Age Must Not Be Empty")
                 .NotNull().WithMessage("{PropertyName}Age Must Not Be Null");
         }
         public void ApplyCustomValidationsRules()
         {
-            RuleFor(x => x.Phone)
+            RuleFor(x => x.Gender)
                 .MustAsync(async (Key, CancellationToken) => !await _patientServices.IsPhoneExist(Key))
                 .WithMessage("Phon is Exist");
 

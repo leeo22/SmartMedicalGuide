@@ -1,7 +1,10 @@
-﻿namespace SmartMedicalGuide.Data.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SmartMedicalGuide.Data.Entities
 {
     public class Payment
     {
+        [Key]
         public int PaymentId { get; set; }
 
         public string AppointmentType { get; set; }

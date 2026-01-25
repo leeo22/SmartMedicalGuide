@@ -1,7 +1,10 @@
-﻿namespace SmartMedicalGuide.Data.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SmartMedicalGuide.Data.Entities
 {
     public class Report
     {
+        [Key]
         public int ReportId { get; set; }
 
         public int ReporterUserId { get; set; }

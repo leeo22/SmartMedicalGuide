@@ -4,6 +4,7 @@ namespace SmartMedicalGuide.Data.Entities
 {
     public class Role
     {
+        [Key]
         public int RoleId { get; set; }
 
         [Required, MaxLength(50)]

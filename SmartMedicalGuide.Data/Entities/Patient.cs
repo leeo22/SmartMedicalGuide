@@ -4,6 +4,7 @@ namespace SmartMedicalGuide.Data.Entities
 {
     public class Patient
     {
+        [Key]
         public int PatientId { get; set; }
 
         public int UserId { get; set; }

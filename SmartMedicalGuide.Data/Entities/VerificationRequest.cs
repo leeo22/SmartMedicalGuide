@@ -1,7 +1,10 @@
-﻿namespace SmartMedicalGuide.Data.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SmartMedicalGuide.Data.Entities
 {
     public class VerificationRequest
     {
+        [Key]
         public int RequestId { get; set; }
 
         public int UserId { get; set; }
