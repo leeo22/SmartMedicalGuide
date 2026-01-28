@@ -17,7 +17,9 @@ namespace SmartMedicalGuide.Data.Entities
         public string Email { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
+        [Required]
+        public string ConfirmPassword { get; set; }
 
         public int RoleId { get; set; }
         public Role Role { get; set; }

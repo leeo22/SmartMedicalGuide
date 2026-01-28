@@ -33,7 +33,7 @@ namespace SmartMedicalGuide.Infrastructure.InfrastuctureBases
         }
 
 
-        public IQueryable<T> GetTableNoTracking()
+        public IQueryable<T> GetByIdAsync()
         {
             return _dbContext.Set<T>().AsNoTracking().AsQueryable();
         }

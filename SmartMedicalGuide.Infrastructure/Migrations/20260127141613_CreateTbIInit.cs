@@ -6,26 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SmartMedicalGuide.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Test : Migration
+    public partial class CreateTbIInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Clinic",
-                columns: table => new
-                {
-                    ClinicId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClinicName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clinic", x => x.ClinicId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
@@ -37,20 +22,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.RoleId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Symptom",
-                columns: table => new
-                {
-                    SymptomId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Symptom", x => x.SymptomId);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,7 +47,8 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     FullName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ConfirmPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -90,26 +62,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SymptomDiagnose",
-                columns: table => new
-                {
-                    DiagnosisId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SymptomId = table.Column<int>(type: "int", nullable: false),
-                    Specialization = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SymptomDiagnose", x => x.DiagnosisId);
-                    table.ForeignKey(
-                        name: "FK_SymptomDiagnose_Symptom_SymptomId",
-                        column: x => x.SymptomId,
-                        principalTable: "Symptom",
-                        principalColumn: "SymptomId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -151,18 +103,11 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     LicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ConsultationPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     VerificationStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AvailableTimes = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClinicId = table.Column<int>(type: "int", nullable: false)
+                    AvailableTimes = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Doctor", x => x.DoctorId);
-                    table.ForeignKey(
-                        name: "FK_Doctor_Clinic_ClinicId",
-                        column: x => x.ClinicId,
-                        principalTable: "Clinic",
-                        principalColumn: "ClinicId",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Doctor_User_UserId",
                         column: x => x.UserId,
@@ -285,6 +230,28 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Clinic",
+                columns: table => new
+                {
+                    ClinicId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClinicName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clinic", x => x.ClinicId);
+                    table.ForeignKey(
+                        name: "FK_Clinic_Doctor_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctor",
+                        principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -565,9 +532,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doctor_ClinicId",
-                table: "Doctor",
-                column: "ClinicId");
+                name: "IX_Clinic_DoctorId",
+                table: "Clinic",
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctor_UserId",
@@ -665,11 +632,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SymptomDiagnose_SymptomId",
-                table: "SymptomDiagnose",
-                column: "SymptomId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_User_RoleId",
                 table: "User",
                 column: "RoleId");
@@ -685,6 +647,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AuditLog");
+
+            migrationBuilder.DropTable(
+                name: "Clinic");
 
             migrationBuilder.DropTable(
                 name: "LabService");
@@ -711,9 +676,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                 name: "Review");
 
             migrationBuilder.DropTable(
-                name: "SymptomDiagnose");
-
-            migrationBuilder.DropTable(
                 name: "SystemSettings");
 
             migrationBuilder.DropTable(
@@ -729,9 +691,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                 name: "DoctorAppointment");
 
             migrationBuilder.DropTable(
-                name: "Symptom");
-
-            migrationBuilder.DropTable(
                 name: "Lab");
 
             migrationBuilder.DropTable(
@@ -739,9 +698,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Patient");
-
-            migrationBuilder.DropTable(
-                name: "Clinic");
 
             migrationBuilder.DropTable(
                 name: "User");

@@ -7,6 +7,14 @@
         public const string version = "V1";
         public const string Rule = root + "/" + version + "/";
 
+        public static class RoleRouting
+        {
+            public const string Prefix = Rule + "Role/";
+            public const string List = Prefix + "List";
+            public const string GetByID = Prefix + SingleRoute;
+            public const string Create = Prefix + "Create";
+
+        }
         public static class PatientRouting
         {
             public const string Prefix = Rule + "Patient/";
@@ -27,7 +35,7 @@
 
         public static class UserRouting
         {
-            public const string Prefix = Rule + "USer/";
+            public const string Prefix = Rule + "User/";
             public const string List = Prefix + "List";
             public const string GetByID = Prefix + SingleRoute;
             public const string Create = Prefix + "Create";

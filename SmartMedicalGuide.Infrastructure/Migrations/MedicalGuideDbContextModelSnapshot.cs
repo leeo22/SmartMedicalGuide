@@ -100,6 +100,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -109,6 +112,8 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ClinicId");
+
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("Clinic");
                 });
@@ -128,9 +133,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<string>("Bio")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ClinicId")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("ConsultationPrice")
                         .HasColumnType("decimal(18,2)");
@@ -155,8 +157,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DoctorId");
-
-                    b.HasIndex("ClinicId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -643,49 +643,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Symptom", b =>
-                {
-                    b.Property<int>("SymptomId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SymptomId"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SymptomId");
-
-                    b.ToTable("Symptom");
-                });
-
-            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.SymptomDiagnosis", b =>
-                {
-                    b.Property<int>("DiagnosisId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DiagnosisId"));
-
-                    b.Property<string>("Specialization")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SymptomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DiagnosisId");
-
-                    b.HasIndex("SymptomId");
-
-                    b.ToTable("SymptomDiagnose");
-                });
-
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.SystemSetting", b =>
                 {
                     b.Property<int>("SettingId")
@@ -715,6 +672,10 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
+                    b.Property<string>("ConfirmPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -733,7 +694,7 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -815,21 +776,24 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Doctor", b =>
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Clinic", b =>
                 {
-                    b.HasOne("SmartMedicalGuide.Data.Entities.Clinic", "Clinic")
-                        .WithMany("Doctors")
-                        .HasForeignKey("ClinicId")
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", "Doctor")
+                        .WithMany("Clinics")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Doctor", b =>
+                {
                     b.HasOne("SmartMedicalGuide.Data.Entities.User", "User")
                         .WithOne("Doctor")
                         .HasForeignKey("SmartMedicalGuide.Data.Entities.Doctor", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Clinic");
 
                     b.Navigation("User");
                 });
@@ -1000,17 +964,6 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.SymptomDiagnosis", b =>
-                {
-                    b.HasOne("SmartMedicalGuide.Data.Entities.Symptom", "Symptom")
-                        .WithMany()
-                        .HasForeignKey("SymptomId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Symptom");
-                });
-
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.User", b =>
                 {
                     b.HasOne("SmartMedicalGuide.Data.Entities.Role", "Role")
@@ -1038,9 +991,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Navigation("Messages");
                 });
 
-            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Clinic", b =>
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Doctor", b =>
                 {
-                    b.Navigation("Doctors");
+                    b.Navigation("Clinics");
                 });
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.DoctorAppointment", b =>

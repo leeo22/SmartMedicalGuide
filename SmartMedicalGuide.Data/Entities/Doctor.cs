@@ -19,8 +19,7 @@ namespace SmartMedicalGuide.Data.Entities
         public string VerificationStatus { get; set; }
         public string AvailableTimes { get; set; }
 
-        public int ClinicId { get; set; }
-        public Clinic Clinic { get; set; }
+        public ICollection<Clinic> Clinics { get; set; }
     }
 
 }

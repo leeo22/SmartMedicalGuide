@@ -10,7 +10,7 @@ namespace SmartMedicalGuide.Infrastructure.InfrastuctureBases
         IDbContextTransaction BeginTransaction();
         void Commit();
         void RollBack();
-        IQueryable<T> GetTableNoTracking();
+        IQueryable<T> GetByIdAsync();
         IQueryable<T> GetTableAsTracking();
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(ICollection<T> entities);

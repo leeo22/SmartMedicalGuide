@@ -28,7 +28,7 @@ namespace SmartMedicalGuide.Services.Implementations
 
         public async Task<Patient> GetPatientByIdAsync(int id)
         {
-            var patient = _patientRepository.GetTableNoTracking()
+            var patient = _patientRepository.GetByIdAsync()
                                             .Where(x => x.PatientId.Equals(id))
                                             .FirstOrDefault();
             return patient;
@@ -45,7 +45,7 @@ namespace SmartMedicalGuide.Services.Implementations
 
         public async Task<bool> IsPhoneExist(string phone)
         {
-            var patient = _patientRepository.GetTableNoTracking()
+            var patient = _patientRepository.GetByIdAsync()
                                                   .Where(x => x.UserId.Equals(phone))
                                                   .FirstOrDefault();
             if (patient == null) return false;
@@ -55,7 +55,7 @@ namespace SmartMedicalGuide.Services.Implementations
 
         public async Task<bool> IsPhoneExistExcludeSelf(string phone, int Id)
         {
-            var patient = await _patientRepository.GetTableNoTracking()
+            var patient = await _patientRepository.GetByIdAsync()
                                                   .Where(x => x.UserId.Equals(phone) & !x.PatientId.Equals(Id))
                                                   .FirstOrDefaultAsync();
             if (patient == null) return false;
@@ -94,4 +94,10 @@ namespace SmartMedicalGuide.Services.Implementations
     }
 
 }
+#region Fields
+#endregion
+#region Constructors
+#endregion
+#region Handels Functions
+#endregion
 

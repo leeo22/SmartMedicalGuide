@@ -1,10 +1,11 @@
 ﻿using SmartMedicalGuide.Data.Entities;
-using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
-    public interface IUserServices : IGenericRepositoryAsync<User>
+    public interface IUserServices
     {
-        public Task<List<User>> GetAllUserListAsync();
+        public Task<List<User>> GetUsersListAsync();
+        public Task<string> AddAsync(User user);
+        public Task<User> GetUserByIDAsync(int id);
     }
 }

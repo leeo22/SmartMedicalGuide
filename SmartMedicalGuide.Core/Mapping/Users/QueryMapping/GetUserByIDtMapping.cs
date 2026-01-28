@@ -5,9 +5,11 @@ namespace SmartMedicalGuide.Core.Mapping.Users
 {
     public partial class UserProfile
     {
-        public void GetUserListMapping()
+        public void GetUserByIDtMapping()
         {
-            CreateMap<User, GetUserListResponse>().ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.RoleName));
+            CreateMap<User, GetUserListResponse>();
+            //.ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.RoleName))
         }
     }
 }
+

@@ -1,6 +1,6 @@
 ﻿namespace SmartMedicalGuide.Core.Features.Users.Queries.Results
 {
-    public class GetUserListResponse
+    public class GetSingleUserResponse
     {
         public int UserId { get; set; }
         public string FullName { get; set; }

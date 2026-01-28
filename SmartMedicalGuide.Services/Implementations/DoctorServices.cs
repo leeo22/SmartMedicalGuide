@@ -62,7 +62,7 @@ namespace SmartMedicalGuide.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public IQueryable<Doctor> GetTableNoTracking()
+        public IQueryable<Doctor> GetByIdAsync()
         {
             throw new NotImplementedException();
         }

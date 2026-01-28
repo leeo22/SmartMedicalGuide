@@ -1,87 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using SmartMedicalGuide.Data.Entities;
-using SmartMedicalGuide.Infrastructure.Context;
+﻿using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Infrastructure.Abstracts;
 using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Services.Implementations
 {
     public class UserServices : IUserServices
     {
-        private readonly DbSet<User> _user;
-        public UserServices(MedicalGuideDbContext dBContext)
-        {
-            _user = dBContext.Set<User>();
+        #region Fields
+        public readonly IUserRepository _userRepository;
 
-        }
-        public Task<User> AddAsync(User entity)
+        #endregion
+        #region Constructors
+        public UserServices(IUserRepository userRepository)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task AddRangeAsync(ICollection<User> entities)
-        {
-            throw new NotImplementedException();
+            _userRepository = userRepository;
         }
 
-        public IDbContextTransaction BeginTransaction()
+        public async Task<string> AddAsync(User user)
         {
-            throw new NotImplementedException();
+            await _userRepository.AddAsync(user);
+            return "Success";
         }
 
-        public void Commit()
+        public async Task<User> GetUserByIDAsync(int id)
         {
-            throw new NotImplementedException();
-        }
+            var user = _userRepository.GetByIdAsync().Where(x => x.UserId.Equals(id)).FirstOrDefault();
 
-        public Task DeleteAsync(User entity)
-        {
-            throw new NotImplementedException();
-        }
+            return user;
 
-        public Task DeleteRangeAsync(ICollection<User> entities)
-        {
-            throw new NotImplementedException();
         }
+        #endregion
+        #region Handels Functions
+        public async Task<List<User>> GetUsersListAsync()
+        {
+            return await _userRepository.GetUsersListAsync();
+        }
+        #endregion
 
-        public async Task<List<User>> GetAllUserListAsync()
-        {
-            return await _user.ToListAsync();
-        }
 
-        public Task<User> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<User> GetTableAsTracking()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<User> GetTableNoTracking()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RollBack()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SaveChangesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateRangeAsync(ICollection<User> entities)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

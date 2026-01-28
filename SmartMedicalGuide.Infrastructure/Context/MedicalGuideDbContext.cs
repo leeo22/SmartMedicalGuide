@@ -16,12 +16,12 @@ namespace SmartMedicalGuide.Infrastructure.Context
         public DbSet<Clinic> Clinic { get; set; }
         public DbSet<Lab> Lab { get; set; }
         public DbSet<VerificationRequest> VerificationRequest { get; set; }
-        public DbSet<Symptom> Symptom { get; set; }
-        public DbSet<SymptomDiagnosis> SymptomDiagnose { get; set; }
+        //public DbSet<Symptom> Symptom { get; set; }
+        //public DbSet<SymptomDiagnosis> SymptomDiagnose { get; set; }
         public DbSet<DoctorAppointment> DoctorAppointment { get; set; }
         public DbSet<LabAppointment> LabAppointment { get; set; }
         public DbSet<Payment> Payment { get; set; }
-        //public DbSet<Chat> Chat { get; set; }
+        public DbSet<Chat> Chat { get; set; }
         public DbSet<Message> Message { get; set; }
         public DbSet<MedicalReport> MedicalReport { get; set; }
         public DbSet<Prescription> Prescription { get; set; }
@@ -65,10 +65,10 @@ namespace SmartMedicalGuide.Infrastructure.Context
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Clinic - Doctors (1:M)
-            modelBuilder.Entity<Doctor>()
-                .HasOne(d => d.Clinic)
-                .WithMany(c => c.Doctors)
-                .HasForeignKey(d => d.ClinicId)
+            modelBuilder.Entity<Clinic>()
+                .HasOne(d => d.Doctor)
+                .WithMany(c => c.Clinics)
+                .HasForeignKey(d => d.DoctorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Lab - LabServices
@@ -85,12 +85,12 @@ namespace SmartMedicalGuide.Infrastructure.Context
                 .HasForeignKey(v => v.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Symptoms - SymptomDiagnoses
-            modelBuilder.Entity<SymptomDiagnosis>()
-                .HasOne(sd => sd.Symptom)
-                .WithMany()
-                .HasForeignKey(sd => sd.SymptomId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //// Symptoms - SymptomDiagnoses
+            //modelBuilder.Entity<SymptomDiagnosis>()
+            //    .HasOne(sd => sd.Symptom)
+            //    .WithMany()
+            //    .HasForeignKey(sd => sd.SymptomId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             // Patient - DoctorAppointments
             modelBuilder.Entity<DoctorAppointment>()
