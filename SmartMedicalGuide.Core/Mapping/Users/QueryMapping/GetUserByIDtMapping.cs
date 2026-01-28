@@ -7,8 +7,9 @@ namespace SmartMedicalGuide.Core.Mapping.Users
     {
         public void GetUserByIDtMapping()
         {
-            CreateMap<User, GetUserListResponse>();
-            //.ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.RoleName))
+            CreateMap<User, GetSingleUserResponse>()
+                                            .ForMember(dest => dest.RoleName, opt => opt
+                                            .MapFrom(src => src.Role.RoleName));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SmartMedicalGuide.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Infrastructure.Abstracts;
 using SmartMedicalGuide.Services.Abstracts;
 
@@ -24,7 +25,10 @@ namespace SmartMedicalGuide.Services.Implementations
 
         public async Task<User> GetUserByIDAsync(int id)
         {
-            var user = _userRepository.GetByIdAsync().Where(x => x.UserId.Equals(id)).FirstOrDefault();
+            var user = _userRepository.GetByIdAsync()
+                                      .Include(x => x.Role)
+                                      .Where(x => x.UserId.Equals(id))
+                                      .FirstOrDefault();
 
             return user;
 
