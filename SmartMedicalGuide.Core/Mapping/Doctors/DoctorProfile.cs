@@ -8,6 +8,7 @@ namespace SmartMedicalGuide.Core.Mapping.Doctors
         public DoctorProfile()
         {
             GetDoctorListMapping();
+            AddDoctorCommandMapping();
         }
 
     }

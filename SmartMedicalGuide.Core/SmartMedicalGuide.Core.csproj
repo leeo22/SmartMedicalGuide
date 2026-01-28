@@ -30,9 +30,7 @@
 
 
   <ItemGroup>
-    <Folder Include="Features\Doctors\Commands\Handlers\" />
     <Folder Include="Features\Roles\Commands\Validatiors\" />
-    <Folder Include="Mapping\Doctors\CommandMapping\" />
   </ItemGroup>
 
 

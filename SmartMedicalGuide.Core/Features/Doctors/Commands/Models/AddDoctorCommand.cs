@@ -1,12 +1,15 @@
-﻿namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Results
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+
+namespace SmartMedicalGuide.Core.Features.Users.Commands.Models
 {
-    public class GetDoctorListRespones
+    public class AddDoctorCommand : IRequest<Response<string>>
     {
-        public int DoctorId { get; set; }
-        public string UserName { get; set; }
-        public string RoleName { get; set; }
+
+        public int UserId { get; set; }
+        public int RoleId { get; set; }
         //public User User { get; set; }
-        //public string FullName { get; set; }
+        public string FullName { get; set; }
         public string Specialization { get; set; }
         public string Bio { get; set; }
         public string LicenseNumber { get; set; }

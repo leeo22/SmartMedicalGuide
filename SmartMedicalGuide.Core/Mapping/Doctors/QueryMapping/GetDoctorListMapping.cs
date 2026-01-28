@@ -7,7 +7,12 @@ namespace SmartMedicalGuide.Core.Mapping.Doctors
     {
         public void GetDoctorListMapping()
         {
-            CreateMap<Doctor, GetDoctorListRespones>();
+            CreateMap<Doctor, GetDoctorListRespones>()
+                .ForMember(dest => dest.RoleName, opt => opt
+                .MapFrom(src => src.User.Role.RoleName))
+                .ForMember(dest => dest.UserName, opt => opt
+                .MapFrom(src => src.User.FullName));
         }
     }
 }
+
