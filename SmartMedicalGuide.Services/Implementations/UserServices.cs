@@ -23,6 +23,29 @@ namespace SmartMedicalGuide.Services.Implementations
             return "Success";
         }
 
+        public async Task<string> DeleteAsync(User user)
+        {
+            var trans = _userRepository.BeginTransaction();
+            try
+            {
+                await _userRepository.DeleteAsync(user);
+                await trans.CommitAsync();
+                return "Success";
+            }
+            catch
+            {
+                await trans.RollbackAsync();
+                return "Falied";
+            }
+        }
+
+
+        public async Task<string> EditAsync(User user)
+        {
+            await _userRepository.UpdateAsync(user);
+            return "Success";
+        }
+
         public async Task<User> GetUserByIDAsync(int id)
         {
             var user = _userRepository.GetByIdAsync()

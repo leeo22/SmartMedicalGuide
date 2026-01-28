@@ -82,9 +82,6 @@ namespace SmartMedicalGuide.Services.Implementations
                 await trans.RollbackAsync();
                 return "Falied";
             }
-
-
-
         }
         #endregion
 

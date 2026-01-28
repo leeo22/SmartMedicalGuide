@@ -9,6 +9,7 @@ namespace SmartMedicalGuide.Core.Mapping.Users
             AddUserCommandMapping();
             GetUserByIDtMapping();
             GetUserListMapping();
+            EditUserCommandMapping();
 
         }
     }
