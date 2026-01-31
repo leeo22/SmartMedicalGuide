@@ -7,7 +7,7 @@ namespace SmartMedicalGuide.Core.Mapping.Roles
     {
         public void GetAllRoleMapping()
         {
-            CreateMap<Role, GetAllRoleResponse>();
+            CreateMap<Role, GetRoleListResponse>();
         }
     }
 }

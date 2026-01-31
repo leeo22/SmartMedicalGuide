@@ -17,6 +17,13 @@ namespace SmartMedicalGuide.Services.Implementations
             _userRepository = userRepository;
         }
 
+
+        #endregion
+        #region Handels Functions
+        public async Task<List<User>> GetUsersListAsync()
+        {
+            return await _userRepository.GetUsersListAsync();
+        }
         public async Task<string> AddAsync(User user)
         {
             await _userRepository.AddAsync(user);
@@ -38,29 +45,18 @@ namespace SmartMedicalGuide.Services.Implementations
                 return "Falied";
             }
         }
-
-
         public async Task<string> EditAsync(User user)
         {
             await _userRepository.UpdateAsync(user);
             return "Success";
         }
-
         public async Task<User> GetUserByIDAsync(int id)
         {
             var user = _userRepository.GetByIdAsync()
                                       .Include(x => x.Role)
                                       .Where(x => x.UserId.Equals(id))
                                       .FirstOrDefault();
-
             return user;
-
-        }
-        #endregion
-        #region Handels Functions
-        public async Task<List<User>> GetUsersListAsync()
-        {
-            return await _userRepository.GetUsersListAsync();
         }
         #endregion
 

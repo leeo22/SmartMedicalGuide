@@ -8,7 +8,7 @@ using SmartMedicalGuide.Services.Abstracts;
 namespace SmartMedicalGuide.Core.Features.Roles.Queries.Handlers
 {
     public class RoleQueryHandler : ResponseHandler,
-                                    IRequestHandler<GetAllRoleQuery, Response<List<GetAllRoleResponse>>>,
+                                    IRequestHandler<GetAllRoleQuery, Response<List<GetRoleListResponse>>>,
                                     IRequestHandler<GetRoleByIDQuery, Response<GetSingleRoleResponse>>
     {
 
@@ -25,10 +25,10 @@ namespace SmartMedicalGuide.Core.Features.Roles.Queries.Handlers
 
         #endregion
         #region Handels Functions
-        public async Task<Response<List<GetAllRoleResponse>>> Handle(GetAllRoleQuery request, CancellationToken cancellationToken)
+        public async Task<Response<List<GetRoleListResponse>>> Handle(GetAllRoleQuery request, CancellationToken cancellationToken)
         {
             var roleList = await _roleServices.GetAllRolesAsync();
-            var roleListmapper = _mapper.Map<List<GetAllRoleResponse>>(roleList);
+            var roleListmapper = _mapper.Map<List<GetRoleListResponse>>(roleList);
             return Success(roleListmapper);
         }
 

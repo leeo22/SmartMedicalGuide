@@ -13,6 +13,8 @@ namespace SmartMedicalGuide.Infrastructure
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IDoctorRepository, DoctorRepository>();
             services.AddTransient<IPatientRepository, PatientRepository>();
+            services.AddTransient<IDoctorAppointmentRepository, DoctorAppointmentRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
 
             services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
             return services;

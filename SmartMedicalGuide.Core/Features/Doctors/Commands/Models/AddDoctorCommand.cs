@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SmartMedicalGuide.Core.Bases;
 
-namespace SmartMedicalGuide.Core.Features.Users.Commands.Models
+namespace SmartMedicalGuide.Core.Features.Doctors.Commands.Models
 {
     public class AddDoctorCommand : IRequest<Response<string>>
     {

@@ -1,46 +1,46 @@
-﻿using FluentValidation;
-using SmartMedicalGuide.Core.Features.Patients.Commands.Models;
-using SmartMedicalGuide.Services.Abstracts;
+﻿//using FluentValidation;
+//using SmartMedicalGuide.Core.Features.Patients.Commands.Models;
+//using SmartMedicalGuide.Services.Abstracts;
 
-namespace SmartMedicalGuide.Core.Features.Patients.Commands.Validatiors
-{
-    public class EditPatientValidator : AbstractValidator<EditPatientCommand>
-    {
-        #region Fields
-        private readonly IPatientServices _patientServices;
-        #endregion
+//namespace SmartMedicalGuide.Core.Features.Patients.Commands.Validatiors
+//{
+//    public class EditPatientValidator : AbstractValidator<EditPatientCommand>
+//    {
+//        #region Fields
+//        private readonly IPatientServices _patientServices;
+//        #endregion
 
-        #region Constructors
-        public EditPatientValidator(IPatientServices patientServices)
-        {
-            _patientServices = patientServices;
-            ApplyValidationsRules();
-            ApplyCustomValidationsRules();
-
-
-        }
-        #endregion
-
-        #region Actions
-        public void ApplyValidationsRules()
-        {
-            RuleFor(x => x.FullName)
-                .NotEmpty().WithMessage("Name Must Not Be Empty")
-                .NotNull().WithMessage("Name Must Not Be Null")
-                .MinimumLength(4).WithMessage("MinimumLength is 10");
+//        #region Constructors
+//        public EditPatientValidator(IPatientServices patientServices)
+//        {
+//            _patientServices = patientServices;
+//            ApplyValidationsRules();
+//            ApplyCustomValidationsRules();
 
 
-            RuleFor(x => x.Age)
-                .NotEmpty().WithMessage("{PropertyName}Age Must Not Be Empty")
-                .NotNull().WithMessage("{PropertyName}Age Must Not Be Null");
-        }
-        public void ApplyCustomValidationsRules()
-        {
-            RuleFor(x => x.Phone)
-                .MustAsync(async (model, Key, CancellationToken) => !await _patientServices.IsPhoneExistExcludeSelf(Key, model.Id))
-                .WithMessage("Phon is Exist");
+//        }
+//        #endregion
 
-        }
-        #endregion
-    }
-}
+//        #region Actions
+//        public void ApplyValidationsRules()
+//        {
+//            RuleFor(x => x.FullName)
+//                .NotEmpty().WithMessage("Name Must Not Be Empty")
+//                .NotNull().WithMessage("Name Must Not Be Null")
+//                .MinimumLength(4).WithMessage("MinimumLength is 10");
+
+
+//            RuleFor(x => x.Age)
+//                .NotEmpty().WithMessage("{PropertyName}Age Must Not Be Empty")
+//                .NotNull().WithMessage("{PropertyName}Age Must Not Be Null");
+//        }
+//        public void ApplyCustomValidationsRules()
+//        {
+//            RuleFor(x => x.Phone)
+//                .MustAsync(async (model, Key, CancellationToken) => !await _patientServices.IsPhoneExistExcludeSelf(Key, model.Id))
+//                .WithMessage("Phon is Exist");
+
+//        }
+//        #endregion
+//    }
+//}

@@ -7,7 +7,7 @@ namespace SmartMedicalGuide.Data.Entities
         [Key]
         public int PaymentId { get; set; }
 
-        public string AppointmentType { get; set; }
+        public AppointmentType AppointmentType { get; set; }
         public int AppointmentId { get; set; }
 
         public string PaymentMethod { get; set; }
@@ -18,6 +18,11 @@ namespace SmartMedicalGuide.Data.Entities
 
         public string PaymentStatus { get; set; }
         public DateTime PaymentDate { get; set; }
+    }
+    public enum AppointmentType
+    {
+        Doctor = 1,
+        Lab = 2
     }
 
 }

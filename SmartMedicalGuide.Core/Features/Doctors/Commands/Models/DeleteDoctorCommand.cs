@@ -1,15 +1,15 @@
-﻿//using MediatR;
-//using SmartMedicalGuide.Core.Bases;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
-//namespace SmartMedicalGuide.Core.Features.Users.Commands.Models
-//{
-//    public class DeleteUserCommand : IRequest<Response<string>>
-//    {
-//        public int Id { get; set; }
-//        public DeleteUserCommand(int id)
-//        {
-//            Id = id;
+namespace SmartMedicalGuide.Core.Features.Doctors.Commands.Models
+{
+    public class DeleteDoctorCommand : IRequest<Response<string>>
+    {
+        public int Id { get; set; }
+        public DeleteDoctorCommand(int id)
+        {
+            Id = id;
 
-//        }
-//    }
-//}
+        }
+    }
+}

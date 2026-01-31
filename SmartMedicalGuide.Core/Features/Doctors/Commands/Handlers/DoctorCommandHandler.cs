@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using MediatR;
 using SmartMedicalGuide.Core.Bases;
-using SmartMedicalGuide.Core.Features.Users.Commands.Models;
+using SmartMedicalGuide.Core.Features.Doctors.Commands.Models;
 using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
 
-namespace SmartMedicalGuide.Core.Features.Users.Commands.Handlers
+namespace SmartMedicalGuide.Core.Features.Doctors.Commands.Handlers
 {
     public class DoctorCommandHandler : ResponseHandler,
-                                       IRequestHandler<AddDoctorCommand, Response<string>>
-    //IRequestHandler<EditUserCommand, Response<string>>,
-    //IRequestHandler<DeleteUserCommand, Response<string>>
+                                       IRequestHandler<AddDoctorCommand, Response<string>>,
+                                       IRequestHandler<EditDoctorCommand, Response<string>>,
+                                       IRequestHandler<DeleteDoctorCommand, Response<string>>
     {
         #region Fields
         private readonly IDoctorServices _doctorServices;
@@ -35,24 +35,24 @@ namespace SmartMedicalGuide.Core.Features.Users.Commands.Handlers
             else return BadRequest<string>();
         }
 
-        //public async Task<Response<string>> Handle(EditUserCommand request, CancellationToken cancellationToken)
-        //{
-        //    var user = await _userServices.GetUserByIDAsync(request.UserId);
-        //    if (user == null) return NotFound<string>("user is not found");
-        //    var userMapper = _mapper.Map<User>(request);
-        //    var result = await _userServices.EditAsync(userMapper);
-        //    if (result == "Success") return Success("Edited Sussessfully");
-        //    else return BadRequest<string>();
-        //}
+        public async Task<Response<string>> Handle(DeleteDoctorCommand request, CancellationToken cancellationToken)
+        {
+            var doctor = await _doctorServices.GetDoctorByIDAsync(request.Id);
+            if (doctor == null) return NotFound<string>("user is not found");
+            var result = await _doctorServices.DeleteAsync(doctor);
+            if (result == "Success") return Deleted<string>($"Deleted Sussessfully {request.Id}");
+            else return BadRequest<string>();
+        }
 
-        //public async Task<Response<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
-        //{
-        //    var user = await _userServices.GetUserByIDAsync(request.Id);
-        //    if (user == null) return NotFound<string>("user is not found");
-        //    var result = await _userServices.DeleteAsync(user);
-        //    if (result == "Success") return Deleted<string>($"Deleted Sussessfully {request.Id}");
-        //    else return BadRequest<string>();
-        //}
+        public async Task<Response<string>> Handle(EditDoctorCommand request, CancellationToken cancellationToken)
+        {
+            var doctor = await _doctorServices.GetDoctorByIDAsync(request.DoctorId);
+            if (doctor == null) return NotFound<string>("user is not found");
+            var doctorMapper = _mapper.Map<Doctor>(request);
+            var result = await _doctorServices.EditAsync(doctorMapper);
+            if (result == "Success") return Success("Edited Sussessfully");
+            else return BadRequest<string>();
+        }
         #endregion
 
     }

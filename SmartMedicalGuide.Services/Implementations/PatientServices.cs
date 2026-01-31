@@ -23,7 +23,7 @@ namespace SmartMedicalGuide.Services.Implementations
         #region Handels Functions
         public async Task<List<Patient>> GetPatientsListAsync()
         {
-            return await _patientRepository.GetAllPatientsListAsync();
+            return await _patientRepository.GetPatientsListAsync();
         }
 
         public async Task<Patient> GetPatientByIdAsync(int id)

@@ -21,9 +21,11 @@ namespace SmartMedicalGuide.Infrastructure.Reposistories
         #endregion
 
         #region Handels Functions
-        public async Task<List<Patient>> GetAllPatientsListAsync()
+        public async Task<List<Patient>> GetPatientsListAsync()
         {
-            return await _patient.ToListAsync();
+            return await _patient.Include(d => d.User)
+                                .ThenInclude(u => u.Role)
+                                .ToListAsync();
         }
         #endregion
     }

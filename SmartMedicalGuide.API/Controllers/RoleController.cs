@@ -6,7 +6,7 @@ using SmartMedicalGuide.Data.AppMetaData;
 
 namespace SmartMedicalGuide.API.Controllers
 {
-    [Route("api/[controller]")]
+
     [ApiController]
     public class RoleController : AppControllerBase
     {

@@ -1,6 +1,6 @@
 ﻿namespace SmartMedicalGuide.Core.Features.Roles.Queries.Results
 {
-    public class GetAllRoleResponse
+    public class GetRoleListResponse
     {
 
         public int RoleId { get; set; }

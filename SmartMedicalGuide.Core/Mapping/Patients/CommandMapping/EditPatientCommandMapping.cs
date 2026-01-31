@@ -8,7 +8,8 @@ namespace SmartMedicalGuide.Core.Mapping.Patients
         public void EditPatientCommandMapping()
         {
             CreateMap<EditPatientCommand, Patient>()
-                .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.Id));
+                        .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.Id));
+
         }
 
     }
