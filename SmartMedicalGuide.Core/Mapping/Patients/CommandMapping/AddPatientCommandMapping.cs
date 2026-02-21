@@ -7,7 +7,9 @@ namespace SmartMedicalGuide.Core.Mapping.Patients
     {
         public void AddPatientMappung()
         {
-            CreateMap<AddPatientCommand, Patient>();
+            CreateMap<AddPatientCommand, Patient>()
+                .ForMember(dest => dest.UserId, opt => opt
+                        .MapFrom(src => src.UserId));
         }
     }
 }

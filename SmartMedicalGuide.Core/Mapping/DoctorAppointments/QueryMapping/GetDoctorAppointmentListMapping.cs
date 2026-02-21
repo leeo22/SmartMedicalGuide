@@ -20,12 +20,12 @@ namespace SmartMedicalGuide.Core.Mapping.DoctorAppointments
                     .MapFrom(src => src.Patient.Gender))
                 .ForMember(dest => dest.PhoneNumber, opt => opt
                     .MapFrom(src => src.Patient.User.PhoneNumber))
-                .ForMember(dest => dest.PaymentStatus, opt => opt
-                    .MapFrom(src => src.Payment.PaymentStatus))
                 .ForMember(dest => dest.AppointmentDate, opt => opt
                     .MapFrom(src => src.AppointmentDate))
                 .ForMember(dest => dest.Price, opt => opt
                     .MapFrom(src => src.Price))
+                .ForMember(dest => dest.PaymentStatus, opt => opt
+                    .MapFrom(src => src.Payment))
                 .ForMember(dest => dest.Status, opt => opt
                     .MapFrom(src => src.Status));
         }

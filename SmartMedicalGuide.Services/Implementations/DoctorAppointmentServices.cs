@@ -14,8 +14,15 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             _services = services;
         }
+
+
         #endregion
         #region Handels Functions
+        public async Task<string> AddAsync(DoctorAppointment doctorAppointment)
+        {
+            await _services.AddAsync(doctorAppointment);
+            return "Success";
+        }
         public async Task<List<DoctorAppointment>> GetDoctorAppointmentsListAsync()
         {
             return await _services.GetDoctorAppointmentsListAsync();

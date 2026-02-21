@@ -2,13 +2,18 @@
 
 namespace SmartMedicalGuide.Data.Entities
 {
+
     public class Payment
     {
         [Key]
         public int PaymentId { get; set; }
+        // FK لحجز الطبيب (يكون واحد فقط منهم غير null)
+        public int? DoctorAppointmentId { get; set; }
+        public DoctorAppointment DoctorAppointment { get; set; }
 
-        public AppointmentType AppointmentType { get; set; }
-        public int AppointmentId { get; set; }
+        // FK لحجز المختبر
+        public int? LabAppointmentId { get; set; }
+        public LabAppointment LabAppointment { get; set; }
 
         public string PaymentMethod { get; set; }
         public string WalletType { get; set; }
@@ -19,10 +24,6 @@ namespace SmartMedicalGuide.Data.Entities
         public string PaymentStatus { get; set; }
         public DateTime PaymentDate { get; set; }
     }
-    public enum AppointmentType
-    {
-        Doctor = 1,
-        Lab = 2
-    }
+
 
 }

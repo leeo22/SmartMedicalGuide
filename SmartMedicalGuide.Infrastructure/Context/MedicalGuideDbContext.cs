@@ -120,14 +120,19 @@ namespace SmartMedicalGuide.Infrastructure.Context
                 .HasForeignKey(a => a.LabId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Appointment - Payment (1:1)
-            modelBuilder.Entity<Payment>()
-                .Property(p => p.AppointmentType)
-                .HasConversion<int>();
+            // DoctorAppointment - Payment (1:1)
+            modelBuilder.Entity<DoctorAppointment>()
+                .HasOne(a => a.Payment)
+                .WithOne(p => p.DoctorAppointment)
+                .HasForeignKey<Payment>(p => p.DoctorAppointmentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Payment>()
-                .HasIndex(p => new { p.AppointmentType, p.AppointmentId })
-                .IsUnique();
+            // LabAppointment - Payment (1:1)
+            modelBuilder.Entity<LabAppointment>()
+                .HasOne(a => a.Payment)
+                .WithOne(p => p.LabAppointment)
+                .HasForeignKey<Payment>(p => p.LabAppointmentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             // Chat relations

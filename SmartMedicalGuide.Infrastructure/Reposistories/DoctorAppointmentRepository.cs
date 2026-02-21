@@ -25,7 +25,7 @@ namespace SmartMedicalGuide.Infrastructure.Reposistories
                     .ThenInclude(d => d.User) // يجيب بيانات اليوزر للدكتور (الاسم، الرول...)
                 .Include(a => a.Patient)      // يجيب بيانات المريض
                     .ThenInclude(p => p.User) // يجيب بيانات اليوزر للمريض
-                .Include(a => a.Payment)      // يجيب بيانات الدفع إذا موجود
+                                              // يجيب بيانات الدفع إذا موجود
                 .ToListAsync();
         }
         #endregion
