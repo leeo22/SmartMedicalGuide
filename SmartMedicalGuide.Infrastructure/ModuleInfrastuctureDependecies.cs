@@ -12,6 +12,7 @@ namespace SmartMedicalGuide.Infrastructure
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IDoctorRepository, DoctorRepository>();
+            services.AddTransient<ILabRepository, LabRepository>();
             services.AddTransient<IPatientRepository, PatientRepository>();
             services.AddTransient<IDoctorAppointmentRepository, DoctorAppointmentRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();

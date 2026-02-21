@@ -10,20 +10,10 @@ namespace SmartMedicalGuide.Core.Mapping.DoctorAppointments
             CreateMap<DoctorAppointment, GetDoctorAppointmentListRespones>()
                 .ForMember(dest => dest.DoctorName, opt => opt
                     .MapFrom(src => src.Doctor.User.FullName)) // الاسم من جدول User للدكتور
-                .ForMember(dest => dest.PatientName, opt => opt
-                    .MapFrom(src => src.Patient.User.FullName)) // الاسم من جدول User للمريض
-                .ForMember(dest => dest.FullName, opt => opt
-                    .MapFrom(src => src.Patient.User.FullName)) // FullName نفسه من User
-                .ForMember(dest => dest.Age, opt => opt
-                    .MapFrom(src => src.Age))
-                .ForMember(dest => dest.Gender, opt => opt
-                    .MapFrom(src => src.Patient.Gender))
-                .ForMember(dest => dest.PhoneNumber, opt => opt
-                    .MapFrom(src => src.Patient.User.PhoneNumber))
                 .ForMember(dest => dest.AppointmentDate, opt => opt
                     .MapFrom(src => src.AppointmentDate))
                 .ForMember(dest => dest.Price, opt => opt
-                    .MapFrom(src => src.Price))
+                    .MapFrom(src => src.Doctor.ConsultationPrice))
                 .ForMember(dest => dest.PaymentStatus, opt => opt
                     .MapFrom(src => src.Payment))
                 .ForMember(dest => dest.Status, opt => opt

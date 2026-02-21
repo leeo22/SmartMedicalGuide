@@ -33,18 +33,13 @@ namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Handlers
             return Success(doctorListMapper);
         }
 
-        public Task<Response<GetSingleDoctorAppointmentResponse>> Handle(GetDoctorAppointmentByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetSingleDoctorAppointmentResponse>> Handle(GetDoctorAppointmentByIDQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var appointment = await _doctorServices.GetDoctorAppointmentByIDAsync(request.Id);
+            if (appointment == null) return NotFound<GetSingleDoctorAppointmentResponse>("No Patient same ID");
+            var result = _mapper.Map<GetSingleDoctorAppointmentResponse>(appointment);
+            return Success(result);
         }
-
-        //public async Task<Response<GetSingleDoctorResponse>> Handle(GetDoctorByIDQuery request, CancellationToken cancellationToken)
-        //{
-        //    var doctor = await _doctorServices.GetDoctorByIDAsync(request.Id);
-        //    if (doctor == null) return NotFound<GetSingleDoctorResponse>("No Patient same ID");
-        //    var result = _mapper.Map<GetSingleDoctorResponse>(doctor);
-        //    return Success(result);
-        //}
         #endregion
     }
 }

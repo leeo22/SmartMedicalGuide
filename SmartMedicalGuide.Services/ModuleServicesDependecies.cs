@@ -12,6 +12,7 @@ namespace SmartMedicalGuide.Services
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IPatientServices, PatientServices>();
             services.AddTransient<IDoctorServices, DoctorServices>();
+            services.AddTransient<ILabServices, LabServices>();
             services.AddTransient<IDoctorAppointmentServices, DoctorAppointmentServices>();
             services.AddTransient<IPaymentSevices, PaymentServices>();
 

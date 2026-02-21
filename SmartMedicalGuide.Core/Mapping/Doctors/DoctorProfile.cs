@@ -9,7 +9,7 @@ namespace SmartMedicalGuide.Core.Mapping.Doctors
         {
             GetDoctorListMapping();
             AddDoctorCommandMapping();
-            GetDoctorByIDtMapping();
+            GetDoctorByIDMapping();
             EditDoctorCommandMapping();
         }
 

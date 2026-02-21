@@ -21,5 +21,25 @@ namespace SmartMedicalGuide.API.Controllers
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
+
+        [HttpGet(Router.DoctorAppointmentRouting.GetByID)]
+        public async Task<IActionResult> GetDoctorAppointmentByID([FromRoute] int id)
+        {
+
+            return NewResult(await Mediator.Send(new GetDoctorAppointmentByIDQuery(id)));
+        }
+
+        [HttpPut(Router.DoctorAppointmentRouting.Edit)]
+        public async Task<IActionResult> Edit([FromBody] EditDoctorAppointmentCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return NewResult(response);
+        }
+        [HttpDelete(Router.DoctorAppointmentRouting.Delete)]
+        public async Task<IActionResult> Delete([FromBody] DeleteDoctorAppointmentCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return NewResult(response);
+        }
     }
 }

@@ -35,5 +35,11 @@ namespace SmartMedicalGuide.API.Controllers
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
+        [HttpGet(Router.DoctorRouting.GetByID)]
+        public async Task<IActionResult> GetDoctorByID([FromRoute] int id)
+        {
+            var response = await Mediator.Send(new GetDoctorByIDQuery(id));
+            return Ok(response);
+        }
     }
 }

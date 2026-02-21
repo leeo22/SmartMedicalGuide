@@ -24,6 +24,8 @@ namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Handlers
             _mapper = mapper;
         }
         #endregion
+
+        #region Handels Functions
         public async Task<Response<List<GetDoctorListRespones>>> Handle(GetDoctorListQuery request, CancellationToken cancellationToken)
         {
             var doctorList = await _doctorServices.GetDoctorsListAsync();
@@ -38,5 +40,6 @@ namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Handlers
             var result = _mapper.Map<GetSingleDoctorResponse>(doctor);
             return Success(result);
         }
+        #endregion
     }
 }

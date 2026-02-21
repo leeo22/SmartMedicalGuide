@@ -8,6 +8,8 @@ namespace SmartMedicalGuide.Core.Mapping.DoctorAppointments
         {
             GetDoctorAppointmentListMapping();
             AddDoctorAppointmentCommandMapping();
+            EditDoctorAppointmentCommandMapping();
+            GetDoctorAppointmentByIDMapping();
         }
 
     }

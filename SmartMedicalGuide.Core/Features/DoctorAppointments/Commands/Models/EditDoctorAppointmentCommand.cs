@@ -1,9 +1,12 @@
-﻿namespace SmartMedicalGuide.Core.Features.DoctorAppointments.Queries.Results
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+
+namespace SmartMedicalGuide.Core.Features.DoctorAppointments.Commands.Models
 {
-    public class GetSingleDoctorAppointmentResponse
+    public class EditDoctorAppointmentCommand : IRequest<Response<string>>
     {
-        public int AppointmentId { get; set; }
-        public string DoctorName { get; set; }
+        public int PatientId { get; set; }
+        public int DoctorId { get; set; }
         public DateTime AppointmentDate { get; set; }
         public string FullName { get; set; }
         public int Age { get; set; }
@@ -12,7 +15,6 @@
         public decimal Price { get; set; }
         public string Status { get; set; }
         public string PaymentStatus { get; set; }
-
-
+        public string AppointmentType { get; set; }
     }
 }

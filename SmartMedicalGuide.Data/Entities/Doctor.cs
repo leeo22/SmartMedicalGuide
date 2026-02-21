@@ -8,7 +8,7 @@ namespace SmartMedicalGuide.Data.Entities
         public int DoctorId { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public string FullName { get; set; }
+        //public string FullName { get; set; }
         public string Specialization { get; set; }
         public string Bio { get; set; }
         public string LicenseNumber { get; set; }
