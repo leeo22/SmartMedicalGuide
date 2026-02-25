@@ -1,0 +1,15 @@
+﻿using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SmartMedicalGuide.Infrastructure.Abstracts
+{
+    public interface IClinicRepository : IGenericRepositoryAsync<Clinic>
+    {
+        public Task<List<Clinic>> GetClinicsListAsync();
+    }
+}

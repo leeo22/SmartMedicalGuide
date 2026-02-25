@@ -2,7 +2,7 @@
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
-    public interface IPaymentSevices
+    public interface IPaymentServices
     {
         public Task<List<Payment>> GetPaymentsListAsync();
         public Task<string> AddAsync(Payment payment);

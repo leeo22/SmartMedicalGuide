@@ -4,7 +4,7 @@ using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Services.Implementations
 {
-    public class PaymentServices : IPaymentSevices
+    public class PaymentServices : IPaymentServices
     {
         #region Fields
         public readonly IPaymentRepository _paymentRepository;

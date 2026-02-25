@@ -14,11 +14,11 @@ namespace SmartMedicalGuide.Core.Features.Payments.Commands.Handlers
     {
 
         #region Fields
-        private readonly IPaymentSevices _paymentServices;
+        private readonly IPaymentServices _paymentServices;
         private readonly IMapper _mapper;
         #endregion
         #region Constructors
-        public PaymentCommandHandler(IPaymentSevices paymentServices, IMapper mapper)
+        public PaymentCommandHandler(IPaymentServices paymentServices, IMapper mapper)
         {
             _paymentServices = paymentServices;
             _mapper = mapper;
