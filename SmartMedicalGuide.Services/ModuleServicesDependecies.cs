@@ -17,6 +17,17 @@ namespace SmartMedicalGuide.Services
             services.AddTransient<IPaymentServices, PaymentServices>();
             services.AddTransient<IClinicServices, ClinicServices>();
             services.AddTransient<ILabAppointmentServices, LabAppointmentServices>();
+            //services.AddTransient<IAuditLogServices, AuditLogServices>();
+            //services.AddTransient<IChatServices, ChatServices>();
+            //services.AddTransient<ILabServiceServices, LabServiceServices>();
+            //services.AddTransient<IMedicalReportServices, MedicalReportServices>();
+            //services.AddTransient<IMessageServices, MessageServices>();
+            //services.AddTransient<INotificationServices, NotificationServices>();
+            //services.AddTransient<IPrescriptionServices, PrescriptionServices>();
+            //services.AddTransient<IReportServices, ReportServices>();
+            //services.AddTransient<IReviewServices, ReviewServices>();
+            //services.AddTransient<ISystemSettingServices, SystemSettingServices>();
+            //services.AddTransient<IVerificationRequestServices, VerificationRequestServices>();
 
 
             return services;
