@@ -1,11 +1,5 @@
 ﻿using SmartMedicalGuide.Core.Features.Clinics.Commands.Models;
-using SmartMedicalGuide.Core.Features.Labs.Commands.Models;
 using SmartMedicalGuide.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Mapping.Clinics
 {
