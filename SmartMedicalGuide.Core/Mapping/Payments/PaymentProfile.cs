@@ -9,6 +9,8 @@ namespace SmartMedicalGuide.Core.Mapping.Payments
         {
             AddPaymentCommandMapping();
             EditPaymentCommandMapping();
+            GetPatientByIDMapping();
+            GetPaymentListMapping();
 
 
         }

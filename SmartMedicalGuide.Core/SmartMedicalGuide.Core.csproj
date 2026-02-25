@@ -40,28 +40,7 @@
     <Folder Include="Features\Payments\Queries\Handlers\" />
     <Folder Include="Features\Payments\Queries\Models\" />
     <Folder Include="Features\Payments\Queries\Results\" />
-    <Folder Include="Mapping\LabService\CommandMapping\" />
-    <Folder Include="Mapping\LabService\QueryMapping\" />
-    <Folder Include="Mapping\MedicalReport\CommandMapping\" />
-    <Folder Include="Mapping\MedicalReport\QueryMapping\" />
-    <Folder Include="Mapping\Message\CommandMapping\" />
-    <Folder Include="Mapping\Message\QueryMapping\" />
-    <Folder Include="Mapping\Notification\CommandMapping\" />
-    <Folder Include="Mapping\Notification\QueryMapping\" />
-    <Folder Include="Mapping\Prescription\CommandMapping\" />
-    <Folder Include="Mapping\Prescription\QueryMapping\" />
-    <Folder Include="Mapping\Report\CommandMapping\" />
-    <Folder Include="Mapping\Report\QueryMapping\" />
-    <Folder Include="Mapping\Review\CommandMapping\" />
-    <Folder Include="Mapping\Review\QueryMapping\" />
-    <Folder Include="Mapping\SystemSetting\CommandMapping\" />
-    <Folder Include="Mapping\SystemSetting\QueryMapping\" />
-    <Folder Include="Mapping\VerificationRequest\CommandMapping\" />
-    <Folder Include="Mapping\VerificationRequest\QueryMapping\" />
-    <Folder Include="Mapping\Chat\CommandMapping\" />
-    <Folder Include="Mapping\Chat\QueryMapping\" />
-    <Folder Include="Mapping\AuditLog\CommandMapping\" />
-    <Folder Include="Mapping\AuditLog\QueryMapping\" />
+    <Folder Include="Features\Roles\Commands\Validatiors\" />
   </ItemGroup>
 
 
