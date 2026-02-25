@@ -31,9 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Payments\Commands\Validatiors\" />
-    <Folder Include="Features\Payments\Queries\Handlers\" />
-    <Folder Include="Features\Payments\Queries\Models\" />
-    <Folder Include="Features\Payments\Queries\Results\" />
     <Folder Include="Features\Roles\Commands\Validatiors\" />
   </ItemGroup>
 
