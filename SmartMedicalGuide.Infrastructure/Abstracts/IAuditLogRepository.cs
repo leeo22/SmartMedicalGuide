@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
 
 namespace SmartMedicalGuide.Infrastructure.Abstracts
 {
-    internal interface IAuditLogRepository
+    public interface IAuditLogRepository : IGenericRepositoryAsync<AuditLog>
     {
+        public Task<List<AuditLog>> GetAuditLogsListAsync();
     }
 }
