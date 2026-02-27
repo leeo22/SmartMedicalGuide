@@ -37,6 +37,17 @@ namespace SmartMedicalGuide.Infrastructure.InfrastuctureBases
         {
             return _dbContext.Set<T>().AsNoTracking().AsQueryable();
         }
+        public virtual async Task<T?> GetByNameAsync(string name)
+        {
+
+            return await _dbContext.Set<T>().FindAsync(name);
+        }
+
+
+        public IQueryable<T> GetByNameAsync()
+        {
+            return _dbContext.Set<T>().AsNoTracking().AsQueryable();
+        }
 
 
         public virtual async Task AddRangeAsync(ICollection<T> entities)

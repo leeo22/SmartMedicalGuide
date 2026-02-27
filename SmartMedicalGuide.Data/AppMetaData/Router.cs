@@ -3,6 +3,7 @@
     public static class Router
     {
         public const string SingleRoute = "{id}";
+        public const string NameRoute = "{name}";
         public const string root = "Api";
         public const string version = "V1";
         public const string Rule = root + "/" + version + "/";
@@ -29,6 +30,7 @@
             public const string Prefix = Rule + "Doctor/";
             public const string List = Prefix + "List";
             public const string GetByID = Prefix + SingleRoute;
+            public const string GetByName = Prefix + NameRoute;
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
             public const string Delete = Prefix + "Delete";
@@ -49,6 +51,7 @@
             public const string Prefix = Rule + "Clinic/";
             public const string List = Prefix + "List";
             public const string GetByID = Prefix + SingleRoute;
+
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
             public const string Delete = Prefix + "Delete";

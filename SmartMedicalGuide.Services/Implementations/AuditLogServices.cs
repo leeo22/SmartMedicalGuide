@@ -49,7 +49,7 @@ namespace SmartMedicalGuide.Services.Implementations
             await _auditLogRepository.UpdateAsync(auditLog);
             return "Success";
         }
-        public async Task<AuditLog> GetAuditLogByIDAsync(int id)
+        public async Task<AuditLog?> GetAuditLogByIDAsync(int id)
         {
             var auditLog = _auditLogRepository.GetByIdAsync()
                                       .Where(x => x.LogId.Equals(id))
