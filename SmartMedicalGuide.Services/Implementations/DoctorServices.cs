@@ -41,15 +41,6 @@ namespace SmartMedicalGuide.Services.Implementations
                                       .FirstOrDefault();
             return doctor;
         }
-        public async Task<Doctor> GetDoctorByNAMEAsync(string name)
-        {
-            var doctor = _doctorRepository.GetByIdAsync()
-                                      .Include(x => x.User)
-                                      .ThenInclude(r => r.Role)
-                                      .Where(x => x.User.FullName.Equals(name))
-                                      .FirstOrDefault();
-            return doctor;
-        }
 
         public async Task<string> EditAsync(Doctor doctor)
         {

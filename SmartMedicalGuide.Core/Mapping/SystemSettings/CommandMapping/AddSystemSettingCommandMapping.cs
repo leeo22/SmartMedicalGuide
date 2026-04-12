@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.SystemSettings.Commands.Models;
+using SmartMedicalGuide.Data.Entities;
 
-namespace SmartMedicalGuide.Core.Mapping.SystemSettings.CommandMapping
+namespace SmartMedicalGuide.Core.Mapping.SystemSettings
 {
-    internal class AddSystemSettingCommandMapping
+    public partial class SystemSettingProfile
     {
+        public void AddSystemSettingCommandMapping()
+        {
+            CreateMap<AddSystemSettingCommand, SystemSetting>();
+        }
     }
 }

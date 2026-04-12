@@ -9,8 +9,8 @@ namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Handlers
 {
     internal class DoctorQueryHandler : ResponseHandler,
                                         IRequestHandler<GetDoctorListQuery, Response<List<GetDoctorListRespones>>>,
-                                        IRequestHandler<GetDoctorByIDQuery, Response<GetSingleDoctorResponse>>,
-                                        IRequestHandler<GetDoctorByNameQuery, Response<GetDoctorNameResponse>>
+                                        IRequestHandler<GetDoctorByIDQuery, Response<GetSingleDoctorResponse>>
+
     {
         #region Fields
         private readonly IDoctorServices _doctorServices;
@@ -42,13 +42,7 @@ namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Handlers
             return Success(result);
         }
 
-        public async Task<Response<GetDoctorNameResponse>> Handle(GetDoctorByNameQuery request, CancellationToken cancellationToken)
-        {
-            var doctor = _doctorServices.GetDoctorByNAMEAsync(request.Name);
-            if (doctor == null) return NotFound<GetDoctorNameResponse>("No Patient same Name");
-            var result = _mapper.Map<GetDoctorNameResponse>(doctor);
-            return Success(result);
-        }
+
         #endregion
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using SmartMedicalGuide.Infrastructure.Context;
 
+
 namespace SmartMedicalGuide.Infrastructure.InfrastuctureBases
 {
     public class GenericRepositoryAsync<T> : IGenericRepositoryAsync<T> where T : class
@@ -10,12 +11,14 @@ namespace SmartMedicalGuide.Infrastructure.InfrastuctureBases
 
         protected readonly MedicalGuideDbContext _dbContext;
 
+
         #endregion
 
         #region Constructor(s)
         public GenericRepositoryAsync(MedicalGuideDbContext dbContext)
         {
             _dbContext = dbContext;
+
         }
 
         #endregion
@@ -37,17 +40,7 @@ namespace SmartMedicalGuide.Infrastructure.InfrastuctureBases
         {
             return _dbContext.Set<T>().AsNoTracking().AsQueryable();
         }
-        public virtual async Task<T?> GetByNameAsync(string name)
-        {
 
-            return await _dbContext.Set<T>().FindAsync(name);
-        }
-
-
-        public IQueryable<T> GetByNameAsync()
-        {
-            return _dbContext.Set<T>().AsNoTracking().AsQueryable();
-        }
 
 
         public virtual async Task AddRangeAsync(ICollection<T> entities)
@@ -122,6 +115,8 @@ namespace SmartMedicalGuide.Infrastructure.InfrastuctureBases
             _dbContext.Set<T>().UpdateRange(entities);
             await _dbContext.SaveChangesAsync();
         }
+
+
         #endregion
     }
 
