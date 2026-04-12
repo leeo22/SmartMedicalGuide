@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartMedicalGuide.Services.Abstracts
+namespace SmartMedicalGuide.Data.Entities
 {
-    public interface IReportServices
+    internal class AppointmentHistory
     {
-
     }
 }

@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Infrastructure.Abstracts;
+using SmartMedicalGuide.Infrastructure.Context;
+using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +11,25 @@ using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Infrastructure.Reposistories
 {
-    internal class AuditLogRepository
+    public class AuditLogRepository : GenericRepositoryAsync<AuditLog>, IAuditLogRepository
     {
+        #region Fields
+        private readonly DbSet<AuditLog> _auditLog;
+        #endregion
+        #region Constructors
+        public AuditLogRepository(MedicalGuideDbContext dbContext) : base(dbContext)
+        {
+            _auditLog = dbContext.Set<AuditLog>();
+        }
+        #endregion
+
+        #region Handels Functions
+        public async Task<List<AuditLog>> GetAuditLogsListAsync()
+        {
+            return await _auditLog.Include(d => d.User)
+                                .ThenInclude(u => u.Role)
+                                .ToListAsync();
+        }
+        #endregion
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Infrastructure.Abstracts
 {
-    internal interface IChatRepository
+    public interface IChatRepository : IGenericRepositoryAsync<Chat>
     {
+        public Task<List<Chat>> GetChatsListAsync();
     }
+   
 }
