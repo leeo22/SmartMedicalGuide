@@ -27,10 +27,11 @@ namespace SmartMedicalGuide.Infrastructure
             //services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
             //services.AddTransient<IReportRepository, ReportRepository>();
             //services.AddTransient<IReviewRepository, ReviewRepository>();
-            //services.AddTransient<ISystemSettingRepository, SystemSettingRepository>();
+            services.AddTransient<ISystemSettingRepository, SystemSettingRepository>();
             //services.AddTransient<IVerificationRequestRepository, VerificationRequestRepository>();
 
             services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
+            services.AddTransient<IDapperRepositoryAsync, DapperRepositoryAsync>();
             return services;
         }
     }

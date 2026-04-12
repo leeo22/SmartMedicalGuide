@@ -50,7 +50,7 @@ namespace SmartMedicalGuide.Services.Implementations
             await _userRepository.UpdateAsync(user);
             return "Success";
         }
-        public async Task<User> GetUserByIDAsync(int id)
+        public async Task<User?> GetUserByIDAsync(int id)
         {
             var user = _userRepository.GetByIdAsync()
                                       .Include(x => x.Role)

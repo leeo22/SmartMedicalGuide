@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.SystemSettings.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 
-namespace SmartMedicalGuide.Core.Mapping.SystemSettings.QueryMapping
+namespace SmartMedicalGuide.Core.Mapping.SystemSettings
 {
-    internal class GetSystemSettingByIDMapping
+    public partial class SystemSettingProfile
     {
+        public void GetSystemSettingByIDMapping()
+        {
+            CreateMap<SystemSetting, GetSingleSystemSettingResponse>();
+        }
     }
 }

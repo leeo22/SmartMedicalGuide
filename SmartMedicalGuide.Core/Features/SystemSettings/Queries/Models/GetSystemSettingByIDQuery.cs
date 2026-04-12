@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.SystemSettings.Queries.Results;
+
 
 namespace SmartMedicalGuide.Core.Features.SystemSettings.Queries.Models
 {
-    internal class GetSystemSettingByIDQuery
+    public class GetSystemSettingByIDQuery : IRequest<Response<GetSingleSystemSettingResponse>>
     {
+        public int Id { get; set; }
+        public GetSystemSettingByIDQuery(int id)
+        {
+            Id = id;
+        }
     }
 }

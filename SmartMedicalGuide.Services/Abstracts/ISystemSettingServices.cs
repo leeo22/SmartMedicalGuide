@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Data.Entities;
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
-    internal interface ISystemSettingServices
+    public interface ISystemSettingServices
     {
+        public Task<List<SystemSetting>> GetAllSystemAsync();
+        public Task<SystemSetting> GetByIdAsync(int Id);
+        public Task<SystemSetting> AddAsync(SystemSetting systemSetting);
     }
 }

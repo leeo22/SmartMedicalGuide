@@ -41,5 +41,6 @@ namespace SmartMedicalGuide.API.Controllers
             var response = await Mediator.Send(new GetDoctorByIDQuery(id));
             return Ok(response);
         }
+
     }
 }

@@ -10,6 +10,7 @@ namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Handlers
     internal class DoctorQueryHandler : ResponseHandler,
                                         IRequestHandler<GetDoctorListQuery, Response<List<GetDoctorListRespones>>>,
                                         IRequestHandler<GetDoctorByIDQuery, Response<GetSingleDoctorResponse>>
+
     {
         #region Fields
         private readonly IDoctorServices _doctorServices;
@@ -40,6 +41,8 @@ namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Handlers
             var result = _mapper.Map<GetSingleDoctorResponse>(doctor);
             return Success(result);
         }
+
+
         #endregion
     }
 }

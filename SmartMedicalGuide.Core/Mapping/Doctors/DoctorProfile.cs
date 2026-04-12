@@ -11,6 +11,7 @@ namespace SmartMedicalGuide.Core.Mapping.Doctors
             AddDoctorCommandMapping();
             GetDoctorByIDMapping();
             EditDoctorCommandMapping();
+            GetDoctorByNameMapping();
         }
 
     }
