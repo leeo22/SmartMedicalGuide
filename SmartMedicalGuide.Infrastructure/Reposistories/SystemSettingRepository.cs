@@ -3,7 +3,7 @@ using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
 
 namespace SmartMedicalGuide.Infrastructure.Reposistories
 {
-    public class SystemSettingRepository(IDapperRepositoryAsync repositoryAsync) : ISystemSettingRepository
+    public class SystemSettingRepository(IDapperRepositoryAsync repositoryAsync) //: ISystemSettingRepository
     {
 
         //public async Task<List<SystemSetting>> GetAllAsync()
