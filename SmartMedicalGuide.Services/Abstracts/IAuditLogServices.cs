@@ -1,26 +1,13 @@
-﻿//using SmartMedicalGuide.Data.Entities;
-<<<<<<< HEAD
-//<<<<<<< HEAD
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//=======
-//>>>>>>> 5544136e3ebc971ee1f59abf8801ca62912e2f8d
+﻿using SmartMedicalGuide.Data.Entities;
 
-=======
-
-
->>>>>>> 8b264d17e25260ca316219f520115ed46d6b195f
-//namespace SmartMedicalGuide.Services.Abstracts
-//{
-//    public interface IAuditLogServices
-//    {
-//        public Task<List<AuditLog>> GetAuditLogsListAsync();
-//        public Task<string> AddAsync(AuditLog auditLog);
-//        public Task<AuditLog> GetAuditLogByIDAsync(int id);
-//        public Task<string> EditAsync(AuditLog auditLog);
-//        public Task<string> DeleteAsync(AuditLog auditLog);
-//    }
-//}
+namespace SmartMedicalGuide.Services.Abstracts
+{
+    public interface IAuditLogServices
+    {
+        public Task<List<AuditLog>> GetAuditLogsListAsync();
+        public Task<string> AddAsync(AuditLog auditLog);
+        public Task<AuditLog> GetAuditLogByIDAsync(int id);
+        public Task<string> EditAsync(AuditLog auditLog);
+        public Task<string> DeleteAsync(AuditLog auditLog);
+    }
+}

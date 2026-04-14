@@ -19,7 +19,7 @@ namespace SmartMedicalGuide.Infrastructure
             services.AddTransient<IClinicRepository, ClinicRepository>();
             services.AddTransient<ILabAppointmentRepository, LabAppointmentRepository>();
             //services.AddTransient<IChatRepository, ChatRepository>();
-            //services.AddTransient<IAuditLogRepository, AuditLogRepository>();
+            services.AddTransient<IAuditLogRepository, AuditLogRepository>();
             //services.AddTransient<ILabServiceRepository, LabServiceRepository>();
             //services.AddTransient<IMedicalReportRepository, MedicalReportRepository>();
             //services.AddTransient<IMessageRepository, MessageRepository>();
