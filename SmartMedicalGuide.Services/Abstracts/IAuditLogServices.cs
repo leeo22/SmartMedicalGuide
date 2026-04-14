@@ -1,4 +1,5 @@
 ﻿//using SmartMedicalGuide.Data.Entities;
+<<<<<<< HEAD
 //<<<<<<< HEAD
 //using System;
 //using System.Collections.Generic;
@@ -8,6 +9,10 @@
 //=======
 //>>>>>>> 5544136e3ebc971ee1f59abf8801ca62912e2f8d
 
+=======
+
+
+>>>>>>> 8b264d17e25260ca316219f520115ed46d6b195f
 //namespace SmartMedicalGuide.Services.Abstracts
 //{
 //    public interface IAuditLogServices
