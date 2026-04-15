@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -13,9 +8,10 @@ namespace SmartMedicalGuide.Data.Entities
         public int TransactionId { get; set; }
 
         public int WalletId { get; set; }
-        //public Amount { get; set; }
-        public string Type { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public Wallet? Wallet { get; set; }
 
+        public decimal Amount { get; set; }
+        public string? Type { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

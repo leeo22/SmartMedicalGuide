@@ -1,7 +1,7 @@
-﻿namespace SmartMedicalGuide.Infrastructure.Reposistories
-{
-    public class ISystemSettingRepository
-    {
+﻿//namespace SmartMedicalGuide.Infrastructure.Reposistories
+//{
+//    public class ISystemSettingRepository
+//    {
 
-    }
-}
+//    }
+//}

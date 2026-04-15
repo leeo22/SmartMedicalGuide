@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.Reports.Commands.Models;
+using SmartMedicalGuide.Data.Entities;
 
-namespace SmartMedicalGuide.Core.Mapping.Reports.CommandMapping
+namespace SmartMedicalGuide.Core.Mapping.Reports
 {
-    internal class EditReportCommandMapping
+    public partial class ReportProfile
     {
+        public void EditReportCommandMapping()
+        {
+            CreateMap<EditReportCommand, Report>();
+        }
     }
 }

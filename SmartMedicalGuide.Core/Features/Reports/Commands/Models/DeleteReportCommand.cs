@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.Reports.Commands.Models
 {
-    internal class DeleteReportCommand
+    public class DeleteReportCommand : IRequest<Response<string>>
     {
+        public int Id { get; set; }
+        public DeleteReportCommand(int id)
+        {
+            Id = id;
+
+        }
     }
 }

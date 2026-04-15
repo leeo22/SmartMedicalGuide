@@ -8,7 +8,6 @@ namespace SmartMedicalGuide.Core.Features.Labs.Commands.Models
         public int LabId { get; set; }
 
         public int UserId { get; set; }
-
         public string CenterName { get; set; }
         public string CenterType { get; set; }
         public string PhoneNumber { get; set; }

@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.Reports.Commands.Models
 {
-    internal class AddReportCommand
+    public class AddReportCommand : IRequest<Response<string>>
     {
+        public int ReporterUserId { get; set; }
+
+        public string? TargetType { get; set; }
+        public int TargetId { get; set; }
+
+        public string? Reason { get; set; }
+        public string? Status { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 }

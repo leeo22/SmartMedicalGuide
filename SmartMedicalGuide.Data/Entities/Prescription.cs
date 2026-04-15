@@ -7,11 +7,13 @@ namespace SmartMedicalGuide.Data.Entities
         [Key]
         public int PrescriptionId { get; set; }
 
-        public int AppointmentId { get; set; }
+        public int DoctorAppointmentId { get; set; }
+        public DoctorAppointment? DoctorAppointment { get; set; }
+
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 

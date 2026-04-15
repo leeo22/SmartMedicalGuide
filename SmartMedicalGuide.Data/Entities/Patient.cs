@@ -8,18 +8,18 @@ namespace SmartMedicalGuide.Data.Entities
         public int PatientId { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
 
         [Required]
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 
         [MaxLength(250)]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
-        public ICollection<DoctorAppointment> DoctorAppointments { get; set; }
-        public ICollection<LabAppointment> LabAppointments { get; set; }
+        public ICollection<DoctorAppointment>? DoctorAppointments { get; set; }
+        public ICollection<LabAppointment>? LabAppointments { get; set; }
     }
 
 

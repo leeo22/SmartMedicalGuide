@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -12,7 +7,7 @@ namespace SmartMedicalGuide.Data.Entities
         [Key]
         public int FavoriteId { get; set; }
 
-        public int PatientId { get; set; }
-        public int DoctorId { get; set; }
+        public int? PatientId { get; set; }
+        public int? DoctorId { get; set; }
     }
 }

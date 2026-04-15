@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -13,8 +8,10 @@ namespace SmartMedicalGuide.Data.Entities
         public int ItemId { get; set; }
 
         public int PrescriptionId { get; set; }
-        public string MedicineName { get; set; }
-        public string Dosage { get; set; }
-        public string Duration { get; set; }
+        public Prescription? Prescription { get; set; }
+
+        public string? MedicineName { get; set; }
+        public string? Dosage { get; set; }
+        public string? Duration { get; set; }
     }
 }

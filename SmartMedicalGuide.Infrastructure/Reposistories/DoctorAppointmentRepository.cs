@@ -21,11 +21,11 @@ namespace SmartMedicalGuide.Infrastructure.Reposistories
         public async Task<List<DoctorAppointment>> GetDoctorAppointmentsListAsync()
         {
             return await _doctorAppointment
-                .Include(a => a.Doctor)       // يجيب بيانات الدكتور
-                    .ThenInclude(d => d.User) // يجيب بيانات اليوزر للدكتور (الاسم، الرول...)
-                .Include(a => a.Patient)      // يجيب بيانات المريض
-                    .ThenInclude(p => p.User) // يجيب بيانات اليوزر للمريض
-                                              // يجيب بيانات الدفع إذا موجود
+                    .Include(a => a.Doctor)
+                    .ThenInclude(d => d.User)
+                    .Include(a => a.Patient)
+                    .ThenInclude(p => p.User)
+
                 .ToListAsync();
         }
         #endregion

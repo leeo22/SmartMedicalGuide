@@ -25,13 +25,14 @@ namespace SmartMedicalGuide.Infrastructure
             //services.AddTransient<IMessageRepository, MessageRepository>();
             //services.AddTransient<INotificationRepository, NotificationRepository>();
             //services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
-            //services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<ISpecializationRepository, SpecializationRepository>();
             //services.AddTransient<IReviewRepository, ReviewRepository>();
             //services.AddTransient<ISystemSettingRepository, SystemSettingRepository>();
             //services.AddTransient<IVerificationRequestRepository, VerificationRequestRepository>();
 
             services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
-            services.AddTransient<IDapperRepositoryAsync, DapperRepositoryAsync>();
+            //services.AddTransient<IDapperRepositoryAsync, DapperRepositoryAsync>();
             return services;
         }
     }

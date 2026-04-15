@@ -6,8 +6,8 @@ namespace SmartMedicalGuide.Data.Entities
     {
         [Key]
         public int SettingId { get; set; }
-        public string KeyName { get; set; }
-        public string Value { get; set; }
+        public string? KeyName { get; set; }
+        public string? Value { get; set; }
     }
 
 }

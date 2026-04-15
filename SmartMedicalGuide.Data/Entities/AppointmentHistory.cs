@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -12,9 +7,10 @@ namespace SmartMedicalGuide.Data.Entities
         [Key]
         public int HistoryId { get; set; }
 
-        public int AppointmentId { get; set; }
-        public string Status { get; set; }
-        public DateTime ChangedAt { get; set; }
+        public int? AppointmentId { get; set; }
+        public string? AppointmentType { get; set; }
+        public string? Status { get; set; }
+        public DateTime? ChangedAt { get; set; }
 
     }
 }

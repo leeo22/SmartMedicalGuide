@@ -47,6 +47,28 @@
             public const string Delete = Prefix + "Delete";
 
         }
+        public static class SpecializationRouting
+        {
+            public const string Prefix = Rule + "Specialization/";
+            public const string List = Prefix + "List";
+            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByName = Prefix + NameRoute;
+            public const string Create = Prefix + "Create";
+            public const string Edit = Prefix + "Edit";
+            public const string Delete = Prefix + "Delete";
+
+        }
+        public static class ReportRouting
+        {
+            public const string Prefix = Rule + "Specialization/";
+            public const string List = Prefix + "List";
+            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByName = Prefix + NameRoute;
+            public const string Create = Prefix + "Create";
+            public const string Edit = Prefix + "Edit";
+            public const string Delete = Prefix + "Delete";
+
+        }
         public static class LabRouting
         {
             public const string Prefix = Rule + "Lab/";

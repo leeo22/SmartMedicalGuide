@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.Reports.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Reports.Queries.Models
 {
-    internal class GetReportByIDQuery
+    public class GetReportByIDQuery : IRequest<Response<GetSingleReportResponse>>
     {
+        public int Id { get; set; }
+        public GetReportByIDQuery(int id)
+        {
+            Id = id;
+        }
     }
 }

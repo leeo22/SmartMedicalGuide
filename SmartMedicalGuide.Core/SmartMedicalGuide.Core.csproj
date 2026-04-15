@@ -41,6 +41,7 @@
     <Folder Include="Features\Payments\Queries\Models\" />
     <Folder Include="Features\Payments\Queries\Results\" />
     <Folder Include="Features\Roles\Commands\Validatiors\" />
+    <Folder Include="Features\Specializations\Commands\Validatiors\" />
   </ItemGroup>
 
 

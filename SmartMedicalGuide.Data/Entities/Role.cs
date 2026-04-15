@@ -7,10 +7,10 @@ namespace SmartMedicalGuide.Data.Entities
         [Key]
         public int RoleId { get; set; }
 
-        [Required, MaxLength(50)]
-        public string RoleName { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public string? RoleName { get; set; }
+
+        public ICollection<User>? Users { get; set; }
     }
 
 }

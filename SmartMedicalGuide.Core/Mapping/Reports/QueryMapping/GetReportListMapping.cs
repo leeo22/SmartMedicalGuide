@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.Reports.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 
-namespace SmartMedicalGuide.Core.Mapping.Reports.QueryMapping
+namespace SmartMedicalGuide.Core.Mapping.Reports
 {
-    internal class GetReportListMapping
+    public partial class ReportProfile
     {
+        public void GetReportListMapping()
+        {
+            CreateMap<Report, GetReportListResponse>();
+        }
     }
 }
