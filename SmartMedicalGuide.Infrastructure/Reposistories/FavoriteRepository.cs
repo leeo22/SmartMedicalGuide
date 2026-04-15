@@ -6,23 +6,25 @@ using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
 
 namespace SmartMedicalGuide.Infrastructure.Reposistories
 {
-    public class LabServiceRepository : GenericRepositoryAsync<LabService>, ILabServiceRepository
+    public class FavoriteRepository : GenericRepositoryAsync<Favorite>, IFavoriteRepository
     {
         #region Fields
-        private readonly DbSet<LabService> _lab;
+        private readonly DbSet<Favorite> _favorite;
         #endregion
         #region Constructors
-        public LabServiceRepository(MedicalGuideDbContext dbContext) : base(dbContext)
+        public FavoriteRepository(MedicalGuideDbContext dbContext) : base(dbContext)
         {
-            _lab = dbContext.Set<LabService>();
+            _favorite = dbContext.Set<Favorite>();
+        }
+
+
+        #endregion
+        #region Handels Functions
+        public async Task<List<Favorite>> GetFavoritesListAsync()
+        {
+            return await _favorite.ToListAsync();
         }
         #endregion
 
-        #region Handels Functions
-        public async Task<List<LabService>> GetLabServicesListAsync()
-        {
-            return await _lab.ToListAsync();
-        }
-        #endregion
     }
 }

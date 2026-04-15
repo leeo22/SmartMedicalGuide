@@ -18,14 +18,16 @@ namespace SmartMedicalGuide.Infrastructure
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IClinicRepository, ClinicRepository>();
             services.AddTransient<ILabAppointmentRepository, LabAppointmentRepository>();
+            services.AddTransient<IAppointmentHistoryRepository, AppointmentHistoryRepository>();
             //services.AddTransient<IChatRepository, ChatRepository>();
             services.AddTransient<IAuditLogRepository, AuditLogRepository>();
-            //services.AddTransient<ILabServiceRepository, LabServiceRepository>();
+            services.AddTransient<ILabServiceRepository, LabServiceRepository>();
             //services.AddTransient<IMedicalReportRepository, MedicalReportRepository>();
             //services.AddTransient<IMessageRepository, MessageRepository>();
             //services.AddTransient<INotificationRepository, NotificationRepository>();
             //services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
             services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<IFavoriteRepository, FavoriteRepository>();
             services.AddTransient<ISpecializationRepository, SpecializationRepository>();
             //services.AddTransient<IReviewRepository, ReviewRepository>();
             //services.AddTransient<ISystemSettingRepository, SystemSettingRepository>();

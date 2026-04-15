@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.LabsServices.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 
-namespace SmartMedicalGuide.Core.Mapping.LabServices.QueryMapping
+namespace SmartMedicalGuide.Core.Mapping.LabServices
 {
-    internal class GetLabServiceListMapping
+    public partial class LabServiceProfile
     {
+        public void GetLabServiceListMapping()
+        {
+            CreateMap<LabService, GetLabServiceListResponse>()
+                .ForMember(dest => dest.ServiceId, opt => opt.MapFrom(src => src.ServiceId))
+                .ForMember(dest => dest.LabId, opt => opt.MapFrom(src => src.LabId))
+                .ForMember(dest => dest.LabName, opt => opt.MapFrom(src => src.Lab != null ? src.Lab.CenterName : null))
+                .ForMember(dest => dest.ServiceName, opt => opt.MapFrom(src => src.ServiceName))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
+        }
     }
 }

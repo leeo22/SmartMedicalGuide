@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
 namespace SmartMedicalGuide.Core.Mapping.LabServices
 {
-    internal class LabServiceProfile
+    public partial class LabServiceProfile : Profile
     {
+        public LabServiceProfile()
+        {
+            AddLabServiceCommandMapping();
+            EditLabServiceCommandMapping();
+            GetLabServiceByIDMapping();
+            GetLabServiceListMapping();
+        }
     }
 }
