@@ -22,7 +22,7 @@ namespace SmartMedicalGuide.Infrastructure.Reposistories
         public async Task<List<Lab>> GetLabsListAsync()
         {
             return await _lab.Include(d => d.User)
-                                .ThenInclude(u => u.Role)
+                                //.ThenInclude(u => u.Role)
                                 .ToListAsync();
         }
         #endregion

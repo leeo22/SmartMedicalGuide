@@ -9,8 +9,8 @@ namespace SmartMedicalGuide.Core.Mapping.Labs
         {
             CreateMap<Lab, GetLabListRespones>()
                 .ForMember(dest => dest.RoleName, opt => opt
-                .MapFrom(src => src.User.Role.RoleName))
-                .ForMember(dest => dest.UserName, opt => opt
+                //.MapFrom(src => src.User.Role.RoleName))
+                //.ForMember(dest => dest.UserName, opt => opt
                 .MapFrom(src => src.User.FullName));
         }
     }

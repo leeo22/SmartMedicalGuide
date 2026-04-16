@@ -24,7 +24,7 @@ namespace SmartMedicalGuide.Infrastructure.Reposistories
         public async Task<List<Patient>> GetPatientsListAsync()
         {
             return await _patient.Include(d => d.User)
-                                .ThenInclude(u => u.Role)
+                                //.ThenInclude(u => u.Role)
                                 .ToListAsync();
         }
         #endregion

@@ -55,7 +55,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             var lab = _labRepository.GetByIdAsync()
                                       .Include(x => x.User)
-                                      .ThenInclude(r => r.Role)
+                                      //.ThenInclude(r => r.Role)
                                       .Where(x => x.LabId.Equals(id))
                                       .FirstOrDefault();
             return lab;

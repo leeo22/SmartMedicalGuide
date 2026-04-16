@@ -1,5 +1,5 @@
 ﻿using SmartMedicalGuide.Core.Features.Users.Queries.Results;
-using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Data.Entities.Identity;
 
 namespace SmartMedicalGuide.Core.Mapping.Users
 {
@@ -7,9 +7,9 @@ namespace SmartMedicalGuide.Core.Mapping.Users
     {
         public void GetUserByIDtMapping()
         {
-            CreateMap<User, GetSingleUserResponse>()
-                                            .ForMember(dest => dest.RoleName, opt => opt
-                                            .MapFrom(src => src.Role.RoleName));
+            CreateMap<User, GetSingleUserResponse>();
+            //.ForMember(dest => dest.RoleName, opt => opt
+            //.MapFrom(src => src.Role.RoleName));
         }
     }
 }

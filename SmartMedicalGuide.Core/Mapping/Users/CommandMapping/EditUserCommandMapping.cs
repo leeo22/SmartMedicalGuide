@@ -1,5 +1,5 @@
 ﻿using SmartMedicalGuide.Core.Features.Users.Commands.Models;
-using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Data.Entities.Identity;
 
 namespace SmartMedicalGuide.Core.Mapping.Users
 {
@@ -8,8 +8,8 @@ namespace SmartMedicalGuide.Core.Mapping.Users
         public void EditUserCommandMapping()
         {
             CreateMap<EditUserCommand, User>()
-                        .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-                       .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.RoleId))
+                       //.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                       //.ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.RoleId))
                        ;
         }
 

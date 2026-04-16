@@ -1,4 +1,4 @@
-﻿using SmartMedicalGuide.Data.Entities;
+﻿using SmartMedicalGuide.Data.Entities.Identity;
 using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
 
 namespace SmartMedicalGuide.Infrastructure.Abstracts

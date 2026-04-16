@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SmartMedicalGuide.Data.Entities.Identity;
 
 namespace SmartMedicalGuide.Data.Entities
 {

@@ -1,15 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SmartMedicalGuide.Data.Entities;
-
+using SmartMedicalGuide.Data.Entities.Identity;
 
 namespace SmartMedicalGuide.Infrastructure.Context
 {
-    public class MedicalGuideDbContext : DbContext
+    //IdentityDbContext<User>, IdentityRole<int>, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>
+    public class MedicalGuideDbContext : IdentityDbContext<User, IdentityRole<int>, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
+        public MedicalGuideDbContext()
+        {
+
+        }
         public MedicalGuideDbContext(DbContextOptions<MedicalGuideDbContext> options)
             : base(options) { }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
@@ -44,11 +51,11 @@ namespace SmartMedicalGuide.Infrastructure.Context
             base.OnModelCreating(modelBuilder);
 
             // 1. Role → User
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Role)
-                .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.Role)
+            //    .WithMany(r => r.Users)
+            //    .HasForeignKey(u => u.RoleId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             // 2. User → Patient (One-to-One)
             modelBuilder.Entity<Patient>()

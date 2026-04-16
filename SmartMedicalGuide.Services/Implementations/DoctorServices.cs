@@ -36,7 +36,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             var doctor = _doctorRepository.GetByIdAsync()
                                       .Include(x => x.User)
-                                      .ThenInclude(r => r.Role)
+                                      //.ThenInclude(r => r.Role)
                                       .Where(x => x.DoctorId.Equals(id))
                                       .FirstOrDefault();
             return doctor;

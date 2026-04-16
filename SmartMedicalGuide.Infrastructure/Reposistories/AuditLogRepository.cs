@@ -23,7 +23,7 @@ namespace SmartMedicalGuide.Infrastructure.Reposistories
         public async Task<List<AuditLog>> GetAuditLogsListAsync()
         {
             return await _auditLog.Include(d => d.User)
-                                .ThenInclude(u => u.Role)
+                                //.ThenInclude(u => u.Role)
                                 .ToListAsync();
         }
         #endregion

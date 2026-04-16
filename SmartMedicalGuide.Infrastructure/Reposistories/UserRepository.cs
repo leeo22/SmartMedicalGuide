@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Data.Entities.Identity;
 using SmartMedicalGuide.Infrastructure.Abstracts;
 using SmartMedicalGuide.Infrastructure.Context;
 using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
@@ -22,7 +22,7 @@ namespace SmartMedicalGuide.Infrastructure.Reposistories
 
         public async Task<List<User>> GetUsersListAsync()
         {
-            return await _user.Include(x => x.Role).ToListAsync();
+            return await _user.ToListAsync();
         }
         #endregion
 

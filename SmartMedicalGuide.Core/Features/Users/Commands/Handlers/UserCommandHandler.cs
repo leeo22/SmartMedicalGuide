@@ -2,7 +2,7 @@
 using MediatR;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Users.Commands.Models;
-using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Data.Entities.Identity;
 using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.Users.Commands.Handlers
