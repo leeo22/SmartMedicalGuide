@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartMedicalGuide.Core.Features.Chat.Queries.Results
+namespace SmartMedicalGuide.Core.Features.Chats.Commands.Validatiors
 {
-    internal class GetChatListResponse
+    internal class AddChatValidator
     {
     }
 }

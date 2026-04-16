@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.Chats.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 
-namespace SmartMedicalGuide.Core.Mapping.Chats.QueryMapping
+namespace SmartMedicalGuide.Core.Mapping.Chats
 {
-    internal class GetAuditLogListMapping
+    public partial class ChatProfile
     {
+        public void GetChatListMapping()
+        {
+            CreateMap<Chat, GetChatListResponse>()
+                .ForMember(dest => dest.ChatId, opt => opt.MapFrom(src => src.ChatId))
+                .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.PatientId))
+                .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.FullName : null))
+                .ForMember(dest => dest.DoctorId, opt => opt.MapFrom(src => src.DoctorId))
+                .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor != null && src.Doctor.User != null ? src.Doctor.User.FullName : null))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
+                .ForMember(dest => dest.MessagesCount, opt => opt.MapFrom(src => src.Messages != null ? src.Messages.Count : 0));
+        }
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.Prescriptions.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Prescriptions.Queries.Models
 {
-    internal class GetPrescriptionByIDQuery
+    public class GetPrescriptionByIDQuery : IRequest<Response<GetSinglePrescriptionResponse>>
     {
+        public int Id { get; set; }
+        public GetPrescriptionByIDQuery(int id) => Id = id;
     }
 }

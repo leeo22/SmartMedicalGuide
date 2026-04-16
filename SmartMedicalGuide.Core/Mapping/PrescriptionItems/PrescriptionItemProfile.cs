@@ -1,12 +1,15 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using AutoMapper;
 
-//namespace SmartMedicalGuide.Core.Mapping.Chats
-//{
-//    internal class AuditLogProfile
-//    {
-//    }
-//}
+namespace SmartMedicalGuide.Core.Mapping.PrescriptionItems
+{
+    public partial class PrescriptionItemProfile : Profile
+    {
+        public PrescriptionItemProfile()
+        {
+            AddPrescriptionItemCommandMapping();
+            EditPrescriptionItemCommandMapping();
+            GetPrescriptionItemByIDMapping();
+            GetPrescriptionItemListMapping();
+        }
+    }
+}

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.Attachments.Commands.Models
 {
-    internal class AddAttachmentCommand
+    public class AddAttachmentCommand : IRequest<Response<string>>
     {
+        public int UserId { get; set; }
+        public string FilePath { get; set; }
+        public DateTime UploadedAt { get; set; } = DateTime.Now;
     }
 }

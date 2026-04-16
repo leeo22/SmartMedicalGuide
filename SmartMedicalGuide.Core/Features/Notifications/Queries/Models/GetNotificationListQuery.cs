@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.Notifications.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Notifications.Queries.Models
 {
-    internal class GetNotificationListQuery
+    public class GetNotificationListQuery : IRequest<Response<List<GetNotificationListResponse>>>
     {
+        public int? UserId { get; set; }
+        public bool? IsRead { get; set; }
+        public GetNotificationListQuery() { }
+        public GetNotificationListQuery(int? userId, bool? isRead)
+        {
+            UserId = userId;
+            IsRead = isRead;
+        }
     }
 }

@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartMedicalGuide.Core.Features.Reviews.Queries.Results
+﻿namespace SmartMedicalGuide.Core.Features.Reviews.Queries.Results
 {
-    internal class GetReviewListResponse
+    public class GetReviewListResponse
     {
+        public int ReviewId { get; set; }
+        public int PatientId { get; set; }
+        public string? PatientName { get; set; }
+        public string TargetType { get; set; }
+        public int TargetId { get; set; }
+        public string? TargetName { get; set; }
+        public int Rating { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

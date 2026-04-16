@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartMedicalGuide.Core.Features.Chat.Commands.Handlers
+namespace SmartMedicalGuide.Core.Features.Chats.Commands.Validatiors
 {
-    internal class ChatCommandHandler
+    internal class EditChatValidator
     {
     }
 }

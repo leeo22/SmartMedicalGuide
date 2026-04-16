@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
 namespace SmartMedicalGuide.Core.Mapping.Notifications
 {
-    internal class NotificationProfile
+    public partial class NotificationProfile : Profile
     {
+        public NotificationProfile()
+        {
+            AddNotificationCommandMapping();
+            EditNotificationCommandMapping();
+            GetNotificationByIDMapping();
+            GetNotificationListMapping();
+        }
     }
 }

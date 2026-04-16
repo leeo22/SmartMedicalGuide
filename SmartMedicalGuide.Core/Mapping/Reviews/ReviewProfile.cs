@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
 namespace SmartMedicalGuide.Core.Mapping.Reviews
 {
-    internal class ReviewProfile
+    public partial class ReviewProfile : Profile
     {
+        public ReviewProfile()
+        {
+            AddReviewCommandMapping();
+            EditReviewCommandMapping();
+            GetReviewByIDMapping();
+            GetReviewListMapping();
+        }
     }
 }

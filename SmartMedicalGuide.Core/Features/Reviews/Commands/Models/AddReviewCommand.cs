@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.Reviews.Commands.Models
 {
-    internal class AddReviewCommand
+    public class AddReviewCommand : IRequest<Response<string>>
     {
+        public int PatientId { get; set; }
+        public string TargetType { get; set; } // "Doctor", "Lab", "Clinic"
+        public int TargetId { get; set; }
+        public int Rating { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

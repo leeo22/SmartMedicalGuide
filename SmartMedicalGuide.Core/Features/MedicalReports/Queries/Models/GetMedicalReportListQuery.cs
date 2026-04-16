@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.MedicalReports.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.MedicalReports.Queries.Models
 {
-    internal class GetMedicalReportListQuery
+    public class GetMedicalReportListQuery : IRequest<Response<List<GetMedicalReportListResponse>>>
     {
+        public int? PatientId { get; set; }
+        public int? DoctorId { get; set; }
+        public int? LabId { get; set; }
+        public GetMedicalReportListQuery() { }
+        public GetMedicalReportListQuery(int? patientId, int? doctorId, int? labId)
+        {
+            PatientId = patientId;
+            DoctorId = doctorId;
+            LabId = labId;
+        }
     }
 }

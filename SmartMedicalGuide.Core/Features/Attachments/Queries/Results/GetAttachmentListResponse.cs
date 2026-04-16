@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartMedicalGuide.Core.Features.Attachments.Queries.Results
+﻿namespace SmartMedicalGuide.Core.Features.Attachments.Queries.Results
 {
-    internal class GetAttachmentListResponse
+    public class GetAttachmentListResponse
     {
+        public int AttachmentId { get; set; }
+        public int UserId { get; set; }
+        public string? UserName { get; set; }
+        public string FilePath { get; set; }
+        public DateTime UploadedAt { get; set; }
     }
 }

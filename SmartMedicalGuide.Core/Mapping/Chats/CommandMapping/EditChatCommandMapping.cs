@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.Chats.Commands.Models;
+using SmartMedicalGuide.Data.Entities;
 
-namespace SmartMedicalGuide.Core.Mapping.Chats.CommandMapping
+namespace SmartMedicalGuide.Core.Mapping.Chats
 {
-    internal class EditAuditLogCommandMapping
+    public partial class ChatProfile
     {
+        public void EditChatCommandMapping()
+        {
+            CreateMap<EditChatCommand, Chat>()
+                .ForMember(dest => dest.ChatId, opt => opt.MapFrom(src => src.ChatId))
+                .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.PatientId))
+                .ForMember(dest => dest.DoctorId, opt => opt.MapFrom(src => src.DoctorId))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
+        }
     }
 }

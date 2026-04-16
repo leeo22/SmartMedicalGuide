@@ -1,0 +1,12 @@
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+
+namespace SmartMedicalGuide.Core.Features.Chats.Commands.Models
+{
+    public class AddChatCommand : IRequest<Response<string>>
+    {
+        public int PatientId { get; set; }
+        public int DoctorId { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+    }
+}

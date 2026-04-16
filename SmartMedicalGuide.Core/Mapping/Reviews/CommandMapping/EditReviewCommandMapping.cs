@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.Reviews.Commands.Models;
+using SmartMedicalGuide.Data.Entities;
 
-namespace SmartMedicalGuide.Core.Mapping.Reviews.CommandMapping
+namespace SmartMedicalGuide.Core.Mapping.Reviews
 {
-    internal class EditReviewCommandMapping
+    public partial class ReviewProfile
     {
+        public void EditReviewCommandMapping()
+        {
+            CreateMap<EditReviewCommand, Review>()
+                .ForMember(dest => dest.ReviewId, opt => opt.MapFrom(src => src.ReviewId))
+                .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.PatientId))
+                .ForMember(dest => dest.TargetType, opt => opt.MapFrom(src => src.TargetType))
+                .ForMember(dest => dest.TargetId, opt => opt.MapFrom(src => src.TargetId))
+                .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating))
+                .ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
+        }
     }
 }

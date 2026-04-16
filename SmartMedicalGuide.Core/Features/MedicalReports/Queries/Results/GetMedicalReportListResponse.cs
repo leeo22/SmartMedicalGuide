@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartMedicalGuide.Core.Features.MedicalReports.Queries.Results
+﻿namespace SmartMedicalGuide.Core.Features.MedicalReports.Queries.Results
 {
-    internal class GetMedicalReportListResponse
+    public class GetMedicalReportListResponse
     {
+        public int ReportId { get; set; }
+        public int PatientId { get; set; }
+        public string? PatientName { get; set; }
+        public int DoctorId { get; set; }
+        public string? DoctorName { get; set; }
+        public int LabId { get; set; }
+        public string? LabName { get; set; }
+        public string ReportType { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.Notifications.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Notifications.Queries.Models
 {
-    internal class GetNotificationByIDQuery
+    public class GetNotificationByIDQuery : IRequest<Response<GetSingleNotificationResponse>>
     {
+        public int Id { get; set; }
+        public GetNotificationByIDQuery(int id) => Id = id;
     }
 }

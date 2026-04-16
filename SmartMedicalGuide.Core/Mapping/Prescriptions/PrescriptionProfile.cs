@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
 namespace SmartMedicalGuide.Core.Mapping.Prescriptions
 {
-    internal class PrescriptionProfile
+    public partial class PrescriptionProfile : Profile
     {
+        public PrescriptionProfile()
+        {
+            AddPrescriptionCommandMapping();
+            EditPrescriptionCommandMapping();
+            GetPrescriptionByIDMapping();
+            GetPrescriptionListMapping();
+        }
     }
 }

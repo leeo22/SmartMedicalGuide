@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 
 namespace SmartMedicalGuide.Core.Mapping.MedicalReports
 {
-    internal class MedicalReportProfile
+    public partial class MedicalReportProfile : Profile
     {
+        public MedicalReportProfile()
+        {
+            AddMedicalReportCommandMapping();
+            EditMedicalReportCommandMapping();
+            GetMedicalReportByIDMapping();
+            GetMedicalReportListMapping();
+        }
     }
 }
