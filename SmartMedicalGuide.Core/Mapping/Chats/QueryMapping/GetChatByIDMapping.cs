@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Mapping.Chats.QueryMapping
 {
-    internal class GetChatByIDMapping
+    internal class GetAuditLogByIDMapping
     {
     }
 }

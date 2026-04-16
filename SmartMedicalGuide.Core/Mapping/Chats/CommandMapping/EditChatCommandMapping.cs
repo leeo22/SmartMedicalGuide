@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Mapping.Chats.CommandMapping
 {
-    internal class EditChatCommandMapping
+    internal class EditAuditLogCommandMapping
     {
     }
 }
