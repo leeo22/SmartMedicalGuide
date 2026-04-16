@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Data.Entities;
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
-    internal interface ISearchHistoryServices
+    public interface ISearchHistoryServices
     {
+        public Task<List<SearchHistory>> GetListAsync();
+        public Task<SearchHistory> GetByIDAsync(int id);
+        public Task<string> AddAsync(SearchHistory searchHistory);
+        public Task<string> EditAsync(SearchHistory searchHistory);
+        public Task<string> DeleteAsync(SearchHistory searchHistory);
+        public Task<string> DeleteAllForUserAsync(int userId);
+        public Task<List<SearchHistory>> GetByUserIdAsync(int userId);
+        public Task<List<SearchHistory>> GetRecentByUserIdAsync(int userId, int count);
     }
 }

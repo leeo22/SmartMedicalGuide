@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Infrastructure.Abstracts;
+using SmartMedicalGuide.Infrastructure.Context;
+using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
 
 namespace SmartMedicalGuide.Infrastructure.Reposistories
 {
-    internal class PrescriptionItemRepository
+    public class PrescriptionItemRepository : GenericRepositoryAsync<PrescriptionItem>, IPrescriptionItemRepository
     {
+        #region Fields
+        private readonly DbSet<PrescriptionItem> _prescriptionItem;
+        #endregion
+
+        #region Constructors
+        public PrescriptionItemRepository(MedicalGuideDbContext dBContext) : base(dBContext)
+        {
+            _prescriptionItem = dBContext.Set<PrescriptionItem>();
+
+        }
+
+        #endregion
+
+        #region Handels Functions
+
+        #endregion
+
     }
 }

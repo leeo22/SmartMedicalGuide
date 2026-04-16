@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartMedicalGuide.Data.Entities;
+using SmartMedicalGuide.Infrastructure.Abstracts;
+using SmartMedicalGuide.Infrastructure.Context;
+using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
 
 namespace SmartMedicalGuide.Infrastructure.Reposistories
 {
-    internal class MedicalReportRepository
+    public class MedicalReportRepository : GenericRepositoryAsync<MedicalReport>, IMedicalReportRepository
     {
+        #region Fields
+        private readonly DbSet<MedicalReport> _medicalReport;
+        #endregion
+
+        #region Constructors
+        public MedicalReportRepository(MedicalGuideDbContext dBContext) : base(dBContext)
+        {
+            _medicalReport = dBContext.Set<MedicalReport>();
+
+        }
+
+        #endregion
+
+        #region Handels Functions
+
+        #endregion
+
     }
 }

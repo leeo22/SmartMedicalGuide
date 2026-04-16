@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Data.Entities;
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
-    internal interface IVerificationRequestServices
+    public interface IVerificationRequestServices
     {
+        public Task<List<VerificationRequest>> GetListAsync();
+        public Task<VerificationRequest> GetByIDAsync(int id);
+        public Task<string> AddAsync(VerificationRequest verificationRequest);
+        public Task<string> EditAsync(VerificationRequest verificationRequest);
+        public Task<string> DeleteAsync(VerificationRequest verificationRequest);
+        public Task<List<VerificationRequest>> GetByUserIdAsync(int userId);
+        public Task<List<VerificationRequest>> GetByStatusAsync(string status);
     }
 }

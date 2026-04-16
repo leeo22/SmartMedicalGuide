@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Data.Entities;
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
-    internal interface IAttachmentServices
+    public interface IAttachmentServices
     {
+        public Task<List<Attachment>> GetListAsync();
+        public Task<Attachment> GetByIDAsync(int id);
+        public Task<string> AddAsync(Attachment attachment);
+        public Task<string> EditAsync(Attachment attachment);
+        public Task<string> DeleteAsync(Attachment attachment);
+        //public Task<List<Attachment>> GetByUserIdAsync(int userId);
     }
 }

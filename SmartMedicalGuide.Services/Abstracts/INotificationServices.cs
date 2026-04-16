@@ -1,19 +1,16 @@
 ﻿using SmartMedicalGuide.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
     public interface INotificationServices
     {
-        public Task<List<Message>> GetMessagesListAsync();
-        public Task<string> AddAsync(Message message);
-        public Task<Message> GetMessageByIDAsync(int id);
-        public Task<string> EditAsync(Message message);
-        public Task<string> DeleteAsync(Message message);
-
+        public Task<List<Notification>> GetListAsync();
+        public Task<Notification> GetByIDAsync(int id);
+        public Task<string> AddAsync(Notification notification);
+        public Task<string> EditAsync(Notification notification);
+        public Task<string> DeleteAsync(Notification notification);
+        public Task<List<Notification>> GetByUserIdAsync(int userId);
+        public Task<List<Notification>> GetUnreadByUserIdAsync(int userId);
+        public Task<int> GetUnreadCountByUserIdAsync(int userId);
     }
 }
