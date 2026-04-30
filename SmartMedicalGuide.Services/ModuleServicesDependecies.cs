@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SmartMedicalGuide.Service.Abstracts;
+using SmartMedicalGuide.Service.Implementations;
 using SmartMedicalGuide.Services.Abstracts;
 using SmartMedicalGuide.Services.Implementations;
 
@@ -8,7 +10,9 @@ namespace SmartMedicalGuide.Services
     {
         public static IServiceCollection AddServicesDependecies(this IServiceCollection services)
         {
-            services.AddTransient<IRoleServices, RoleServices>();
+            //services.AddTransient<IRoleServices, RoleServices>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IAuthorizationService, AuthorizationService>();
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IUserSessionServices, UserSessionServices>();
             services.AddTransient<IPatientServices, PatientServices>();

@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Users.Commands.Models;
 using SmartMedicalGuide.Data.Entities.Identity;
-using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.Users.Commands.Handlers
 {
@@ -13,45 +14,78 @@ namespace SmartMedicalGuide.Core.Features.Users.Commands.Handlers
                                        IRequestHandler<DeleteUserCommand, Response<string>>
     {
         #region Fields
-        private readonly IUserServices _userServices;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         #endregion
         #region Constructors
-        public UserCommandHandler(IUserServices userServices, IMapper mapper)
+        public UserCommandHandler(UserManager<User> userManager, IMapper mapper)
         {
-            _userServices = userServices;
+            _userManager = userManager;
             _mapper = mapper;
         }
         #endregion
         #region Handels Functions
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user != null) return BadRequest<string>("email is ex");
+            var userByUserName = await _userManager.FindByNameAsync(request.UserName);
+            if (userByUserName != null) return BadRequest<string>("userName is Exist");
             // mapping between request and user
-            var userMapper = _mapper.Map<User>(request);
+            var identityUser = _mapper.Map<User>(request);
             //add
-            var result = await _userServices.AddAsync(userMapper);
+            var createResult = await _userManager.CreateAsync(identityUser, request.Password);
             //return response
-            if (result == "Success") return Created("Added Sussessfully");
-            else return BadRequest<string>();
+            if (!createResult.Succeeded)
+                return BadRequest<string>("Create faild");
+            await _userManager.AddToRoleAsync(identityUser, "User");
+            return Created("Success");
         }
 
         public async Task<Response<string>> Handle(EditUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userServices.GetUserByIDAsync(request.UserId);
-            if (user == null) return NotFound<string>("user is not found");
-            var userMapper = _mapper.Map<User>(request);
-            var result = await _userServices.EditAsync(userMapper);
-            if (result == "Success") return Success("Edited Sussessfully");
-            else return BadRequest<string>();
+
+            var oldUser = await _userManager.FindByIdAsync(request.Id.ToString());
+            if (oldUser == null) return NotFound<string>("user is not found");
+            var userMapper = _mapper.Map(request, oldUser);
+            //if username is Exist
+            var userByUserName = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == userMapper.UserName && x.Id != userMapper.Id);
+            //username is Exist
+            if (userByUserName != null) return BadRequest<string>("User is Exist");
+            //update
+            var result = await _userManager.UpdateAsync(userMapper);
+            //result is not success
+            if (!result.Succeeded) return BadRequest<string>("Edited faild");
+            return Success("Success");
         }
 
         public async Task<Response<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userServices.GetUserByIDAsync(request.Id);
+            var user = await _userManager.FindByIdAsync(request.Id.ToString());
             if (user == null) return NotFound<string>("user is not found");
-            var result = await _userServices.DeleteAsync(user);
-            if (result == "Success") return Deleted<string>($"Deleted Sussessfully {request.Id}");
-            else return BadRequest<string>();
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded) return BadRequest<string>("Edited faild");
+            return Success("");
+        }
+
+        public async Task<Response<string>> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
+        {
+            //get user
+            //check if user is exist
+            var user = await _userManager.FindByIdAsync(request.Id.ToString());
+            //if Not Exist notfound
+            if (user == null) return NotFound<string>();
+
+            //Change User Password
+            var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+            //var user1=await _userManager.HasPasswordAsync(user);
+            //await _userManager.RemovePasswordAsync(user);
+            //await _userManager.AddPasswordAsync(user, request.NewPassword);
+
+            //result
+            if (!result.Succeeded) return BadRequest<string>(result.Errors.FirstOrDefault().Description);
+            return Success((string)"Success");
+
         }
         #endregion
 

@@ -9,7 +9,8 @@ namespace SmartMedicalGuide.Infrastructure
     {
         public static IServiceCollection AddInfrastuctureDependecies(this IServiceCollection services)
         {
-            services.AddTransient<IRoleRepository, RoleRepository>();
+            //services.AddTransient<IRoleRepository, RoleRepository>();
+            services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IDoctorRepository, DoctorRepository>();
             services.AddTransient<ILabRepository, LabRepository>();

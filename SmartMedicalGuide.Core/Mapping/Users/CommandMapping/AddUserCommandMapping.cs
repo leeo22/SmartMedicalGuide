@@ -7,8 +7,10 @@ namespace SmartMedicalGuide.Core.Mapping.Users
     {
         public void AddUserCommandMapping()
         {
-            CreateMap<AddUserCommand, User>();
-            //.ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.RoleId));
+            CreateMap<AddUserCommand, User>()
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(srs => srs.FullName))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(srs => srs.Email));
+
         }
     }
 }

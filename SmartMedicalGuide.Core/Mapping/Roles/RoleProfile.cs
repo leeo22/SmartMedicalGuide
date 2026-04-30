@@ -6,10 +6,8 @@ namespace SmartMedicalGuide.Core.Mapping.Roles
     {
         public RoleProfile()
         {
-            AddRoleCommandMapping();
-            GetRoleByIDMapping();
-            GetAllRoleMapping();
-
+            GetRolesListMapping();
+            GetRoleByIdMapping();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartMedicalGuide.API.Base;
 using SmartMedicalGuide.Core.Features.Users.Commands.Models;
 using SmartMedicalGuide.Core.Features.Users.Queries.Models;
@@ -17,6 +18,7 @@ namespace SmartMedicalGuide.API.Controllers
             return Ok(response);
         }
         [HttpGet(Router.UserRouting.GetByID)]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUserByID([FromRoute] int id)
         {
             var response = await Mediator.Send(new GetUserByIDQuery(id));
@@ -28,8 +30,15 @@ namespace SmartMedicalGuide.API.Controllers
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
+        [Authorize]
         [HttpPut(Router.UserRouting.Edit)]
         public async Task<IActionResult> Edit([FromBody] EditUserCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return NewResult(response);
+        }
+        [HttpPut(Router.UserRouting.ChangePassword)]
+        public async Task<IActionResult> Edit([FromBody] ChangeUserPasswordCommand command)
         {
             var response = await Mediator.Send(command);
             return NewResult(response);

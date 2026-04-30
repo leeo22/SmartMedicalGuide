@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Features\Roles\Commands\Validatiors\**" />
-    <EmbeddedResource Remove="Features\Roles\Commands\Validatiors\**" />
-    <None Remove="Features\Roles\Commands\Validatiors\**" />
+    <Compile Remove="Features\Roles\**" />
+    <EmbeddedResource Remove="Features\Roles\**" />
+    <None Remove="Features\Roles\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,11 +24,11 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="MediatR" Version="14.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.26">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.26">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -36,11 +36,11 @@
 
 
   <ItemGroup>
+    <Folder Include="Features\Authentication\Queries\Validators\" />
     <Folder Include="Features\Payments\Commands\Validatiors\" />
     <Folder Include="Features\Payments\Queries\Handlers\" />
     <Folder Include="Features\Payments\Queries\Models\" />
     <Folder Include="Features\Payments\Queries\Results\" />
-    <Folder Include="Features\Roles\Commands\Validatiors\" />
     <Folder Include="Features\Specializations\Commands\Validatiors\" />
   </ItemGroup>
 

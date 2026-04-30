@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartMedicalGuide.API.Base;
 using SmartMedicalGuide.Core.Features.Doctors.Commands.Models;
 using SmartMedicalGuide.Core.Features.Doctors.Queries.Models;
@@ -8,6 +9,7 @@ namespace SmartMedicalGuide.API.Controllers
 {
 
     [ApiController]
+    [Authorize]
     public class DoctorController : AppControllerBase
     {
         [HttpGet(Router.DoctorRouting.List)]
