@@ -8,6 +8,12 @@
         public const string version = "V1";
         public const string Rule = root + "/" + version + "/";
 
+        public static class ChatSignalRRouting
+        {
+            public const string Prefix = Rule + "ChatSignalR/";
+            public const string CreateChat = Prefix + "CreateChat";
+            public const string SendMessage = Prefix + "SendMessage";
+        }
         public static class AppointmentHistoryRouting
         {
             public const string Prefix = Rule + "AppointmentHistory/";
@@ -68,13 +74,13 @@
         }
         public static class ChatRouting
         {
-            public const string Prefix = Rule + "Chat/";
-            public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
-            public const string Create = Prefix + "Create";
-            public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
-
+            private const string Root = "api/Chat";
+            public const string Create = Root + "/Create";
+            public const string Edit = Root + "/Edit";
+            public const string Delete = Root + "/Delete/{id}";
+            public const string List = Root + "/List";
+            public const string GetById = Root + "/GetById/{id}";
+            public const string GetByPatientDoctor = Root + "/GetByPatientDoctor";
         }
         public static class ClinicRouting
         {
@@ -170,14 +176,26 @@
         }
         public static class MessageRouting
         {
-            public const string Prefix = Rule + "Message/";
-            public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
-            public const string Create = Prefix + "Create";
-            public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
-
+            private const string Root = "api/Message";
+            public const string Create = Root + "/Create";
+            public const string Edit = Root + "/Edit";
+            public const string Delete = Root + "/Delete/{id}";
+            public const string List = Root + "/List";
+            public const string GetById = Root + "/GetById/{id}";
+            public const string GetByChatId = Root + "/GetByChatId/{chatId}";
+            public const string MarkAsRead = Root + "/MarkAsRead/{id}";
         }
+        public static class ChatParticipantRouting
+        {
+            private const string Root = "api/ChatParticipant";
+            public const string AddParticipant = Root + "/AddParticipant";
+            public const string RemoveParticipant = Root + "/RemoveParticipant";
+            public const string UpdateTypingStatus = Root + "/UpdateTypingStatus";
+            public const string GetByChatId = Root + "/GetByChatId/{chatId}";
+            public const string GetUserChats = Root + "/GetUserChats/{userId}";
+            public const string GetMyChats = Root + "/GetMyChats";
+        }
+
         public static class NotificationRouting
         {
             public const string Prefix = Rule + "Notification/";
