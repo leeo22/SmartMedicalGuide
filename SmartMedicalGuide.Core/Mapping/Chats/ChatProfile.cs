@@ -10,6 +10,7 @@ namespace SmartMedicalGuide.Core.Mapping.Chats
             EditChatCommandMapping();
             GetChatByIDMapping();
             GetChatListMapping();
+            MessageDtoMapping();
         }
     }
 }

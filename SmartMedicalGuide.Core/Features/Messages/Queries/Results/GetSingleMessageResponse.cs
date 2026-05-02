@@ -9,5 +9,22 @@
         public string? SenderEmail { get; set; }
         public string Content { get; set; }
         public DateTime SentAt { get; set; }
+
+        // ✅ الحقول الجديدة
+        public bool IsRead { get; set; }
+        public DateTime? ReadAt { get; set; }
+        public int? ReplyToMessageId { get; set; }
+        public MessageDto? ReplyToMessage { get; set; }  // الرسالة التي تم الرد عليها
+        public string? AttachmentUrl { get; set; }
+        public bool IsDeleted { get; set; }
+    }
+
+    public class MessageDto
+    {
+        public int MessageId { get; set; }
+        public int SenderId { get; set; }
+        public string? SenderName { get; set; }
+        public string Content { get; set; }
+        public DateTime SentAt { get; set; }
     }
 }

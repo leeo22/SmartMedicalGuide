@@ -14,7 +14,12 @@ namespace SmartMedicalGuide.Core.Mapping.Chats
                 .ForMember(dest => dest.DoctorId, opt => opt.MapFrom(src => src.DoctorId))
                 .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor != null && src.Doctor.User != null ? src.Doctor.User.FullName : null))
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
-                .ForMember(dest => dest.MessagesCount, opt => opt.MapFrom(src => src.Messages != null ? src.Messages.Count : 0));
+                .ForMember(dest => dest.MessagesCount, opt => opt.MapFrom(src => src.Messages != null ? src.Messages.Count(m => !m.IsDeleted) : 0))
+                .ForMember(dest => dest.ChatName, opt => opt.MapFrom(src => src.ChatName))
+                .ForMember(dest => dest.IsGroup, opt => opt.MapFrom(src => src.IsGroup))
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
+                .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.LastMessage))
+                .ForMember(dest => dest.LastMessageAt, opt => opt.MapFrom(src => src.LastMessageAt));
         }
     }
 }

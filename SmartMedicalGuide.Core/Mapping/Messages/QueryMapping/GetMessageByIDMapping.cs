@@ -14,7 +14,13 @@ namespace SmartMedicalGuide.Core.Mapping.Messages
                 .ForMember(dest => dest.SenderName, opt => opt.MapFrom(src => src.Sender != null ? src.Sender.FullName : null))
                 .ForMember(dest => dest.SenderEmail, opt => opt.MapFrom(src => src.Sender != null ? src.Sender.Email : null))
                 .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
-                .ForMember(dest => dest.SentAt, opt => opt.MapFrom(src => src.SentAt));
+                .ForMember(dest => dest.SentAt, opt => opt.MapFrom(src => src.SentAt))
+                .ForMember(dest => dest.IsRead, opt => opt.MapFrom(src => src.IsRead))
+                .ForMember(dest => dest.ReadAt, opt => opt.MapFrom(src => src.ReadAt))
+                .ForMember(dest => dest.ReplyToMessageId, opt => opt.MapFrom(src => src.ReplyToMessageId))
+                .ForMember(dest => dest.AttachmentUrl, opt => opt.MapFrom(src => src.AttachmentUrl))
+                .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsDeleted))
+                .ForMember(dest => dest.ReplyToMessage, opt => opt.MapFrom(src => src.ReplyToMessage));
         }
     }
 }

@@ -8,11 +8,15 @@ namespace SmartMedicalGuide.Core.Features.Chats.Queries.Models
     {
         public int? PatientId { get; set; }
         public int? DoctorId { get; set; }
+        public int? CurrentUserId { get; set; }  // ✅ أضف هذا لحساب الرسائل غير المقروءة
+
         public GetChatListQuery() { }
-        public GetChatListQuery(int? patientId, int? doctorId)
+
+        public GetChatListQuery(int? patientId, int? doctorId, int? currentUserId = null)
         {
             PatientId = patientId;
             DoctorId = doctorId;
+            CurrentUserId = currentUserId;
         }
     }
 }

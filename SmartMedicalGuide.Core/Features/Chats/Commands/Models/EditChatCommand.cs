@@ -9,5 +9,10 @@ namespace SmartMedicalGuide.Core.Features.Chats.Commands.Models
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        // ✅ الحقول الجديدة
+        public string ChatName { get; set; }
+        public bool IsGroup { get; set; }
+        public bool IsActive { get; set; }
     }
 }

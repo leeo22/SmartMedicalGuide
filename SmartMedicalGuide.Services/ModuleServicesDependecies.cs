@@ -33,6 +33,7 @@ namespace SmartMedicalGuide.Services
             services.AddTransient<IAuditLogServices, AuditLogServices>();
             services.AddTransient<ITransactionServices, TransactionServices>();
             services.AddTransient<IChatServices, ChatServices>();
+            services.AddScoped<IChatParticipantServices, ChatParticipantServices>();
             services.AddTransient<ILabServiceServices, LabServiceServices>();
             services.AddTransient<IMedicalReportServices, MedicalReportServices>();
             services.AddTransient<IMessageServices, MessageServices>();

@@ -9,18 +9,18 @@ namespace SmartMedicalGuide.Infrastructure.Context
 {
     public class MedicalGuideDbContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        // مُنشئ فارغ لأدوات التصميم
+
         public MedicalGuideDbContext()
         {
         }
 
-        // مُنشئ رئيسي للتطبيق
+
         public MedicalGuideDbContext(DbContextOptions<MedicalGuideDbContext> options)
             : base(options)
         {
         }
 
-        // تكوين قاعدة البيانات لوقت التصميم
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -29,7 +29,7 @@ namespace SmartMedicalGuide.Infrastructure.Context
             }
         }
 
-        // DbSets
+
         public DbSet<User> User { get; set; }
         public DbSet<UserRefreshToken> UserRefreshToken { get; set; }
         public DbSet<Patient> Patients { get; set; }
@@ -47,6 +47,7 @@ namespace SmartMedicalGuide.Infrastructure.Context
         public DbSet<MedicalReport> MedicalReports { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<ChatParticipant> ChatParticipants { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Notification> Notifications { get; set; }

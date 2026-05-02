@@ -2,6 +2,7 @@
 using SmartMedicalGuide.Infrastructure.Abstracts;
 using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
 using SmartMedicalGuide.Infrastructure.Reposistories;
+using SmartMedicalGuide.Infrastructure.Repositories;
 
 namespace SmartMedicalGuide.Infrastructure
 {
@@ -16,6 +17,7 @@ namespace SmartMedicalGuide.Infrastructure
             services.AddTransient<ILabRepository, LabRepository>();
             services.AddTransient<IPatientRepository, PatientRepository>();
             services.AddTransient<IDoctorAppointmentRepository, DoctorAppointmentRepository>();
+            services.AddScoped<IChatParticipantRepository, ChatParticipantRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IClinicRepository, ClinicRepository>();
             services.AddTransient<ILabAppointmentRepository, LabAppointmentRepository>();

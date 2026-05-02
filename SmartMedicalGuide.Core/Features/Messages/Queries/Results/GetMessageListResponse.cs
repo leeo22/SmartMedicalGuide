@@ -8,5 +8,12 @@
         public string? SenderName { get; set; }
         public string Content { get; set; }
         public DateTime SentAt { get; set; }
+
+        // ✅ الحقول الجديدة
+        public bool IsRead { get; set; }
+        public DateTime? ReadAt { get; set; }
+        public int? ReplyToMessageId { get; set; }
+        public string? AttachmentUrl { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

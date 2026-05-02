@@ -218,11 +218,27 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChatId"));
 
+                    b.Property<string>("ChatName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsGroup")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastMessageAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("PatientId")
                         .HasColumnType("int");
@@ -231,9 +247,55 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     b.HasIndex("DoctorId");
 
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("LastMessageAt");
+
                     b.HasIndex("PatientId");
 
                     b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.ChatParticipant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ChatId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMuted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTyping")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("JoinedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastSeenAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("MutedUntil")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("ChatId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("ChatParticipants");
                 });
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Clinic", b =>
@@ -703,11 +765,26 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageId"));
 
+                    b.Property<string>("AttachmentUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ReadAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReplyToMessageId")
+                        .HasColumnType("int");
 
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
@@ -719,7 +796,13 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     b.HasIndex("ChatId");
 
+                    b.HasIndex("IsRead");
+
+                    b.HasIndex("ReplyToMessageId");
+
                     b.HasIndex("SenderId");
+
+                    b.HasIndex("SentAt");
 
                     b.ToTable("Messages");
                 });
@@ -1206,6 +1289,25 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.ChatParticipant", b =>
+                {
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Chat", "Chat")
+                        .WithMany("Participants")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Clinic", b =>
                 {
                     b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", "Doctor")
@@ -1329,6 +1431,11 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Message", "ReplyToMessage")
+                        .WithMany()
+                        .HasForeignKey("ReplyToMessageId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("SmartMedicalGuide.Data.Entities.Identity.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
@@ -1336,6 +1443,8 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Chat");
+
+                    b.Navigation("ReplyToMessage");
 
                     b.Navigation("Sender");
                 });
@@ -1470,6 +1579,8 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Chat", b =>
                 {
                     b.Navigation("Messages");
+
+                    b.Navigation("Participants");
                 });
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Doctor", b =>

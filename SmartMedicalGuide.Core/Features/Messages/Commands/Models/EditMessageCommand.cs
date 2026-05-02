@@ -10,5 +10,11 @@ namespace SmartMedicalGuide.Core.Features.Messages.Commands.Models
         public int SenderId { get; set; }
         public string Content { get; set; }
         public DateTime SentAt { get; set; }
+
+        // ✅ الحقول الجديدة
+        public bool IsRead { get; set; }
+        public bool IsDeleted { get; set; }  // حذف منطقي
+        public int? ReplyToMessageId { get; set; }
+        public string? AttachmentUrl { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SmartMedicalGuide.API.Hubs;
 using SmartMedicalGuide.Core;
 using SmartMedicalGuide.Core.MiddleWare;
 using SmartMedicalGuide.Data.Entities.Identity;
@@ -16,12 +17,24 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 builder.Services.AddDbContext<MedicalGuideDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-
+#region CORS 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+#endregion
 #region Dependencies Injection
 builder.Services.AddInfrastuctureDependecies()
                 .AddServicesDependecies()
@@ -29,6 +42,7 @@ builder.Services.AddInfrastuctureDependecies()
                 .AddServicesRegisteration(builder.Configuration);
 #endregion
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
@@ -37,6 +51,14 @@ using (var scope = app.Services.CreateScope())
     await UserSeeder.SeedAsync(userManager);
 }
 
+
+#region Map Hubs
+app.MapHub<ChatHub>("/chatHub");
+#endregion
+
+#region Use CORS
+app.UseCors("AllowAll");
+#endregion
 
 
 // Configure the HTTP request pipeline.
