@@ -21,7 +21,7 @@ namespace SmartMedicalGuide.Services.Implementations
         #region Handels Functions
         public async Task<List<User>> GetUsersListAsync()
         {
-            return await _userRepository.GetUsersListAsync();
+            return await _userRepository.GetTableAsTracking.To;
         }
         public async Task<string> AddAsync(User user)
         {
@@ -52,8 +52,6 @@ namespace SmartMedicalGuide.Services.Implementations
         public async Task<User?> GetUserByIDAsync(int id)
         {
             var user = _userRepository.GetByIdAsync()
-                                      //.Include(x => x.Role)
-
                                       .FirstOrDefault();
             return user;
         }
