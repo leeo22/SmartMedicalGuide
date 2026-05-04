@@ -1,12 +1,15 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using AutoMapper;
 
-//namespace SmartMedicalGuide.Core.Mapping.Chats
-//{
-//    internal class AuditLogProfile
-//    {
-//    }
-//}
+namespace SmartMedicalGuide.Core.Mapping.DoctorSchedules
+{
+    public partial class DoctorScheduleProfile : Profile
+    {
+        public DoctorScheduleProfile()
+        {
+            AddDoctorScheduleCommandMapping();
+            EditDoctorScheduleCommandMapping();
+            GetDoctorScheduleListResponseMapping();
+            GetSingleDoctorScheduleResponseMapping();
+        }
+    }
+}

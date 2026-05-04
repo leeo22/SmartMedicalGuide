@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.DoctorSchedules.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.DoctorSchedules.Queries.Models
 {
-    internal class GetDoctorScheduleListQuery
+    public class GetDoctorScheduleListQuery : IRequest<Response<List<GetDoctorScheduleListResponse>>>
     {
+        public int? DoctorId { get; set; }
+        public string? DayOfWeek { get; set; }
     }
 }

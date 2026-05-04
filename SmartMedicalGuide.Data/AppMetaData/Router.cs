@@ -166,12 +166,17 @@
         public static class DoctorScheduleRouting
         {
             public const string Prefix = Rule + "DoctorSchedule/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Queries
+            public const string GetAvailableSlots = Prefix + "GetAvailableSlots";
+            public const string CheckAvailability = Prefix + "CheckAvailability";
         }
         public static class FavoriteRouting
         {

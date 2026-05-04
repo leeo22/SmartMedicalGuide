@@ -4,13 +4,20 @@ namespace SmartMedicalGuide.Services.Abstracts
 {
     public interface IDoctorScheduleServices
     {
-        public Task<List<DoctorSchedule>> GetListAsync();
-        public Task<DoctorSchedule> GetByIDAsync(int id);
-        public Task<string> AddAsync(DoctorSchedule doctorSchedule);
-        public Task<string> EditAsync(DoctorSchedule doctorSchedule);
-        public Task<string> DeleteAsync(DoctorSchedule doctorSchedule);
-        public Task<List<DoctorSchedule>> GetByDoctorIdAsync(int doctorId);
-        public Task<List<DoctorSchedule>> GetByDoctorIdAndDayAsync(int doctorId, string dayOfWeek);
-        public Task<bool> IsTimeSlotAvailableAsync(int doctorId, string dayOfWeek, DateTime startTime, DateTime endTime);
+        #region Basic CRUD - 5 Functions
+        Task<List<DoctorSchedule>> GetListAsync();
+        Task<DoctorSchedule?> GetByIDAsync(int id);
+        Task<string> AddAsync(DoctorSchedule schedule);
+        Task<string> EditAsync(DoctorSchedule schedule);
+        Task<string> DeleteAsync(DoctorSchedule schedule);
+        #endregion
+
+        #region Additional Important Functions - 5 Functions
+        Task<List<DoctorSchedule>> GetByDoctorIdAsync(int doctorId);
+        Task<List<DoctorSchedule>> GetByDayOfWeekAsync(string dayOfWeek);
+        Task<DoctorSchedule?> GetDoctorScheduleByDayAsync(int doctorId, string dayOfWeek);
+        Task<List<TimeSpan>> GetDoctorAvailableSlotsAsync(int doctorId, DateTime date);
+        Task<bool> CheckDoctorAvailableAsync(int doctorId, DateTime dateTime);
+        #endregion
     }
 }

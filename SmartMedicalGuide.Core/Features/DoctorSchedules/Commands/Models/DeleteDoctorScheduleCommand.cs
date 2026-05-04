@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.DoctorSchedules.Commands.Models
 {
-    internal class DeleteDoctorScheduleCommand
+    public class DeleteDoctorScheduleCommand : IRequest<Response<string>>
     {
+        public int Id { get; set; }
+        public DeleteDoctorScheduleCommand(int id) => Id = id;
     }
 }
