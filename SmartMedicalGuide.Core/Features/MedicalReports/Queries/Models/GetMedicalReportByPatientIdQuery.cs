@@ -4,7 +4,8 @@ using SmartMedicalGuide.Core.Features.MedicalReports.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.MedicalReports.Queries.Models
 {
-    public class GetMedicalReportListQuery : IRequest<Response<List<GetMedicalReportListResponse>>>
+    public class GetMedicalReportByPatientIdQuery : IRequest<Response<List<GetMedicalReportListResponse>>>
     {
+        public int PatientId { get; set; }
     }
 }

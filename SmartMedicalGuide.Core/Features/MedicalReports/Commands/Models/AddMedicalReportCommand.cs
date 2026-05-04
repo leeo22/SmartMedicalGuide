@@ -7,9 +7,8 @@ namespace SmartMedicalGuide.Core.Features.MedicalReports.Commands.Models
     {
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
-        public int LabId { get; set; }
-        public string FilePath { get; set; }
-        public string ReportType { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string? ReportType { get; set; }
+        public string? Description { get; set; }
+        public DateTime ReportDate { get; set; } = DateTime.UtcNow;
     }
 }

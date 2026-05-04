@@ -8,8 +8,8 @@ namespace SmartMedicalGuide.Core.Mapping.MedicalReports
         {
             AddMedicalReportCommandMapping();
             EditMedicalReportCommandMapping();
-            GetMedicalReportByIDMapping();
-            GetMedicalReportListMapping();
+            GetMedicalReportListResponseMapping();
+            GetPatientMedicalHistoryResponseMapping();
         }
     }
 }

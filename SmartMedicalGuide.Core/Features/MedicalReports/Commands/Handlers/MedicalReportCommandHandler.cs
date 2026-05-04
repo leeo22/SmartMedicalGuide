@@ -10,39 +10,77 @@ namespace SmartMedicalGuide.Core.Features.MedicalReports.Commands.Handlers
     public class MedicalReportCommandHandler : ResponseHandler,
         IRequestHandler<AddMedicalReportCommand, Response<string>>,
         IRequestHandler<EditMedicalReportCommand, Response<string>>,
-        IRequestHandler<DeleteMedicalReportCommand, Response<string>>
+        IRequestHandler<UploadReportFileCommand, Response<string>>,
+        IRequestHandler<DeleteReportFileCommand, Response<string>>,
+        IRequestHandler<UpdateReportFileCommand, Response<string>>
     {
-        private readonly IMedicalReportServices _medicalReportServices;
+        private readonly IMedicalReportServices _reportServices;
         private readonly IMapper _mapper;
 
-        public MedicalReportCommandHandler(IMedicalReportServices medicalReportServices, IMapper mapper)
+        public MedicalReportCommandHandler(IMedicalReportServices reportServices, IMapper mapper)
         {
-            _medicalReportServices = medicalReportServices;
+            _reportServices = reportServices;
             _mapper = mapper;
         }
 
         public async Task<Response<string>> Handle(AddMedicalReportCommand request, CancellationToken cancellationToken)
         {
-            var resultMapper = _mapper.Map<MedicalReport>(request);
-            var result = await _medicalReportServices.AddAsync(resultMapper);
-            return result == "Success" ? Created("Medical report added successfully") : BadRequest<string>();
+            var report = _mapper.Map<MedicalReport>(request);
+            var result = await _reportServices.AddAsync(report);
+
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Created("Medical report added successfully");
         }
 
         public async Task<Response<string>> Handle(EditMedicalReportCommand request, CancellationToken cancellationToken)
         {
-            var result = await _medicalReportServices.GetByIDAsync(request.ReportId);
-            if (result == null) return NotFound<string>("Medical report not found");
-            var resultMapper = _mapper.Map<MedicalReport>(request);
-            var result1 = await _medicalReportServices.EditAsync(resultMapper);
-            return result1 == "Success" ? Success("Medical report edited successfully") : BadRequest<string>();
+            var report = _mapper.Map<MedicalReport>(request);
+            var result = await _reportServices.EditAsync(report);
+
+            if (result == "Report not found")
+                return NotFound<string>("Report not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success("Medical report edited successfully");
         }
 
-        public async Task<Response<string>> Handle(DeleteMedicalReportCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(UploadReportFileCommand request, CancellationToken cancellationToken)
         {
-            var result = await _medicalReportServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<string>("Medical report not found");
-            var result1 = await _medicalReportServices.DeleteAsync(result);
-            return result1 == "Success" ? Deleted<string>($"Medical report deleted successfully: {request.Id}") : BadRequest<string>();
+            var result = await _reportServices.UploadReportFileAsync(request.ReportId, request.File);
+
+            if (result == "Report not found")
+                return NotFound<string>("Report not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success("File uploaded successfully");
+        }
+
+        public async Task<Response<string>> Handle(DeleteReportFileCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _reportServices.DeleteReportFileAsync(request.ReportId);
+
+            if (result == "Report not found")
+                return NotFound<string>("Report not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success("File deleted successfully");
+        }
+
+        public async Task<Response<string>> Handle(UpdateReportFileCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _reportServices.UpdateReportFileAsync(request.ReportId, request.File);
+
+            if (result == "Report not found")
+                return NotFound<string>("Report not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success("File updated successfully");
         }
     }
 }

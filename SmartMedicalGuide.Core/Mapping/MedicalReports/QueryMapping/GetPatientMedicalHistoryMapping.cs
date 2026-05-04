@@ -5,10 +5,9 @@ namespace SmartMedicalGuide.Core.Mapping.MedicalReports
 {
     public partial class MedicalReportProfile
     {
-        public void GetMedicalReportListResponseMapping()
+        public void GetPatientMedicalHistoryResponseMapping()
         {
-            CreateMap<MedicalReport, GetMedicalReportListResponse>()
-                .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.FullName : null))
+            CreateMap<MedicalReport, GetPatientMedicalHistoryResponse>()
                 .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor != null && src.Doctor.User != null ? src.Doctor.User.FullName : null));
         }
     }

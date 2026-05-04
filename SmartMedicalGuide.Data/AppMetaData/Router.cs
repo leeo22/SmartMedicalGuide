@@ -216,12 +216,25 @@
         public static class MedicalReportRouting
         {
             public const string Prefix = Rule + "MedicalReport/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
 
+            // Additional Queries
+            public const string GetByPatientId = Prefix + "GetByPatientId/{patientId}";
+            public const string GetByDoctorId = Prefix + "GetByDoctorId/{doctorId}";
+            public const string GetByReportType = Prefix + "GetByReportType/{reportType}";
+            public const string GetByDateRange = Prefix + "GetByDateRange";
+            public const string GetPatientMedicalHistory = Prefix + "GetPatientMedicalHistory/{patientId}";
+            public const string GetStatistics = Prefix + "GetStatistics";
+
+            // File Operations
+            public const string UploadFile = Prefix + "UploadFile";
+            public const string DownloadFile = Prefix + "DownloadFile/{reportId}";
+            public const string DeleteFile = Prefix + "DeleteFile/{reportId}";
+            public const string UpdateFile = Prefix + "UpdateFile";
         }
         public static class MessageRouting
         {
