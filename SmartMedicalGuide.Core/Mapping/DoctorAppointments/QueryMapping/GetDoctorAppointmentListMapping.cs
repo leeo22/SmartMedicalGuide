@@ -5,24 +5,11 @@ namespace SmartMedicalGuide.Core.Mapping.DoctorAppointments
 {
     public partial class DoctorAppointmentProfile
     {
-        public void GetDoctorAppointmentListMapping()
+        public void GetDoctorAppointmentListResponseMapping()
         {
-            CreateMap<DoctorAppointment, GetDoctorAppointmentListRespones>()
-                .ForMember(dest => dest.DoctorName, opt => opt
-                    .MapFrom(src => src.Doctor.User.FullName)) // الاسم من جدول User للدكتور
-                .ForMember(dest => dest.AppointmentDate, opt => opt
-                    .MapFrom(src => src.AppointmentDate))
-                .ForMember(dest => dest.Price, opt => opt
-                    .MapFrom(src => src.Doctor.ConsultationPrice))
-                .ForMember(dest => dest.PaymentStatus, opt => opt
-                    .MapFrom(src => src.Payment))
-                .ForMember(dest => dest.Status, opt => opt
-                    .MapFrom(src => src.Status));
+            CreateMap<DoctorAppointment, GetDoctorAppointmentListResponse>()
+                .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.FullName : src.FullName))
+                .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor != null && src.Doctor.User != null ? src.Doctor.User.FullName : null));
         }
-
-
-
-
     }
 }
-

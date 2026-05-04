@@ -7,51 +7,103 @@ using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.DoctorAppointments.Commands.Handlers
 {
-    public class DoctorAppointmentHandler : ResponseHandler,
-                                            IRequestHandler<AddDoctorAppointmentCommand, Response<string>>,
-                                            IRequestHandler<EditDoctorAppointmentCommand, Response<string>>,
-                                            IRequestHandler<DeleteDoctorAppointmentCommand, Response<string>>
+    public class DoctorAppointmentCommandHandler : ResponseHandler,
+        IRequestHandler<AddDoctorAppointmentCommand, Response<string>>,
+        IRequestHandler<EditDoctorAppointmentCommand, Response<string>>,
+        IRequestHandler<DeleteDoctorAppointmentCommand, Response<string>>
     {
-        #region Fields
+        private readonly IDoctorAppointmentServices _appointmentServices;
         private readonly IMapper _mapper;
-        private readonly IDoctorAppointmentServices _doctorAppointmentServices;
-        #endregion
-        #region Constructors
-        public DoctorAppointmentHandler(IMapper mapper,
-                                        IDoctorAppointmentServices doctorAppointmentServices)
+
+        public DoctorAppointmentCommandHandler(IDoctorAppointmentServices appointmentServices, IMapper mapper)
         {
+            _appointmentServices = appointmentServices;
             _mapper = mapper;
-            _doctorAppointmentServices = doctorAppointmentServices;
         }
-        #endregion
-        #region Handels Functions
+
         public async Task<Response<string>> Handle(AddDoctorAppointmentCommand request, CancellationToken cancellationToken)
         {
-            var doctorAppointmentMapper = _mapper.Map<DoctorAppointment>(request);
-            var result = await _doctorAppointmentServices.AddAsync(doctorAppointmentMapper);
-            if (result == "Success") return Created("Added Sussessfully");
-            else return BadRequest<string>();
+            var appointment = _mapper.Map<DoctorAppointment>(request);
+            var result = await _appointmentServices.AddAsync(appointment);
+
+            if (result != "Success")
+                return BadRequest<string>("Failed to add appointment");
+
+            return Created("Appointment added successfully");
         }
 
         public async Task<Response<string>> Handle(EditDoctorAppointmentCommand request, CancellationToken cancellationToken)
         {
-            var appointment = await _doctorAppointmentServices.GetDoctorAppointmentByIDAsync(request.DoctorId);
-            if (appointment == null) return NotFound<string>("user is not found");
-            var doctorAppointmentMapper = _mapper.Map<DoctorAppointment>(request);
-            var result = await _doctorAppointmentServices.EditAsync(doctorAppointmentMapper);
-            if (result == "Success") return Success("Edited Sussessfully");
-            else return BadRequest<string>();
+            var appointment = _mapper.Map<DoctorAppointment>(request);
+            var result = await _appointmentServices.EditAsync(appointment);
+
+            if (result == "Appointment not found")
+                return NotFound<string>("Appointment not found");
+            if (result != "Success")
+                return BadRequest<string>("Failed to edit appointment");
+
+            return Success("Appointment edited successfully");
         }
 
         public async Task<Response<string>> Handle(DeleteDoctorAppointmentCommand request, CancellationToken cancellationToken)
         {
-            var appointment = await _doctorAppointmentServices.GetDoctorAppointmentByIDAsync(request.Id);
-            if (appointment == null) return NotFound<string>("user is not found");
-            var result = await _doctorAppointmentServices.DeleteAsync(appointment);
-            if (result == "Success") return Deleted<string>($"Deleted Sussessfully {request.Id}");
-            else return BadRequest<string>();
+            var appointment = await _appointmentServices.GetByIDAsync(request.Id);
+            if (appointment == null)
+                return NotFound<string>("Appointment not found");
+
+            var result = await _appointmentServices.DeleteAsync(appointment);
+            return result == "Success" ? Deleted<string>("Appointment deleted successfully") : BadRequest<string>("Failed to delete appointment");
+        }
+        #region Additional Command Handlers
+        public async Task<Response<string>> Handle(CancelAppointmentCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _appointmentServices.CancelAppointmentAsync(
+                request.AppointmentId, request.CancellationReason, request.RescheduledByUserId);
+
+            if (result == "Appointment not found")
+                return NotFound<string>("Appointment not found");
+            if (result != "Success")
+                return BadRequest<string>("Failed to cancel appointment");
+
+            return Success("Appointment cancelled successfully");
+        }
+
+        public async Task<Response<string>> Handle(ConfirmAppointmentCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _appointmentServices.ConfirmAppointmentAsync(request.AppointmentId);
+
+            if (result == "Appointment not found")
+                return NotFound<string>("Appointment not found");
+            if (result != "Success")
+                return BadRequest<string>("Failed to confirm appointment");
+
+            return Success("Appointment confirmed successfully");
+        }
+
+        public async Task<Response<string>> Handle(CompleteAppointmentCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _appointmentServices.CompleteAppointmentAsync(request.AppointmentId);
+
+            if (result == "Appointment not found")
+                return NotFound<string>("Appointment not found");
+            if (result != "Success")
+                return BadRequest<string>("Failed to complete appointment");
+
+            return Success("Appointment completed successfully");
+        }
+
+        public async Task<Response<string>> Handle(RescheduleAppointmentCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _appointmentServices.RescheduleAppointmentAsync(
+                request.AppointmentId, request.NewAppointmentDate, request.Reason, request.RescheduledByUserId);
+
+            if (result == "Appointment not found")
+                return NotFound<string>("Appointment not found");
+            if (result != "Success")
+                return BadRequest<string>("Failed to reschedule appointment");
+
+            return Success("Appointment rescheduled successfully");
         }
         #endregion
-
     }
 }

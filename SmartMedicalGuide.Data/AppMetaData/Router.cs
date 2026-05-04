@@ -136,13 +136,32 @@
         }
         public static class DoctorAppointmentRouting
         {
+            // Additional Queries
+            public const string GetByDoctorId = Prefix + "GetByDoctorId/{doctorId}";
+            public const string GetByPatientId = Prefix + "GetByPatientId/{patientId}";
+            public const string GetByDate = Prefix + "GetByDate";
+            public const string GetByStatus = Prefix + "GetByStatus/{status}";
+            public const string GetDoctorUpcoming = Prefix + "GetDoctorUpcoming/{doctorId}";
+            public const string GetPatientUpcoming = Prefix + "GetPatientUpcoming/{patientId}";
+            public const string GetDoctorToday = Prefix + "GetDoctorToday/{doctorId}";
+            public const string GetByDateRange = Prefix + "GetByDateRange";
+            public const string GetCount = Prefix + "GetCount";
+            public const string CheckAvailability = Prefix + "CheckAvailability";
+            public const string GetReport = Prefix + "GetReport";
+
+            // Additional Commands
+            public const string Cancel = Prefix + "Cancel";
+            public const string Confirm = Prefix + "Confirm";
+            public const string Complete = Prefix + "Complete";
+            public const string Reschedule = Prefix + "Reschedule";
             public const string Prefix = Rule + "DoctorAppointment/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
-
+            public const string Delete = Prefix + "Delete/{id}";
         }
         public static class DoctorScheduleRouting
         {

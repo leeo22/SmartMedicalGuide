@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SmartMedicalGuide.Data.Entities.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -32,6 +34,18 @@ namespace SmartMedicalGuide.Data.Entities
         public DateTime? NewAppointmentDate { get; set; }
 
         public string? PostponeReason { get; set; }
+        // Soft Delete
+        public bool IsDeleted { get; set; } = false;
+
+        // سبب الإلغاء (اختياري)
+        public string? CancellationReason { get; set; }
+
+        // معرف المستخدم الذي قام بإعادة الجدولة (Admin أو Doctor أو Patient)
+        public int? RescheduledByUserId { get; set; }
+
+        // Navigation Property للمستخدم الذي قام بإعادة الجدولة
+        [ForeignKey("RescheduledByUserId")]
+        public virtual User? RescheduledByUser { get; set; }
 
         public bool IsPostponed { get; set; } = false;
 

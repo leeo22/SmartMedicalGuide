@@ -4,9 +4,8 @@ using SmartMedicalGuide.Core.Features.DoctorAppointments.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.DoctorAppointments.Queries.Models
 {
-    public class GetDoctorAppointmentByIdQuery : IRequest<Response<GetSingleDoctorAppointmentResponse>>
+    public class GetDoctorAppointmentsByDateQuery : IRequest<Response<List<GetDoctorAppointmentListResponse>>>
     {
-        public int Id { get; set; }
-        public GetDoctorAppointmentByIdQuery(int id) => Id = id;
+        public DateTime Date { get; set; }
     }
 }
