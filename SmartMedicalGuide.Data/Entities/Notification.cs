@@ -15,6 +15,28 @@ namespace SmartMedicalGuide.Data.Entities
         public string? Message { get; set; }
         public bool IsRead { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        // حذف منطقي
+        public bool IsDeleted { get; set; } = false;
+
+        // نوع الإشعار (Appointment, Payment, Report, System, Message)
+        [MaxLength(50)]
+        public string? NotificationType { get; set; }
+
+        // معرف الكيان المرتبط (مثلاً AppointmentId)
+        public int? RelatedEntityId { get; set; }
+
+        // نوع الكيان المرتبط (DoctorAppointment, Payment, MedicalReport)
+        [MaxLength(100)]
+        public string? RelatedEntityType { get; set; }
+
+        // رابط الصورة الرمزية للإشعار
+        [MaxLength(500)]
+        public string? ImageUrl { get; set; }
+
+        // الرابط الذي يفتح عند النقر على الإشعار
+        [MaxLength(500)]
+        public string? ActionUrl { get; set; }
     }
 
 }

@@ -4,13 +4,20 @@ namespace SmartMedicalGuide.Services.Abstracts
 {
     public interface INotificationServices
     {
-        public Task<List<Notification>> GetListAsync();
-        public Task<Notification> GetByIDAsync(int id);
-        public Task<string> AddAsync(Notification notification);
-        public Task<string> EditAsync(Notification notification);
-        public Task<string> DeleteAsync(Notification notification);
-        public Task<List<Notification>> GetByUserIdAsync(int userId);
-        public Task<List<Notification>> GetUnreadByUserIdAsync(int userId);
-        public Task<int> GetUnreadCountByUserIdAsync(int userId);
+        #region Basic CRUD - 5 Functions
+        Task<List<Notification>> GetListAsync();
+        Task<Notification?> GetByIDAsync(int id);
+        Task<string> AddAsync(Notification notification);
+        Task<string> EditAsync(Notification notification);
+        Task<string> DeleteAsync(Notification notification);
+        #endregion
+
+        #region Additional Important Functions - 5 Functions
+        Task<List<Notification>> GetByUserIdAsync(int userId);
+        Task<List<Notification>> GetUnreadByUserIdAsync(int userId);
+        Task<int> GetUnreadCountAsync(int userId);
+        Task<bool> MarkAsReadAsync(int notificationId);
+        Task<bool> MarkAllAsReadAsync(int userId);
+        #endregion
     }
 }

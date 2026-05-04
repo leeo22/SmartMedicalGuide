@@ -4,9 +4,9 @@ using SmartMedicalGuide.Core.Features.Notifications.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Notifications.Queries.Models
 {
-    public class GetNotificationByIDQuery : IRequest<Response<GetSingleNotificationResponse>>
+    public class GetNotificationByIdQuery : IRequest<Response<GetSingleNotificationResponse>>
     {
         public int Id { get; set; }
-        public GetNotificationByIDQuery(int id) => Id = id;
+        public GetNotificationByIdQuery(int id) => Id = id;
     }
 }

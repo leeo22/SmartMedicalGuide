@@ -8,8 +8,8 @@ namespace SmartMedicalGuide.Core.Mapping.Notifications
         {
             AddNotificationCommandMapping();
             EditNotificationCommandMapping();
-            GetNotificationByIDMapping();
-            GetNotificationListMapping();
+            GetNotificationListResponseMapping();
+            GetSingleNotificationResponseMapping();
         }
     }
 }

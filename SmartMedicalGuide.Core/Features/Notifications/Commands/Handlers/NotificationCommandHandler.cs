@@ -11,7 +11,8 @@ namespace SmartMedicalGuide.Core.Features.Notifications.Commands.Handlers
         IRequestHandler<AddNotificationCommand, Response<string>>,
         IRequestHandler<EditNotificationCommand, Response<string>>,
         IRequestHandler<DeleteNotificationCommand, Response<string>>,
-        IRequestHandler<MarkNotificationAsReadCommand, Response<string>>
+        IRequestHandler<MarkAsReadCommand, Response<string>>,
+        IRequestHandler<MarkAllAsReadCommand, Response<string>>
     {
         private readonly INotificationServices _notificationServices;
         private readonly IMapper _mapper;
@@ -24,35 +25,56 @@ namespace SmartMedicalGuide.Core.Features.Notifications.Commands.Handlers
 
         public async Task<Response<string>> Handle(AddNotificationCommand request, CancellationToken cancellationToken)
         {
-            var resultMapper = _mapper.Map<Notification>(request);
-            var result = await _notificationServices.AddAsync(resultMapper);
-            return result == "Success" ? Created("Notification added successfully") : BadRequest<string>();
+            var notification = _mapper.Map<Notification>(request);
+            var result = await _notificationServices.AddAsync(notification);
+
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Created("Notification added successfully");
         }
 
         public async Task<Response<string>> Handle(EditNotificationCommand request, CancellationToken cancellationToken)
         {
-            var result = await _notificationServices.GetByIDAsync(request.NotificationId);
-            if (result == null) return NotFound<string>("Notification not found");
-            var resultMapper = _mapper.Map<Notification>(request);
-            var result1 = await _notificationServices.EditAsync(resultMapper);
-            return result1 == "Success" ? Success("Notification edited successfully") : BadRequest<string>();
+            var notification = _mapper.Map<Notification>(request);
+            var result = await _notificationServices.EditAsync(notification);
+
+            if (result == "Notification not found")
+                return NotFound<string>("Notification not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success("Notification edited successfully");
         }
 
         public async Task<Response<string>> Handle(DeleteNotificationCommand request, CancellationToken cancellationToken)
         {
-            var result = await _notificationServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<string>("Notification not found");
-            var result1 = await _notificationServices.DeleteAsync(result);
-            return result1 == "Success" ? Deleted<string>($"Notification deleted successfully: {request.Id}") : BadRequest<string>();
+            var notification = await _notificationServices.GetByIDAsync(request.Id);
+            if (notification == null)
+                return NotFound<string>("Notification not found");
+
+            var result = await _notificationServices.DeleteAsync(notification);
+            return result == "Success" ? Deleted<string>("Notification deleted successfully") : BadRequest<string>(result);
         }
 
-        public async Task<Response<string>> Handle(MarkNotificationAsReadCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(MarkAsReadCommand request, CancellationToken cancellationToken)
         {
-            var result = await _notificationServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<string>("Notification not found");
-            result.IsRead = true;
-            var result1 = await _notificationServices.EditAsync(result);
-            return result1 == "Success" ? Success("Notification marked as read") : BadRequest<string>();
+            var result = await _notificationServices.MarkAsReadAsync(request.NotificationId);
+
+            if (!result)
+                return BadRequest<string>("Failed to mark notification as read");
+
+            return Success("Notification marked as read");
+        }
+
+        public async Task<Response<string>> Handle(MarkAllAsReadCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _notificationServices.MarkAllAsReadAsync(request.UserId);
+
+            if (!result)
+                return BadRequest<string>("Failed to mark all notifications as read");
+
+            return Success("All notifications marked as read");
         }
     }
 }

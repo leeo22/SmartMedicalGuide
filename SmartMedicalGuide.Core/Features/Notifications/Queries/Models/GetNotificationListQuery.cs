@@ -8,11 +8,6 @@ namespace SmartMedicalGuide.Core.Features.Notifications.Queries.Models
     {
         public int? UserId { get; set; }
         public bool? IsRead { get; set; }
-        public GetNotificationListQuery() { }
-        public GetNotificationListQuery(int? userId, bool? isRead)
-        {
-            UserId = userId;
-            IsRead = isRead;
-        }
+        public string? NotificationType { get; set; }
     }
 }
