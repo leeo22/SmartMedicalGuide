@@ -13,6 +13,7 @@ namespace SmartMedicalGuide.API.Controllers
     public class PatientController : AppControllerBase
     {
         #region Basic CRUD
+        [Authorize(Policy = "CreateUser")]
         [SwaggerOperation(Summary = "Get all patients", OperationId = "GetAllPatients")]
         [HttpGet(Router.PatientRouting.List)]
         public async Task<IActionResult> GetAll([FromQuery] string? searchKeyword)

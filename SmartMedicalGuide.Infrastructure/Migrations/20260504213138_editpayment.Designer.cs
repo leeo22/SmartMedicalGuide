@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartMedicalGuide.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using SmartMedicalGuide.Infrastructure.Context;
 namespace SmartMedicalGuide.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalGuideDbContext))]
-    partial class MedicalGuideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260504213138_editpayment")]
+    partial class editpayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartMedicalGuide.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using SmartMedicalGuide.Infrastructure.Context;
 namespace SmartMedicalGuide.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalGuideDbContext))]
-    partial class MedicalGuideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260504203720_fixereport")]
+    partial class fixereport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1021,17 +1024,8 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<int?>("DoctorAppointmentId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("DoctorShare")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("LabAppointmentId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
@@ -1042,18 +1036,11 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<string>("PaymentStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("PlatformFee")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("ReceiverName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReceiverNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionId")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TransferImagePath")
                         .HasColumnType("nvarchar(max)");
