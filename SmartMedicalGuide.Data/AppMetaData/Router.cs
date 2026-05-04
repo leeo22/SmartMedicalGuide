@@ -354,13 +354,20 @@
         public static class SpecializationRouting
         {
             public const string Prefix = Rule + "Specialization/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
-            public const string GetByName = Prefix + NameRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Queries
+            public const string GetByName = Prefix + "GetByName/{name}";
+            public const string Search = Prefix + "Search";
+            public const string GetPopular = Prefix + "GetPopular";
+            public const string GetWithDetails = Prefix + "GetWithDetails/{id}";
+            public const string GetStatistics = Prefix + "GetStatistics/{specializationId}";
         }
 
 

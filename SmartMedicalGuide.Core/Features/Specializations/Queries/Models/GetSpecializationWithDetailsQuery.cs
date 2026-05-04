@@ -4,9 +4,9 @@ using SmartMedicalGuide.Core.Features.Specializations.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Specializations.Queries.Models
 {
-    public class GetSpecializationByIdQuery : IRequest<Response<GetSingleSpecializationResponse>>
+    public class GetSpecializationWithDetailsQuery : IRequest<Response<GetSpecializationWithDetailsResponse>>
     {
         public int Id { get; set; }
-        public GetSpecializationByIdQuery(int id) => Id = id;
+        public GetSpecializationWithDetailsQuery(int id) => Id = id;
     }
 }

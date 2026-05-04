@@ -4,9 +4,8 @@ using SmartMedicalGuide.Core.Features.Specializations.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Specializations.Queries.Models
 {
-    public class GetSpecializationListQuery : IRequest<Response<List<GetSpecializationListResponse>>>
+    public class SearchSpecializationsQuery : IRequest<Response<List<GetSpecializationListResponse>>>
     {
-        public string? SearchKeyword { get; set; }
-        public bool? IncludeDoctorCount { get; set; }
+        public string Keyword { get; set; }
     }
 }

@@ -6,10 +6,11 @@ namespace SmartMedicalGuide.Core.Mapping.Specializations
     {
         public SpecializationProfile()
         {
-            GetSpecializationByIDtMapping();
-            GetSpecializationListMapping();
-            EditSpecializationCommandMapping();
             AddSpecializationCommandMapping();
+            EditSpecializationCommandMapping();
+            GetSpecializationListResponseMapping();
+            GetSingleSpecializationResponseMapping();
+            GetSpecializationWithDetailsResponseMapping();
         }
     }
 }

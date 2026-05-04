@@ -8,8 +8,6 @@ namespace SmartMedicalGuide.Data.Entities
     {
         [Key]
         public int DoctorId { get; set; }
-
-        //[ForeignKey("User")]
         public int UserId { get; set; }
         public virtual User? User { get; set; }
 
@@ -24,7 +22,6 @@ namespace SmartMedicalGuide.Data.Entities
 
         public string? AvailableTimes { get; set; }
 
-        //[ForeignKey("Specialization")]
         public int? SpecializationId { get; set; }
         public virtual Specialization? Specialization { get; set; }
 
@@ -32,6 +29,7 @@ namespace SmartMedicalGuide.Data.Entities
         public bool IsAvailableForBooking { get; set; } = true;
 
         public int? YearsOfExperience { get; set; }
+
 
         public string? Gender { get; set; }  // "Male", "Female"
 
