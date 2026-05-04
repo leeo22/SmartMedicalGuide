@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -14,8 +15,6 @@ namespace SmartMedicalGuide.Data.Entities
 
         public int? LabAppointmentId { get; set; }
         public LabAppointment? LabAppointment { get; set; }
-        [Required]
-        public decimal Amount { get; set; }
         public string? PaymentMethod { get; set; }
         public string? WalletType { get; set; }
         public string? ReceiverName { get; set; }
@@ -24,6 +23,27 @@ namespace SmartMedicalGuide.Data.Entities
 
         public string? PaymentStatus { get; set; }
         public DateTime PaymentDate { get; set; }
+        // سعر الدفع (نسخة محفوظة بجانب الموعد)
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Amount { get; set; }
+
+        // رقم مرجعي للمعاملة من بوابة الدفع
+        [MaxLength(100)]
+        public string? TransactionId { get; set; }
+
+        // حذف منطقي
+        public bool IsDeleted { get; set; } = false;
+
+        // ملاحظات إضافية على الدفع
+        public string? Notes { get; set; }
+
+        // رسوم المنصة (إن وجدت)
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal PlatformFee { get; set; }
+
+        // حصة الدكتور من المبلغ
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal DoctorShare { get; set; }
     }
 
 

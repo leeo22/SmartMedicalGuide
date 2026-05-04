@@ -4,7 +4,8 @@ using SmartMedicalGuide.Core.Features.Payments.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Payments.Queries.Models
 {
-    public class GetPaymentListQuery : IRequest<Response<List<GetPaymentListResponse>>>
+    public class GetPaymentsByStatusQuery : IRequest<Response<List<GetPaymentListResponse>>>
     {
+        public string Status { get; set; }
     }
 }

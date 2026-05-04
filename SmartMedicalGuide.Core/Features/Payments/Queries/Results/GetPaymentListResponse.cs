@@ -2,16 +2,15 @@
 {
     public class GetPaymentListResponse
     {
-        public string AppointmentType { get; set; }
-
-        public string PaymentMethod { get; set; }
-        public string WalletType { get; set; }
-        public string ReceiverName { get; set; }
-        public string ReceiverNumber { get; set; }
-        public string TransferImagePath { get; set; }
-
-        public string PaymentStatus { get; set; }
+        public int PaymentId { get; set; }
+        public int? DoctorAppointmentId { get; set; }
+        public int? LabAppointmentId { get; set; }
+        public string? PaymentMethod { get; set; }
+        public string? PaymentStatus { get; set; }
+        public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
-
+        public string? PatientName { get; set; }
+        public string? DoctorName { get; set; }
+        public string? LabName { get; set; }
     }
 }

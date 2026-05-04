@@ -3,16 +3,13 @@
 namespace SmartMedicalGuide.Core.Mapping.Payments
 {
     public partial class PaymentProfile : Profile
-
     {
         public PaymentProfile()
         {
             AddPaymentCommandMapping();
             EditPaymentCommandMapping();
-            GetPatientByIDMapping();
-            GetPaymentListMapping();
-
-
+            GetPaymentListResponseMapping();
+            GetSinglePaymentResponseMapping();
         }
     }
 }

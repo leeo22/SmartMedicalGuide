@@ -297,11 +297,31 @@
         public static class PaymentRouting
         {
             public const string Prefix = Rule + "Payment/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
+
+            // Additional Queries
+            public const string GetByPatientId = Prefix + "GetByPatientId/{patientId}";
+            public const string GetByDoctorId = Prefix + "GetByDoctorId/{doctorId}";
+            public const string GetByStatus = Prefix + "GetByStatus/{status}";
+            public const string GetByDateRange = Prefix + "GetByDateRange";
+            public const string GetByMethod = Prefix + "GetByMethod/{method}";
+            public const string GetDoctorRevenue = Prefix + "GetDoctorRevenue";
+            public const string GetPlatformRevenue = Prefix + "GetPlatformRevenue";
+            public const string GetRevenueReport = Prefix + "GetRevenueReport";
+            public const string GetPending = Prefix + "GetPending";
+            public const string GetStatistics = Prefix + "GetStatistics";
+            public const string GetWalletPayments = Prefix + "GetWalletPayments";
+            public const string GetTransferPayments = Prefix + "GetTransferPayments";
+
+            // Additional Commands
+            public const string UpdateStatus = Prefix + "UpdateStatus";
+            public const string Verify = Prefix + "Verify";
         }
         public static class PrescriptionRouting
         {

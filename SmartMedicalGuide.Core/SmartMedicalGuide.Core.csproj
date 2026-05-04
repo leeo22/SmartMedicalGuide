@@ -37,9 +37,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Authentication\Queries\Validators\" />
-    <Folder Include="Features\Payments\Commands\Validatiors\" />
-    <Folder Include="Features\Payments\Queries\Handlers\" />
-    <Folder Include="Features\Payments\Queries\Models\" />
     <Folder Include="Features\Payments\Queries\Results\" />
   </ItemGroup>
 
