@@ -40,6 +40,7 @@ namespace SmartMedicalGuide.Infrastructure
             services.AddTransient<IFavoriteRepository, FavoriteRepository>();
             services.AddTransient<ISpecializationRepository, SpecializationRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
+            services.AddTransient<IDoctorCapacitySettingRepository, DoctorCapacitySettingRepository>();
             //services.AddTransient<ISystemSettingRepository, SystemSettingRepository>();
             services.AddTransient<IVerificationRequestRepository, VerificationRequestRepository>();
 

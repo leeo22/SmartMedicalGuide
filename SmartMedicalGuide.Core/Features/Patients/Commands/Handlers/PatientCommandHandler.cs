@@ -8,59 +8,67 @@ using SmartMedicalGuide.Services.Abstracts;
 namespace SmartMedicalGuide.Core.Features.Patients.Commands.Handlers
 {
     public class PatientCommandHandler : ResponseHandler,
-                                       IRequestHandler<AddPatientCommand, Response<string>>,
-                                       IRequestHandler<EditPatientCommand, Response<string>>,
-                                       IRequestHandler<DeletePatientCommand, Response<string>>
-
+        IRequestHandler<AddPatientCommand, Response<string>>,
+        IRequestHandler<EditPatientCommand, Response<string>>,
+        IRequestHandler<DeletePatientCommand, Response<string>>,
+        IRequestHandler<UpdatePatientProfileCommand, Response<string>>
     {
-        #region Fields
         private readonly IPatientServices _patientServices;
         private readonly IMapper _mapper;
 
-        #endregion
-
-
-        #region Constructors
         public PatientCommandHandler(IPatientServices patientServices, IMapper mapper)
         {
             _patientServices = patientServices;
             _mapper = mapper;
         }
-        #endregion
 
-        #region Handle Functions
         public async Task<Response<string>> Handle(AddPatientCommand request, CancellationToken cancellationToken)
         {
-            // mapping between request and patient
-            var patientMapper = _mapper.Map<Patient>(request);
-            //add
-            var result = await _patientServices.AddAsync(patientMapper);
-            //return response
-            if (result == "Success") return Created("Added Sussessfully");
-            else return BadRequest<string>();
+            var patient = _mapper.Map<Patient>(request);
+            var result = await _patientServices.AddAsync(patient);
 
+            if (result == "User is already registered as a patient")
+                return BadRequest<string>("User is already registered as a patient");
+            if (result != "Success")
+                return BadRequest<string>("Failed to add patient");
+
+            return Created("Patient added successfully");
         }
 
         public async Task<Response<string>> Handle(EditPatientCommand request, CancellationToken cancellationToken)
         {
-            var Patient = await _patientServices.GetPatientByIdAsync(request.Id);
-            if (Patient == null) return NotFound<string>("Patient is not found");
-            var patientMapper = _mapper.Map<Patient>(request);
-            var result = await _patientServices.EditAsync(patientMapper);
-            if (result == "Success") return Success("Edited Sussessfully");
-            else return BadRequest<string>();
+            var patient = _mapper.Map<Patient>(request);
+            var result = await _patientServices.EditAsync(patient);
+
+            if (result == "Patient not found")
+                return NotFound<string>("Patient not found");
+            if (result != "Success")
+                return BadRequest<string>("Failed to edit patient");
+
+            return Success("Patient edited successfully");
         }
 
         public async Task<Response<string>> Handle(DeletePatientCommand request, CancellationToken cancellationToken)
         {
-            var patient = await _patientServices.GetPatientByIdAsync(request.Id);
-            if (patient == null) return NotFound<string>("Patient is not found");
+            var patient = await _patientServices.GetByIDAsync(request.Id);
+            if (patient == null)
+                return NotFound<string>("Patient not found");
+
             var result = await _patientServices.DeleteAsync(patient);
-            if (result == "Success") return Deleted<string>($"Deleted Sussessfully {request.Id}");
-            else return BadRequest<string>();
-
+            return result == "Success" ? Deleted<string>("Patient deleted successfully") : BadRequest<string>("Failed to delete patient");
         }
-        #endregion
 
+        public async Task<Response<string>> Handle(UpdatePatientProfileCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.UpdatePatientProfileAsync(
+                request.PatientId, request.Gender, request.DateOfBirth, request.Address);
+
+            if (result == "Patient not found")
+                return NotFound<string>("Patient not found");
+            if (result != "Success")
+                return BadRequest<string>("Failed to update profile");
+
+            return Success("Profile updated successfully");
+        }
     }
 }

@@ -7,9 +7,14 @@ namespace SmartMedicalGuide.Data.Entities
         [Key]
         public int ReportId { get; set; }
 
-        public int PatientId { get; set; }
-        public int DoctorId { get; set; }
-        public int LabId { get; set; }
+        public int? PatientId { get; set; }
+        public virtual Patient? Patient { get; set; }
+
+        public int? DoctorId { get; set; }
+        public virtual Doctor? Doctor { get; set; }
+
+        public int? LabId { get; set; }
+        public virtual Lab? Lab { get; set; }
 
         public string? FilePath { get; set; }
         public string? ReportType { get; set; }

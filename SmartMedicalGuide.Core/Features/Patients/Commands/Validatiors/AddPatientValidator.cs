@@ -1,48 +1,47 @@
-﻿//using FluentValidation;
-//using SmartMedicalGuide.Core.Features.Patients.Commands.Models;
-//using SmartMedicalGuide.Services.Abstracts;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
+using SmartMedicalGuide.Core.Features.Patients.Commands.Models;
+using SmartMedicalGuide.Data.Entities.Identity;
 
-//namespace SmartMedicalGuide.Core.Features.Patients.Commands.Validatiors
-//{
-//    public class AddPatientValidator : AbstractValidator<AddPatientCommand>
-//    {
-//        #region Fields
-//        private readonly IPatientServices _patientServices;
-//        #endregion
+namespace SmartMedicalGuide.Core.Features.Patients.Commands.Validators
+{
+    public class AddPatientValidator : AbstractValidator<AddPatientCommand>
+    {
+        private readonly UserManager<User> _userManager;
 
-//        #region Constructors
-//        public AddPatientValidator(IPatientServices patientServices)
-//        {
-//            _patientServices = patientServices;
-//            ApplyValidationsRules();
-//            ApplyCustomValidationsRules();
+        public AddPatientValidator(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+            ApplyValidationRules();
+            ApplyCustomValidationRules();
+        }
 
+        public void ApplyValidationRules()
+        {
+            RuleFor(x => x.UserId)
+                .GreaterThan(0).WithMessage("UserId must be greater than 0");
 
-//        }
-//        #endregion
+            RuleFor(x => x.Gender)
+                .NotEmpty().WithMessage("Gender is required")
+                .Must(g => g == "Male" || g == "Female")
+                .WithMessage("Gender must be Male or Female");
 
-//        #region Actions
-//        public void ApplyValidationsRules()
-//        {
-//            RuleFor(x => x.Gender)
-//                .NotEmpty().WithMessage("Name Must Not Be Empty")
-//                .NotNull().WithMessage("Name Must Not Be Null")
-//                .MinimumLength(10).WithMessage("MinimumLength is 10");
+            RuleFor(x => x.DateOfBirth)
+                .LessThan(DateTime.Now).WithMessage("Date of birth must be in the past");
 
+            RuleFor(x => x.Address)
+                .MaximumLength(250).WithMessage("Address cannot exceed 250 characters");
+        }
 
-//            RuleFor(x => x.Address)
-//                .NotEmpty().WithMessage("{PropertyName}Age Must Not Be Empty")
-//                .NotNull().WithMessage("{PropertyName}Age Must Not Be Null");
-//        }
-//        public void ApplyCustomValidationsRules()
-//        {
-//            RuleFor(x => x.Gender)
-//                .MustAsync(async (Key, CancellationToken) => !await _patientServices.IsPhoneExist(Key))
-//                .WithMessage("Phon is Exist");
-
-//        }
-//        #endregion
-
-
-//    }
-//}
+        public void ApplyCustomValidationRules()
+        {
+            RuleFor(x => x.UserId)
+                .MustAsync(async (userId, cancellationToken) =>
+                {
+                    var user = await _userManager.FindByIdAsync(userId.ToString());
+                    return user != null;
+                })
+                .WithMessage("User does not exist");
+        }
+    }
+}

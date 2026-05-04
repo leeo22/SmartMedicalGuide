@@ -8,6 +8,7 @@ namespace SmartMedicalGuide.Data.Entities
         public int ReviewId { get; set; }
 
         public int PatientId { get; set; }
+        public virtual Patient? Patient { get; set; }
         public string? TargetType { get; set; }
         public int TargetId { get; set; }
 

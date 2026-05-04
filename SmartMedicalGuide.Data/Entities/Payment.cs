@@ -14,7 +14,8 @@ namespace SmartMedicalGuide.Data.Entities
 
         public int? LabAppointmentId { get; set; }
         public LabAppointment? LabAppointment { get; set; }
-
+        [Required]
+        public decimal Amount { get; set; }
         public string? PaymentMethod { get; set; }
         public string? WalletType { get; set; }
         public string? ReceiverName { get; set; }

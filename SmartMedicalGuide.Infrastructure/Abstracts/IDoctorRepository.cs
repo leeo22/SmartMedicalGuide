@@ -5,6 +5,18 @@ namespace SmartMedicalGuide.Infrastructure.Abstracts
 {
     public interface IDoctorRepository : IGenericRepositoryAsync<Doctor>
     {
-        public Task<List<Doctor>> GetDoctorsListAsync();
+        // Get Doctor with Includes
+        Task<Doctor?> GetDoctorByIdWithIncludesAsync(int id);
+        Task<List<Doctor>> GetAllDoctorsWithIncludesAsync();
+
+        // Additional Functions
+        Task<Doctor?> GetByUserIdAsync(int userId);
+        Task<List<Doctor>> GetBySpecializationIdAsync(int specializationId);
+        Task<List<Doctor>> GetVerifiedDoctorsAsync();
+        Task<List<Doctor>> SearchDoctorsAsync(string keyword);
+        Task<List<Doctor>> GetTopRatedDoctorsAsync(int limit);
+        Task<List<Doctor>> GetDoctorsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
+        Task<Doctor?> GetDoctorWithDetailsAsync(int id);
+        Task<List<Doctor>> GetAvailableForBookingDoctorsAsync();
     }
 }

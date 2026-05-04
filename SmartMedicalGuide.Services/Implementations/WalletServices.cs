@@ -49,7 +49,7 @@ namespace SmartMedicalGuide.Services.Abstracts
         public async Task<decimal> GetBalanceByUserIdAsync(int userId)
         {
             var wallet = await GetByUserIdAsync(userId);
-            return wallet?.Balance ?? 0;
+            return wallet?.TotalBalance ?? 0;
         }
 
         public async Task<Wallet> GetByIDAsync(int id)

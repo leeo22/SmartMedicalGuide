@@ -220,12 +220,18 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     b.Property<string>("ChatName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValue("");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DoctorId1")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -246,6 +252,8 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.HasKey("ChatId");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("DoctorId1");
 
                     b.HasIndex("IsActive");
 
@@ -347,7 +355,19 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<decimal?>("ConsultationPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailableForBooking")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LicenseNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SpecializationId")
@@ -358,6 +378,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     b.Property<string>("VerificationStatus")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("YearsOfExperience")
+                        .HasColumnType("int");
 
                     b.HasKey("DoctorId");
 
@@ -386,7 +409,13 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<string>("AppointmentType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BookingSource")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DoctorId1")
                         .HasColumnType("int");
 
                     b.Property<string>("FullName")
@@ -395,10 +424,22 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsPostponed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("NewAppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("OriginalAppointmentDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostponeReason")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("Price")
@@ -411,9 +452,61 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     b.HasIndex("DoctorId");
 
+                    b.HasIndex("DoctorId1");
+
                     b.HasIndex("PatientId");
 
                     b.ToTable("DoctorAppointments");
+                });
+
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.DoctorCapacitySetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BookingType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DailyCapacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DoctorId1")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxLimit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShiftType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("WorkDays")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("DoctorId1");
+
+                    b.ToTable("DoctorCapacitySettings");
                 });
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.DoctorSchedule", b =>
@@ -430,6 +523,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DoctorId1")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime2");
 
@@ -439,6 +535,8 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.HasKey("ScheduleId");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("DoctorId1");
 
                     b.ToTable("DoctorSchedules");
                 });
@@ -737,22 +835,28 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DoctorId")
+                    b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LabId")
+                    b.Property<int?>("LabId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatientId")
+                    b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
                     b.Property<string>("ReportType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ReportId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("LabId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("MedicalReports");
                 });
@@ -875,6 +979,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int?>("DoctorAppointmentId")
                         .HasColumnType("int");
 
@@ -941,6 +1048,8 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.HasKey("PrescriptionId");
 
                     b.HasIndex("DoctorAppointmentId");
+
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("Prescriptions");
                 });
@@ -1019,6 +1128,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -1032,6 +1144,10 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ReviewId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Reviews");
                 });
@@ -1187,11 +1303,20 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalletId"));
 
-                    b.Property<decimal>("Balance")
+                    b.Property<decimal>("AvailableBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("DoctorAccountNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalBalance")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("WithdrawnBalance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("WalletId");
 
@@ -1279,6 +1404,10 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", null)
+                        .WithMany("ChatsAsDoctor")
+                        .HasForeignKey("DoctorId1");
+
                     b.HasOne("SmartMedicalGuide.Data.Entities.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
@@ -1351,6 +1480,10 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", null)
+                        .WithMany("DoctorAppointments")
+                        .HasForeignKey("DoctorId1");
+
                     b.HasOne("SmartMedicalGuide.Data.Entities.Patient", "Patient")
                         .WithMany("DoctorAppointments")
                         .HasForeignKey("PatientId")
@@ -1361,12 +1494,31 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.DoctorCapacitySetting", b =>
+                {
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", null)
+                        .WithMany("DoctorCapacitySettings")
+                        .HasForeignKey("DoctorId1");
+
+                    b.Navigation("Doctor");
+                });
+
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.DoctorSchedule", b =>
                 {
                     b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", null)
+                        .WithMany("DoctorSchedules")
+                        .HasForeignKey("DoctorId1");
 
                     b.Navigation("Doctor");
                 });
@@ -1421,6 +1573,30 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Lab");
+                });
+
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.MedicalReport", b =>
+                {
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Lab", "Lab")
+                        .WithMany()
+                        .HasForeignKey("LabId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Lab");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Message", b =>
@@ -1496,6 +1672,12 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", null)
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("DoctorAppointment");
                 });
 
@@ -1519,6 +1701,21 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ReporterUser");
+                });
+
+            modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Review", b =>
+                {
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Doctor", null)
+                        .WithMany("Reviews")
+                        .HasForeignKey("DoctorId");
+
+                    b.HasOne("SmartMedicalGuide.Data.Entities.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.SearchHistory", b =>
@@ -1585,7 +1782,19 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Doctor", b =>
                 {
+                    b.Navigation("ChatsAsDoctor");
+
                     b.Navigation("Clinics");
+
+                    b.Navigation("DoctorAppointments");
+
+                    b.Navigation("DoctorCapacitySettings");
+
+                    b.Navigation("DoctorSchedules");
+
+                    b.Navigation("Prescriptions");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.DoctorAppointment", b =>

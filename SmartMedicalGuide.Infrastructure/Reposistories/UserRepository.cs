@@ -20,10 +20,10 @@ namespace SmartMedicalGuide.Infrastructure.Reposistories
         #region Handels Functions
 
 
-        public async Task<List<User>> GetUsersListAsync()
-        {
-            return await _user.ToListAsync();
-        }
+        //public async Task<List<User>> GetUsersListAsync()
+        //{
+        //    return await _user.ToListAsync();
+        //}
         #endregion
 
     }

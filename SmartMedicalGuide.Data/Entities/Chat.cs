@@ -15,8 +15,8 @@ namespace SmartMedicalGuide.Data.Entities
 
         public DateTime? CreatedAt { get; set; }
 
-
-        public string ChatName { get; set; }  // اسم المحادثة (مثال: "محادثة د. أحمد مع مريض")
+        [MaxLength(200)]
+        public string ChatName { get; set; } = string.Empty;
         public bool IsGroup { get; set; } = false;  // هل هي محادثة جماعية؟
         public string? LastMessage { get; set; }  // آخر رسالة (للعرض السريع)
         public DateTime? LastMessageAt { get; set; }  // وقت آخر رسالة

@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using SmartMedicalGuide.Data.Entities.Identity;
+﻿using SmartMedicalGuide.Data.Entities.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -9,8 +9,15 @@ namespace SmartMedicalGuide.Data.Entities
         public int WalletId { get; set; }
 
         public int UserId { get; set; }
+
         public User? User { get; set; }
 
-        public decimal Balance { get; set; }
+        public decimal TotalBalance { get; set; }
+
+        public decimal WithdrawnBalance { get; set; }
+
+        public decimal AvailableBalance { get; set; }
+
+        public string? DoctorAccountNumber { get; set; }
     }
 }

@@ -6,10 +6,6 @@ namespace SmartMedicalGuide.Core.Features.Patients.Commands.Models
     public class DeletePatientCommand : IRequest<Response<string>>
     {
         public int Id { get; set; }
-        public DeletePatientCommand(int id)
-        {
-            Id = id;
-
-        }
+        public DeletePatientCommand(int id) => Id = id;
     }
 }

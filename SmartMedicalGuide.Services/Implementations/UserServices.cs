@@ -1,4 +1,5 @@
-﻿using SmartMedicalGuide.Data.Entities.Identity;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartMedicalGuide.Data.Entities.Identity;
 using SmartMedicalGuide.Infrastructure.Abstracts;
 using SmartMedicalGuide.Services.Abstracts;
 
@@ -21,7 +22,8 @@ namespace SmartMedicalGuide.Services.Implementations
         #region Handels Functions
         public async Task<List<User>> GetUsersListAsync()
         {
-            return await _userRepository.GetTableAsTracking.To;
+            var user = await _userRepository.GetTableAsTracking().ToListAsync();
+            return user;
         }
         public async Task<string> AddAsync(User user)
         {

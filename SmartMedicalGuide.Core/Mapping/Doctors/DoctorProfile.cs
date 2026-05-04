@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
 
-
 namespace SmartMedicalGuide.Core.Mapping.Doctors
 {
     public partial class DoctorProfile : Profile
     {
         public DoctorProfile()
         {
-            GetDoctorListMapping();
             AddDoctorCommandMapping();
-            GetDoctorByIDMapping();
             EditDoctorCommandMapping();
-            GetDoctorByNameMapping();
+            GetDoctorListResponseMapping();
+            GetSingleDoctorResponseMapping();
+            GetDoctorWithDetailsResponseMapping();
+            DoctorStatisticsResponseMapping();
         }
-
     }
 }

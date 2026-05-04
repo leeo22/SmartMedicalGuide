@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using SmartMedicalGuide.Data.Entities.Identity;
+﻿using SmartMedicalGuide.Data.Entities.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -18,7 +18,7 @@ namespace SmartMedicalGuide.Data.Entities
 
         [MaxLength(250)]
         public string? Address { get; set; }
-
+        public bool IsDeleted { get; set; } = false;
         public ICollection<DoctorAppointment>? DoctorAppointments { get; set; }
         public ICollection<LabAppointment>? LabAppointments { get; set; }
     }

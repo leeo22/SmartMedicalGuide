@@ -4,12 +4,9 @@ using SmartMedicalGuide.Core.Features.Doctors.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Doctors.Queries.Models
 {
-    public class GetDoctorByIDQuery : IRequest<Response<GetSingleDoctorResponse>>
+    public class GetDoctorByIdQuery : IRequest<Response<GetSingleDoctorResponse>>
     {
         public int Id { get; set; }
-        public GetDoctorByIDQuery(int id)
-        {
-            Id = id;
-        }
+        public GetDoctorByIdQuery(int id) => Id = id;
     }
 }

@@ -14,6 +14,21 @@
             public const string CreateChat = Prefix + "CreateChat";
             public const string SendMessage = Prefix + "SendMessage";
         }
+        public static class DoctorCapacitySettingRouting
+        {
+            public const string Prefix = Rule + "DoctorCapacitySetting/";
+            public const string List = Prefix + "List";
+            public const string GetByID = Prefix + "GetById/{id}";
+            public const string Create = Prefix + "Create";
+            public const string Edit = Prefix + "Edit";
+            public const string Delete = Prefix + "Delete/{id}";
+            public const string GetByDoctorId = Prefix + "GetByDoctorId/{doctorId}";
+            public const string GetRemainingCapacity = Prefix + "GetRemainingCapacity";
+            public const string CheckAvailability = Prefix + "CheckAvailability";
+            public const string DecrementCapacity = Prefix + "DecrementCapacity";
+            public const string GetCapacityReport = Prefix + "GetCapacityReport";
+            public const string BulkUpdate = Prefix + "BulkUpdate";
+        }
         public static class AppointmentHistoryRouting
         {
             public const string Prefix = Rule + "AppointmentHistory/";
@@ -96,13 +111,28 @@
         public static class DoctorRouting
         {
             public const string Prefix = Rule + "Doctor/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
-            public const string GetByName = Prefix + NameRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Queries
+            public const string GetByUserId = Prefix + "GetByUserId/{userId}";
+            public const string GetBySpecialization = Prefix + "GetBySpecialization/{specializationId}";
+            public const string GetVerified = Prefix + "GetVerified";
+            public const string Search = Prefix + "Search";
+            public const string TopRated = Prefix + "TopRated";
+            public const string GetByPriceRange = Prefix + "GetByPriceRange";
+            public const string GetAvailableForBooking = Prefix + "GetAvailableForBooking";
+            public const string GetWithDetails = Prefix + "GetWithDetails/{id}";
+            public const string GetStatistics = Prefix + "GetStatistics/{doctorId}";
+
+            // Additional Commands
+            public const string UpdateVerification = Prefix + "UpdateVerificationStatus";
+            public const string ToggleAvailable = Prefix + "ToggleAvailableForBooking";
         }
         public static class DoctorAppointmentRouting
         {
@@ -209,11 +239,28 @@
         public static class PatientRouting
         {
             public const string Prefix = Rule + "Patient/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
+
+            // Additional Queries
+            public const string GetByUserId = Prefix + "GetByUserId/{userId}";
+            public const string GetAppointments = Prefix + "GetAppointments/{patientId}";
+            public const string GetPrescriptions = Prefix + "GetPrescriptions/{patientId}";
+            public const string GetMedicalReports = Prefix + "GetMedicalReports/{patientId}";
+            public const string GetPaymentHistory = Prefix + "GetPaymentHistory/{patientId}";
+            public const string GetUpcomingAppointments = Prefix + "GetUpcomingAppointments/{patientId}";
+            public const string GetPastAppointments = Prefix + "GetPastAppointments/{patientId}";
+            public const string GetFavoriteDoctors = Prefix + "GetFavoriteDoctors/{patientId}";
+            public const string GetReviews = Prefix + "GetReviews/{patientId}";
+            public const string GetStatistics = Prefix + "GetStatistics/{patientId}";
+
+            // Additional Commands
+            public const string UpdateProfile = Prefix + "UpdateProfile";
         }
         public static class PaymentRouting
         {

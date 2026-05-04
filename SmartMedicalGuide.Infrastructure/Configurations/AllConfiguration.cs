@@ -16,6 +16,7 @@ namespace SmartMedicalGuide.Infrastructure.Configurations
                  .OnDelete(DeleteBehavior.Cascade);
         }
     }
+
     public class DoctorScheduleConfiguration : IEntityTypeConfiguration<DoctorSchedule>
     {
         public void Configure(EntityTypeBuilder<DoctorSchedule> builder)

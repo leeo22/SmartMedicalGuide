@@ -6,6 +6,6 @@ namespace SmartMedicalGuide.Core.Features.Patients.Queries.Models
 {
     public class GetPatientListQuery : IRequest<Response<List<GetPatientListResponse>>>
     {
-
+        public string? SearchKeyword { get; set; }
     }
 }

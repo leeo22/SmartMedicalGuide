@@ -5,6 +5,9 @@ namespace SmartMedicalGuide.Infrastructure.Abstracts
 {
     public interface IPatientRepository : IGenericRepositoryAsync<Patient>
     {
-        public Task<List<Patient>> GetPatientsListAsync();
+        Task<Patient?> GetPatientByIdWithIncludesAsync(int id);
+        Task<List<Patient>> GetAllPatientsWithIncludesAsync();
+        Task<Patient?> GetByUserIdAsync(int userId);
+        Task<List<Patient>> SearchPatientsAsync(string keyword);
     }
 }

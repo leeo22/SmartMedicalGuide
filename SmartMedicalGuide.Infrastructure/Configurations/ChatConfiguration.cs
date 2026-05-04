@@ -21,7 +21,10 @@ namespace SmartMedicalGuide.Infrastructure.Configurations
                 .WithMany()
                 .HasForeignKey(c => c.DoctorId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+            builder.Property(x => x.ChatName)
+                 .HasMaxLength(200)
+                 .IsRequired()
+                 .HasDefaultValue("");
             // ✅ إضافة فهرس لتحسين البحث بآخر رسالة
             builder.HasIndex(c => c.LastMessageAt);
 

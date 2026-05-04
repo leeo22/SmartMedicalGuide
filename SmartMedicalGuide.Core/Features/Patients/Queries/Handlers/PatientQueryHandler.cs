@@ -3,44 +3,119 @@ using MediatR;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Patients.Queries.Models;
 using SmartMedicalGuide.Core.Features.Patients.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.Patients.Queries.Handlers
 {
     public class PatientQueryHandler : ResponseHandler,
-                                       IRequestHandler<GetPatientListQuery, Response<List<GetPatientListResponse>>>,
-                                       IRequestHandler<GetPatientByIDQuery, Response<GetSinglePatientResponse>>
+        IRequestHandler<GetPatientListQuery, Response<List<GetPatientListResponse>>>,
+        IRequestHandler<GetPatientByIdQuery, Response<GetSinglePatientResponse>>,
+        IRequestHandler<GetPatientByUserIdQuery, Response<GetSinglePatientResponse>>,
+        IRequestHandler<GetPatientAppointmentsQuery, Response<object>>,
+        IRequestHandler<GetPatientPrescriptionsQuery, Response<object>>,
+        IRequestHandler<GetPatientMedicalReportsQuery, Response<object>>,
+        IRequestHandler<GetPatientPaymentHistoryQuery, Response<object>>,
+        IRequestHandler<GetPatientUpcomingAppointmentsQuery, Response<object>>,
+        IRequestHandler<GetPatientPastAppointmentsQuery, Response<object>>,
+        IRequestHandler<GetPatientFavoriteDoctorsQuery, Response<object>>,
+        IRequestHandler<GetPatientReviewsQuery, Response<object>>,
+        IRequestHandler<GetPatientStatisticsQuery, Response<object>>
     {
-        #region Fields
         private readonly IPatientServices _patientServices;
         private readonly IMapper _mapper;
 
-        #endregion
-
-        #region Constructors
-        public PatientQueryHandler(IPatientServices PatientServices, IMapper mapper)
+        public PatientQueryHandler(IPatientServices patientServices, IMapper mapper)
         {
-            _patientServices = PatientServices;
+            _patientServices = patientServices;
             _mapper = mapper;
         }
-        #endregion
 
-        #region Handels Functions
         public async Task<Response<List<GetPatientListResponse>>> Handle(GetPatientListQuery request, CancellationToken cancellationToken)
         {
-            var patientList = await _patientServices.GetPatientsListAsync();
-            var patientListMapper = _mapper.Map<List<GetPatientListResponse>>(patientList);
-            return Success(patientListMapper);
+            List<Patient> patients;
+
+            if (!string.IsNullOrWhiteSpace(request.SearchKeyword))
+                patients = await _patientServices.SearchPatientsAsync(request.SearchKeyword);
+            else
+                patients = await _patientServices.GetListAsync();
+
+            var result = _mapper.Map<List<GetPatientListResponse>>(patients);
+            return Success(result);
         }
 
-        public async Task<Response<GetSinglePatientResponse>> Handle(GetPatientByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetSinglePatientResponse>> Handle(GetPatientByIdQuery request, CancellationToken cancellationToken)
         {
-            var patient = await _patientServices.GetPatientByIdAsync(request.Id);
-            if (patient == null) return NotFound<GetSinglePatientResponse>("No Patient same ID");
+            var patient = await _patientServices.GetByIDAsync(request.Id);
+            if (patient == null)
+                return NotFound<GetSinglePatientResponse>("Patient not found");
+
             var result = _mapper.Map<GetSinglePatientResponse>(patient);
             return Success(result);
         }
-        #endregion
 
+        public async Task<Response<GetSinglePatientResponse>> Handle(GetPatientByUserIdQuery request, CancellationToken cancellationToken)
+        {
+            var patient = await _patientServices.GetByUserIdAsync(request.UserId);
+            if (patient == null)
+                return NotFound<GetSinglePatientResponse>("Patient not found for this user");
+
+            var result = _mapper.Map<GetSinglePatientResponse>(patient);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientAppointmentsQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientAppointmentsAsync(request.PatientId);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientPrescriptionsQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientPrescriptionsAsync(request.PatientId);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientMedicalReportsQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientMedicalReportsAsync(request.PatientId);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientPaymentHistoryQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientPaymentHistoryAsync(request.PatientId);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientUpcomingAppointmentsQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientUpcomingAppointmentsAsync(request.PatientId);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientPastAppointmentsQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientPastAppointmentsAsync(request.PatientId);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientFavoriteDoctorsQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientFavoriteDoctorsAsync(request.PatientId);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientReviewsQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientReviewsAsync(request.PatientId);
+            return Success(result);
+        }
+
+        public async Task<Response<object>> Handle(GetPatientStatisticsQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _patientServices.GetPatientStatisticsAsync(request.PatientId);
+            return Success(result);
+        }
     }
 }
