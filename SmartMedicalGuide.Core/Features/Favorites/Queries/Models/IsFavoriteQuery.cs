@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.Favorites.Queries.Models
 {
-    internal class IsFavoriteQuery
+    public class IsFavoriteQuery : IRequest<Response<bool>>
     {
+        public int PatientId { get; set; }
+        public int DoctorId { get; set; }
     }
 }

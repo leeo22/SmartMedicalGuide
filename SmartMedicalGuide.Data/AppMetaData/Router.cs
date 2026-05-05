@@ -100,13 +100,16 @@
         public static class ClinicRouting
         {
             public const string Prefix = Rule + "Clinic/";
-            public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
 
+            // Basic CRUD
+            public const string List = Prefix + "List";
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoint
+            public const string GetWithDoctor = Prefix + "GetWithDoctor/{id}";
         }
         public static class DoctorRouting
         {
@@ -181,12 +184,19 @@
         public static class FavoriteRouting
         {
             public const string Prefix = Rule + "Favorite/";
-            public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
-            public const string Create = Prefix + "Create";
-            public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
 
+            // Basic CRUD
+            public const string List = Prefix + "List";
+            public const string GetByID = Prefix + "GetById/{id}";
+            public const string Create = Prefix + "Create";
+            public const string Delete = Prefix + "Delete/{id}";
+
+            // Additional Important Endpoints
+            public const string GetMyFavorites = Prefix + "GetMyFavorites";
+            public const string GetMyFavoritesWithDetails = Prefix + "GetMyFavoritesWithDetails";
+            public const string IsFavorite = Prefix + "IsFavorite";
+            public const string Toggle = Prefix + "Toggle";
+            public const string GetCountByDoctor = Prefix + "GetCountByDoctor";
         }
         public static class LabRouting
         {

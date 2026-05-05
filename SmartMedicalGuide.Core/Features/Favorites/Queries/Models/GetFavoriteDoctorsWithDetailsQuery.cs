@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.Favorites.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Favorites.Queries.Models
 {
-    internal class GetFavoriteDoctorsWithDetailsQuery
+    public class GetFavoriteDoctorsWithDetailsQuery : IRequest<Response<List<FavoriteDoctorDto>>>
     {
+        public int PatientId { get; set; }
     }
 }

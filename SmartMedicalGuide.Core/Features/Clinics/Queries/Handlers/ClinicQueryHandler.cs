@@ -2,59 +2,74 @@
 using MediatR;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Clinics.Queries.Models;
-using SmartMedicalGuide.Core.Features.Clinics.Queries.Models;
 using SmartMedicalGuide.Core.Features.Clinics.Queries.Results;
-using SmartMedicalGuide.Core.Features.Clinics.Queries.Results;
-using SmartMedicalGuide.Core.Features.Patients.Queries.Results;
-using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
-using SmartMedicalGuide.Services.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Features.Clinics.Queries.Handlers
 {
     public class ClinicQueryHandler : ResponseHandler,
-                                       IRequestHandler<GetClinicListQuery, Response<List<GetClinicListResponse>>>,
-                                       IRequestHandler<GetClinicByIDQuery, Response<GetSingleClinicResponse>>
+        IRequestHandler<GetClinicListQuery, Response<List<GetClinicListResponse>>>,
+        IRequestHandler<GetClinicByIdQuery, Response<GetSingleClinicResponse>>,
+        IRequestHandler<GetClinicWithDoctorQuery, Response<GetSingleClinicResponse>>
     {
-        #region Fields
         private readonly IClinicServices _clinicServices;
         private readonly IMapper _mapper;
 
-        #endregion
-
-        #region Constructors
         public ClinicQueryHandler(IClinicServices clinicServices, IMapper mapper)
         {
             _clinicServices = clinicServices;
             _mapper = mapper;
         }
 
-        #endregion
-
-        #region Handels Functions
-
         public async Task<Response<List<GetClinicListResponse>>> Handle(GetClinicListQuery request, CancellationToken cancellationToken)
         {
-            var clinicList = await _clinicServices.GetClinicsListAsync();
-            var clinicListMapper = _mapper.Map<List<GetClinicListResponse>>(clinicList);
-            return Success(clinicListMapper);
+            List<Clinic> clinics;
+
+            if (request.DoctorId.HasValue)
+            {
+                clinics = await _clinicServices.GetByDoctorIdAsync(request.DoctorId.Value);
+            }
+            else if (!string.IsNullOrWhiteSpace(request.Location))
+            {
+                clinics = await _clinicServices.GetByLocationAsync(request.Location);
+            }
+            else if (!string.IsNullOrWhiteSpace(request.SearchKeyword))
+            {
+                clinics = await _clinicServices.SearchClinicsAsync(request.SearchKeyword);
+            }
+            else if (request.IsActive.HasValue)
+            {
+                clinics = request.IsActive.Value
+                    ? await _clinicServices.GetActiveClinicsAsync()
+                    : await _clinicServices.GetListAsync();
+            }
+            else
+            {
+                clinics = await _clinicServices.GetListAsync();
+            }
+
+            var result = _mapper.Map<List<GetClinicListResponse>>(clinics);
+            return Success(result);
         }
 
-        public async Task<Response<GetSingleClinicResponse>> Handle(GetClinicByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetSingleClinicResponse>> Handle(GetClinicByIdQuery request, CancellationToken cancellationToken)
         {
-            var clinic = await _clinicServices.GetClinicByIDAsync(request.Id);
-            if (clinic == null) return NotFound<GetSingleClinicResponse>("No Clinic same ID");
+            var clinic = await _clinicServices.GetByIDAsync(request.Id);
+            if (clinic == null)
+                return NotFound<GetSingleClinicResponse>("Clinic not found");
+
             var result = _mapper.Map<GetSingleClinicResponse>(clinic);
             return Success(result);
         }
-        #endregion
 
+        public async Task<Response<GetSingleClinicResponse>> Handle(GetClinicWithDoctorQuery request, CancellationToken cancellationToken)
+        {
+            var clinic = await _clinicServices.GetClinicWithDoctorAsync(request.Id);
+            if (clinic == null)
+                return NotFound<GetSingleClinicResponse>("Clinic not found");
 
-
+            var result = _mapper.Map<GetSingleClinicResponse>(clinic);
+            return Success(result);
+        }
     }
 }

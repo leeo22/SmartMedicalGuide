@@ -5,13 +5,10 @@ namespace SmartMedicalGuide.Core.Mapping.Clinics
 {
     public partial class ClinicProfile
     {
-        public void GetClinicListMapping()
+        public void GetClinicListResponseMapping()
         {
             CreateMap<Clinic, GetClinicListResponse>()
-                .ForMember(dest => dest.RoleName, opt => opt
-                //.MapFrom(src => src.User.Role.RoleName))
-                //.ForMember(dest => dest.UserName, opt => opt
-                .MapFrom(src => src.User.FullName));
+                .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor != null && src.Doctor.User != null ? src.Doctor.User.FullName : null));
         }
     }
 }

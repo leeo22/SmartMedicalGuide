@@ -7,9 +7,8 @@ namespace SmartMedicalGuide.Core.Mapping.Favorites
         public FavoriteProfile()
         {
             AddFavoriteCommandMapping();
-            EditFavoriteCommandMapping();
-            GetFavoriteByIDMapping();
-            GetFavoriteListMapping();
+            GetFavoriteListResponseMapping();
+            GetSingleFavoriteResponseMapping();
         }
     }
 }

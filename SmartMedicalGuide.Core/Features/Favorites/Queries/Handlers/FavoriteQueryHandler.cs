@@ -8,46 +8,76 @@ using SmartMedicalGuide.Services.Abstracts;
 namespace SmartMedicalGuide.Core.Features.Favorites.Queries.Handlers
 {
     public class FavoriteQueryHandler : ResponseHandler,
-                                       IRequestHandler<GetFavoriteListQuery, Response<List<GetFavoriteListResponse>>>,
-                                       IRequestHandler<GetFavoriteByIDQuery, Response<GetSingleFavoriteResponse>>
+        IRequestHandler<GetFavoriteListQuery, Response<List<GetFavoriteListResponse>>>,
+        IRequestHandler<GetFavoriteByIdQuery, Response<GetSingleFavoriteResponse>>,
+        IRequestHandler<IsFavoriteQuery, Response<bool>>,
+        IRequestHandler<GetFavoriteDoctorsWithDetailsQuery, Response<List<FavoriteDoctorDto>>>
     {
-        #region Fields
         private readonly IFavoriteServices _favoriteServices;
         private readonly IMapper _mapper;
-        #endregion
 
-        #region Constructors
         public FavoriteQueryHandler(IFavoriteServices favoriteServices, IMapper mapper)
         {
             _favoriteServices = favoriteServices;
             _mapper = mapper;
         }
-        #endregion
 
-        #region Handlers Functions
         public async Task<Response<List<GetFavoriteListResponse>>> Handle(GetFavoriteListQuery request, CancellationToken cancellationToken)
         {
-            var resultList = await _favoriteServices.GetListAsync();
+            List<Favorite> favorites;
 
-            // فلترة حسب PatientId إذا تم توفيره
             if (request.PatientId.HasValue)
             {
-                resultList = resultList.Where(f => f.PatientId == request.PatientId.Value).ToList();
+                favorites = await _favoriteServices.GetByPatientIdAsync(request.PatientId.Value);
+            }
+            else
+            {
+                favorites = await _favoriteServices.GetListAsync();
             }
 
-            var resultListMapper = _mapper.Map<List<GetFavoriteListResponse>>(resultList);
-            return Success(resultListMapper);
+            if (request.DoctorId.HasValue)
+            {
+                favorites = favorites.Where(x => x.DoctorId == request.DoctorId.Value).ToList();
+            }
+
+            var result = _mapper.Map<List<GetFavoriteListResponse>>(favorites);
+            return Success(result);
         }
 
-        public async Task<Response<GetSingleFavoriteResponse>> Handle(GetFavoriteByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetSingleFavoriteResponse>> Handle(GetFavoriteByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _favoriteServices.GetByIDAsync(request.Id);
-            if (result == null)
-                return NotFound<GetSingleFavoriteResponse>("No favorite found with this ID");
+            var favorite = await _favoriteServices.GetByIDAsync(request.Id);
+            if (favorite == null)
+                return NotFound<GetSingleFavoriteResponse>("Favorite not found");
 
-            var result1 = _mapper.Map<GetSingleFavoriteResponse>(result);
-            return Success(result1);
+            var result = _mapper.Map<GetSingleFavoriteResponse>(favorite);
+            return Success(result);
         }
-        #endregion
+
+        public async Task<Response<bool>> Handle(IsFavoriteQuery request, CancellationToken cancellationToken)
+        {
+            var isFavorite = await _favoriteServices.IsFavoriteAsync(request.PatientId, request.DoctorId);
+            return Success(isFavorite);
+        }
+
+        public async Task<Response<List<FavoriteDoctorDto>>> Handle(GetFavoriteDoctorsWithDetailsQuery request, CancellationToken cancellationToken)
+        {
+            var favorites = await _favoriteServices.GetFavoriteDoctorsWithDetailsAsync(request.PatientId);
+
+            var result = favorites.Select(f => new FavoriteDoctorDto
+            {
+                DoctorId = f.DoctorId,
+                DoctorName = f.Doctor?.User?.FullName ?? "Unknown",
+                ProfileImageUrl = f.Doctor?.ProfileImageUrl,
+                SpecializationName = f.Doctor?.Specialization?.Name ?? "غير محدد",
+                ConsultationPrice = f.Doctor?.ConsultationPrice,
+                AverageRating = f.Doctor?.Reviews != null && f.Doctor.Reviews.Any()
+                    ? f.Doctor.Reviews.Average(r => r.Rating) : 0,
+                ReviewsCount = f.Doctor?.Reviews?.Count ?? 0,
+                AddedAt = f.CreatedAt
+            }).ToList();
+
+            return Success(result);
+        }
     }
 }

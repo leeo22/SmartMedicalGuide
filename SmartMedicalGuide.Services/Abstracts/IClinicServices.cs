@@ -1,18 +1,23 @@
 ﻿using SmartMedicalGuide.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
     public interface IClinicServices
     {
-        public Task<List<Clinic>> GetClinicsListAsync();
-        public Task<string> AddAsync(Clinic clinic);
-        public Task<Clinic> GetClinicByIDAsync(int id);
-        public Task<string> EditAsync(Clinic clinic);
-        public Task<string> DeleteAsync(Clinic clinic);
+        #region Basic CRUD - 5 Functions
+        Task<List<Clinic>> GetListAsync();
+        Task<Clinic?> GetByIDAsync(int id);
+        Task<string> AddAsync(Clinic clinic);
+        Task<string> EditAsync(Clinic clinic);
+        Task<string> DeleteAsync(Clinic clinic);
+        #endregion
+
+        #region Additional Important Functions - 5 Functions
+        Task<List<Clinic>> GetByDoctorIdAsync(int doctorId);
+        Task<List<Clinic>> GetByLocationAsync(string location);
+        Task<List<Clinic>> SearchClinicsAsync(string keyword);
+        Task<Clinic?> GetClinicWithDoctorAsync(int id);
+        Task<List<Clinic>> GetActiveClinicsAsync();
+        #endregion
     }
 }

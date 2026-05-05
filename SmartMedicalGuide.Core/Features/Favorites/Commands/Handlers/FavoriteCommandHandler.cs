@@ -8,68 +8,46 @@ using SmartMedicalGuide.Services.Abstracts;
 namespace SmartMedicalGuide.Core.Features.Favorites.Commands.Handlers
 {
     public class FavoriteCommandHandler : ResponseHandler,
-                                       IRequestHandler<AddFavoriteCommand, Response<string>>,
-                                       IRequestHandler<EditFavoriteCommand, Response<string>>,
-                                       IRequestHandler<DeleteFavoriteCommand, Response<string>>
+        IRequestHandler<AddFavoriteCommand, Response<string>>,
+        IRequestHandler<DeleteFavoriteCommand, Response<string>>,
+        IRequestHandler<ToggleFavoriteCommand, Response<bool>>
     {
-        #region Fields
         private readonly IFavoriteServices _favoriteServices;
         private readonly IMapper _mapper;
-        #endregion
 
-        #region Constructors
         public FavoriteCommandHandler(IFavoriteServices favoriteServices, IMapper mapper)
         {
             _favoriteServices = favoriteServices;
             _mapper = mapper;
         }
-        #endregion
 
-        #region Handlers Functions
         public async Task<Response<string>> Handle(AddFavoriteCommand request, CancellationToken cancellationToken)
         {
-            // التحقق من عدم وجود نفس المفضلة مسبقاً
-            //var existingFavorite = await _favoriteServices.GetByIDAsync(request.PatientId, request.DoctorId);
-            //if (existingFavorite != null)
-            //    return BadRequest<string>("This favorite already exists");
+            var favorite = _mapper.Map<Favorite>(request);
+            var result = await _favoriteServices.AddAsync(favorite);
 
-            var resultMapper = _mapper.Map<Favorite>(request);
-            var result = await _favoriteServices.AddAsync(resultMapper);
+            if (result == "Doctor already in favorites")
+                return BadRequest<string>("Doctor already in favorites");
+            if (result != "Success")
+                return BadRequest<string>(result);
 
-            if (result == "Success")
-                return Created("Favorite added successfully");
-            else
-                return BadRequest<string>();
-        }
-
-        public async Task<Response<string>> Handle(EditFavoriteCommand request, CancellationToken cancellationToken)
-        {
-            var result = await _favoriteServices.GetByIDAsync(request.FavoriteId);
-            if (result == null)
-                return NotFound<string>("Favorite not found");
-
-            var resultMapper = _mapper.Map<Favorite>(request);
-            var result1 = await _favoriteServices.EditAsync(resultMapper);
-
-            if (result1 == "Success")
-                return Success("Favorite edited successfully");
-            else
-                return BadRequest<string>();
+            return Created("Doctor added to favorites successfully");
         }
 
         public async Task<Response<string>> Handle(DeleteFavoriteCommand request, CancellationToken cancellationToken)
         {
-            var result = await _favoriteServices.GetByIDAsync(request.Id);
-            if (result == null)
+            var favorite = await _favoriteServices.GetByIDAsync(request.Id);
+            if (favorite == null)
                 return NotFound<string>("Favorite not found");
 
-            var result1 = await _favoriteServices.DeleteAsync(result);
-
-            if (result1 == "Success")
-                return Deleted<string>($"Favorite deleted successfully: {request.Id}");
-            else
-                return BadRequest<string>();
+            var result = await _favoriteServices.DeleteAsync(favorite);
+            return result == "Success" ? Deleted<string>("Doctor removed from favorites successfully") : BadRequest<string>(result);
         }
-        #endregion
+
+        public async Task<Response<bool>> Handle(ToggleFavoriteCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _favoriteServices.ToggleFavoriteAsync(request.PatientId, request.DoctorId);
+            return Success(result);
+        }
     }
 }

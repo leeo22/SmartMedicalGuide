@@ -1,15 +1,19 @@
-﻿
-
-namespace SmartMedicalGuide.Core.Features.Clinics.Queries.Results
+﻿namespace SmartMedicalGuide.Core.Features.Clinics.Queries.Results
 {
     public class GetClinicListResponse
     {
-        public string UserName { get; set; }
-        public string RoleName { get; set; }
-
         public int ClinicId { get; set; }
-        public string ClinicName { get; set; }
-        public string Location { get; set; }
-        public string PhoneNumber { get; set; }
+        public int DoctorId { get; set; }
+        public string DoctorName { get; set; }
+        public string? ClinicName { get; set; }
+        public string? Location { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Description { get; set; }
+        public string? ClinicImageUrl { get; set; }
+        public bool IsActive { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
+        public TimeSpan? OpeningTime { get; set; }
+        public TimeSpan? ClosingTime { get; set; }
     }
 }
