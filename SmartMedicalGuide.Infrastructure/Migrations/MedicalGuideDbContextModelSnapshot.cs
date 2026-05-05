@@ -147,7 +147,7 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     b.HasKey("HistoryId");
 
-                    b.ToTable("AppointmentHistories");
+                    b.ToTable("AppointmentHistorie");
                 });
 
             modelBuilder.Entity("SmartMedicalGuide.Data.Entities.Attachment", b =>
@@ -533,6 +533,12 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScheduleId"));
 
+                    b.Property<TimeSpan?>("BreakEndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan?>("BreakStartTime")
+                        .HasColumnType("time");
+
                     b.Property<string>("DayOfWeek")
                         .HasColumnType("nvarchar(max)");
 
@@ -544,6 +550,18 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxAppointmentsPerSlot")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SlotDuration")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime2");
@@ -622,6 +640,9 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -952,14 +973,36 @@ namespace SmartMedicalGuide.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"));
 
+                    b.Property<string>("ActionUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NotificationType")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("RelatedEntityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RelatedEntityType")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");

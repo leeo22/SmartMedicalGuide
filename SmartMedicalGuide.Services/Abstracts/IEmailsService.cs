@@ -1,4 +1,4 @@
-﻿namespace SmartMedicalGuide.Service.Abstracts
+﻿namespace SmartMedicalGuide.Services.Abstracts
 {
     public interface IEmailsService
     {

@@ -2,7 +2,7 @@
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Emails.Commands.Models;
 //using SmartMedicalGuide.Core.Resources;
-using SmartMedicalGuide.Service.Abstracts;
+using SmartMedicalGuide.Services.Abstracts;
 namespace SmartMedicalGuide.Core.Features.Emails.Commands.Handlers
 {
     public class EmailsCommandHandler : ResponseHandler,

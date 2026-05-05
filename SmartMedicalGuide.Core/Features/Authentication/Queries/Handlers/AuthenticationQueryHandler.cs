@@ -6,9 +6,9 @@ using SmartMedicalGuide.Services.Abstracts;
 namespace SmartMedicalGuide.Core.Features.Authentication.Queries.Handlers
 {
     internal class AuthenticationQueryHandler : ResponseHandler,
-        IRequestHandler<AuthorizeUserQuery, Response<string>>
-    //IRequestHandler<ConfirmEmailQuery, Response<string>>,
-    //IRequestHandler<ConfirmResetPasswordQuery, Response<string>>
+        IRequestHandler<AuthorizeUserQuery, Response<string>>,
+    IRequestHandler<ConfirmEmailQuery, Response<string>>,
+    IRequestHandler<ConfirmResetPasswordQuery, Response<string>>
     {
 
 
@@ -36,25 +36,25 @@ namespace SmartMedicalGuide.Core.Features.Authentication.Queries.Handlers
             return Unauthorized<string>("TokenIsExpired");
         }
 
-        //public async Task<Response<string>> Handle(ConfirmEmailQuery request, CancellationToken cancellationToken)
-        //{
-        //    var confirmEmail = await _authenticationService.ConfirmEmail(request.UserId, request.Code);
-        //    if (confirmEmail == "ErrorWhenConfirmEmail")
-        //        return BadRequest<string>(_stringLocalizer[SharedResourcesKeys.ErrorWhenConfirmEmail]);
-        //    return Success<string>(_stringLocalizer[SharedResourcesKeys.ConfirmEmailDone]);
-        //}
+        public async Task<Response<string>> Handle(ConfirmEmailQuery request, CancellationToken cancellationToken)
+        {
+            var confirmEmail = await _authenticationService.ConfirmEmail(request.UserId, request.Code);
+            if (confirmEmail == "ErrorWhenConfirmEmail")
+                return BadRequest<string>("_stringLocalizer[SharedResourcesKeys.ErrorWhenConfirmEmail]");
+            return Success<string>("_stringLocalizer[SharedResourcesKeys.ConfirmEmailDone]");
+        }
 
-        //public async Task<Response<string>> Handle(ConfirmResetPasswordQuery request, CancellationToken cancellationToken)
-        //{
-        //    var result = await _authenticationService.ConfirmResetPassword(request.Code, request.Email);
-        //    switch (result)
-        //    {
-        //        case "UserNotFound": return BadRequest<string>(_stringLocalizer[SharedResourcesKeys.UserIsNotFound]);
-        //        case "Failed": return BadRequest<string>(_stringLocalizer[SharedResourcesKeys.InvaildCode]);
-        //        case "Success": return Success<string>("");
-        //        default: return BadRequest<string>(_stringLocalizer[SharedResourcesKeys.InvaildCode]);
-        //    }
-        //}
+        public async Task<Response<string>> Handle(ConfirmResetPasswordQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _authenticationService.ConfirmResetPassword(request.Code, request.Email);
+            switch (result)
+            {
+                case "UserNotFound": return BadRequest<string>("_stringLocalizer[SharedResourcesKeys.UserIsNotFound]");
+                case "Failed": return BadRequest<string>("_stringLocalizer[SharedResourcesKeys.InvaildCode]");
+                case "Success": return Success<string>("");
+                default: return BadRequest<string>("_stringLocalizer[SharedResourcesKeys.InvaildCode]");
+            }
+        }
         #endregion
     }
 }

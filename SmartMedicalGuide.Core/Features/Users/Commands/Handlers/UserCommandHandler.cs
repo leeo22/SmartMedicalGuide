@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Users.Commands.Models;
 using SmartMedicalGuide.Data.Entities.Identity;
+using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.Users.Commands.Handlers
 {
@@ -16,31 +17,49 @@ namespace SmartMedicalGuide.Core.Features.Users.Commands.Handlers
         #region Fields
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IApplicationUserService _applicationUserService;
         #endregion
         #region Constructors
-        public UserCommandHandler(UserManager<User> userManager, IMapper mapper)
+        public UserCommandHandler(UserManager<User> userManager, IApplicationUserService applicationUserService, IMapper mapper)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _applicationUserService = applicationUserService;
+
         }
         #endregion
         #region Handels Functions
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user != null) return BadRequest<string>("email is ex");
-            var userByUserName = await _userManager.FindByNameAsync(request.UserName);
-            if (userByUserName != null) return BadRequest<string>("userName is Exist");
-            // mapping between request and user
             var identityUser = _mapper.Map<User>(request);
-            //add
-            var createResult = await _userManager.CreateAsync(identityUser, request.Password);
-            //return response
-            if (!createResult.Succeeded)
-                return BadRequest<string>("Create faild");
-            await _userManager.AddToRoleAsync(identityUser, "User");
-            return Created("Success");
+            //Create
+            var createResult = await _applicationUserService.AddUserAsync(identityUser, request.Password);
+            switch (createResult)
+            {
+                case "EmailIsExist": return BadRequest<string>("");
+                case "UserNameIsExist": return BadRequest<string>("");
+                case "ErrorInCreateUser": return BadRequest<string>("");
+                case "Failed": return BadRequest<string>("");
+                case "Success": return Success<string>("");
+                default: return BadRequest<string>(createResult);
+            }
         }
+        //public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(request.Email);
+        //    if (user != null) return BadRequest<string>("email is ex");
+        //    var userByUserName = await _userManager.FindByNameAsync(request.UserName);
+        //    if (userByUserName != null) return BadRequest<string>("userName is Exist");
+        //    // mapping between request and user
+        //    var identityUser = _mapper.Map<User>(request);
+        //    //add
+        //    var createResult = await _userManager.CreateAsync(identityUser, request.Password);
+        //    //return response
+        //    if (!createResult.Succeeded)
+        //        return BadRequest<string>("Create faild");
+        //    await _userManager.AddToRoleAsync(identityUser, "User");
+        //    return Created("Success");
+        //}
 
         public async Task<Response<string>> Handle(EditUserCommand request, CancellationToken cancellationToken)
         {

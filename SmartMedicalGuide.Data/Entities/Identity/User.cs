@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EntityFrameworkCore.EncryptColumn.Attribute;
+using Microsoft.AspNetCore.Identity;
 
 namespace SmartMedicalGuide.Data.Entities.Identity
 {
@@ -8,10 +9,13 @@ namespace SmartMedicalGuide.Data.Entities.Identity
         {
             UserRefreshToken = new HashSet<UserRefreshToken>();
         }
+
         public string? FullName { get; set; }
         public bool IsVerified { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }
+        [EncryptColumn]
+        public string? Code { get; set; }
         public Patient? Patient { get; set; }
         public Doctor? Doctor { get; set; }
         public Lab? Lab { get; set; }

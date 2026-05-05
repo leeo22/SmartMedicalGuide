@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using SmartMedicalGuide.API.Hubs;
 using SmartMedicalGuide.Core;
@@ -35,6 +38,14 @@ builder.Services.AddCors(options =>
         });
 });
 #endregion
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+builder.Services.AddTransient<IUrlHelper>(x =>
+{
+    var actionContext = x.GetRequiredService<IActionContextAccessor>().ActionContext;
+    var factory = x.GetRequiredService<IUrlHelperFactory>();
+    return factory.GetUrlHelper(actionContext);
+});
+
 #region Dependencies Injection
 builder.Services.AddInfrastuctureDependecies()
                 .AddServicesDependecies()

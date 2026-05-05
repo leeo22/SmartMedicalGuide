@@ -6,7 +6,6 @@ using SmartMedicalGuide.Data.Helpers;
 using SmartMedicalGuide.Data.Requests;
 using SmartMedicalGuide.Infrastructure.Abstracts;
 using SmartMedicalGuide.Infrastructure.Context;
-using SmartMedicalGuide.Service.Abstracts;
 using SmartMedicalGuide.Services.Abstracts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -252,7 +251,7 @@ namespace SmartMedicalGuide.Services.Implementations
                 var updateResult = await _userManager.UpdateAsync(user);
                 if (!updateResult.Succeeded)
                     return "ErrorInUpdateUser";
-                var message = "Code To Reset Passsword : " + user.Code;
+                var message = "Code To Reset Passsword : " + user;
                 //Send Code To  Email 
                 await _emailsService.SendEmail(user.Email, message, "Reset Password");
                 await trans.CommitAsync();

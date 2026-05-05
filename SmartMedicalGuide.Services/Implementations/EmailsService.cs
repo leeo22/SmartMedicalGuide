@@ -1,8 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 using SmartMedicalGuide.Data.Helpers;
-using SmartMedicalGuide.Service.Abstracts;
-namespace SmartMedicalGuide.Service.Implementations
+using SmartMedicalGuide.Services.Abstracts;
+namespace SmartMedicalGuide.Services.Implementations
 {
     public class EmailsService : IEmailsService
     {
