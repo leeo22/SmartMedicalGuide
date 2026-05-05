@@ -266,12 +266,20 @@
         public static class NotificationRouting
         {
             public const string Prefix = Rule + "Notification/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoints
+            public const string GetMyNotifications = Prefix + "GetMyNotifications";
+            public const string GetMyUnread = Prefix + "GetMyUnread";
+            public const string GetUnreadCount = Prefix + "GetUnreadCount";
+            public const string MarkAsRead = Prefix + "MarkAsRead";
+            public const string MarkAllAsRead = Prefix + "MarkAllAsRead";
         }
         public static class PatientRouting
         {
