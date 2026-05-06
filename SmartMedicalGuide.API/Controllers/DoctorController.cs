@@ -4,6 +4,7 @@ using SmartMedicalGuide.API.Base;
 using SmartMedicalGuide.Core.Features.Doctors.Commands.Models;
 using SmartMedicalGuide.Core.Features.Doctors.Queries.Models;
 using SmartMedicalGuide.Data.AppMetaData;
+using SmartMedicalGuide.Services.Abstracts;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SmartMedicalGuide.API.Controllers
@@ -12,6 +13,14 @@ namespace SmartMedicalGuide.API.Controllers
     [ApiController]
     public class DoctorController : AppControllerBase
     {
+        private readonly IDoctorServices _doctorServices;
+        public DoctorController(IDoctorServices doctorServices)
+        {
+            _doctorServices = doctorServices;
+        }
+
+
+
         #region Basic CRUD
         [SwaggerOperation(Summary = "Get all doctors", OperationId = "GetAllDoctors")]
         [HttpGet(Router.DoctorRouting.List)]
@@ -55,6 +64,14 @@ namespace SmartMedicalGuide.API.Controllers
         #endregion
 
         #region Additional Queries
+
+        [SwaggerOperation(Summary = "Get total treated patients count for a doctor", OperationId = "GetTotalTreatedPatientsCount")]
+        [HttpGet(Router.DoctorRouting.GetTotalTreatedPatients)]
+        public async Task<IActionResult> GetTotalTreatedPatientsCount([FromQuery] int doctorId)
+        {
+            var count = await _doctorServices.GetTotalTreatedPatientsCountAsync(doctorId);
+            return Ok(new { succeeded = true, data = count });
+        }
         [SwaggerOperation(Summary = "Get doctor by User ID", OperationId = "GetDoctorByUserId")]
         [HttpGet(Router.DoctorRouting.GetByUserId)]
         public async Task<IActionResult> GetByUserId([FromRoute] int userId)
@@ -127,6 +144,7 @@ namespace SmartMedicalGuide.API.Controllers
             return NewResult(response);
         }
         #endregion
+
 
         #region Additional Commands
         [SwaggerOperation(Summary = "Update doctor verification status", OperationId = "UpdateVerificationStatus")]

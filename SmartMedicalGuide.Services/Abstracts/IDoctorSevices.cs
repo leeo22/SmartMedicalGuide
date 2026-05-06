@@ -11,7 +11,10 @@ namespace SmartMedicalGuide.Services.Abstracts
         Task<string> EditAsync(Doctor doctor);
         Task<string> DeleteAsync(Doctor doctor);
 
+
         // Additional Functions - 11 Functions
+        // أضف هذه الدالة
+        Task<int> GetTotalTreatedPatientsCountAsync(int doctorId);
         Task<Doctor?> GetByUserIdAsync(int userId);
         Task<List<Doctor>> GetBySpecializationIdAsync(int specializationId);
         Task<List<Doctor>> GetVerifiedDoctorsAsync();

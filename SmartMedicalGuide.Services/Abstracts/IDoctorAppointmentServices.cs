@@ -21,6 +21,7 @@ namespace SmartMedicalGuide.Services.Abstracts
         Task<List<DoctorAppointment>> GetPatientUpcomingAppointmentsAsync(int patientId);
         Task<List<DoctorAppointment>> GetDoctorTodayAppointmentsAsync(int doctorId);
         Task<List<DoctorAppointment>> GetDoctorAppointmentsByDateRangeAsync(int doctorId, DateTime fromDate, DateTime toDate);
+
         Task<int> GetDoctorAppointmentsCountAsync(int doctorId);
         Task<bool> CheckDoctorAvailabilityAsync(int doctorId, DateTime appointmentDate);
         Task<object> GetAppointmentsReportAsync(DateTime? fromDate, DateTime? toDate);

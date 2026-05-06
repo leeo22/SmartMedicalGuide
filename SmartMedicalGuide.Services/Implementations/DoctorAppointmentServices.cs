@@ -73,6 +73,8 @@ namespace SmartMedicalGuide.Services.Implementations
         #endregion
 
         #region Additional Functions
+        // أضف هذه الدالة
+
         public async Task<List<DoctorAppointment>> GetByDoctorIdAsync(int doctorId)
         {
             return await _appointmentRepository.GetByDoctorIdAsync(doctorId);

@@ -83,6 +83,10 @@ namespace SmartMedicalGuide.Services.Implementations
         #endregion
 
         #region Additional Functions
+        public async Task<int> GetTotalTreatedPatientsCountAsync(int doctorId)
+        {
+            return await _appointmentRepository.GetTotalTreatedPatientsCountAsync(doctorId);
+        }
         public async Task<Doctor?> GetByUserIdAsync(int userId)
         {
             return await _doctorRepository.GetByUserIdAsync(userId);

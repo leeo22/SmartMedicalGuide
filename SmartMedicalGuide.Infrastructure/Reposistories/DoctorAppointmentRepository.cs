@@ -48,6 +48,17 @@ namespace SmartMedicalGuide.Infrastructure.Repositories
         #endregion
 
         #region Additional Handlers
+        // أضف هذا الكود
+        public async Task<int> GetTotalTreatedPatientsCountAsync(int doctorId)
+        {
+            return await _appointments
+                .Where(x => x.DoctorId == doctorId
+                            && x.Status == "Completed"
+                            && !x.IsDeleted)
+                .Select(x => x.PatientId)
+                .Distinct()
+                .CountAsync();
+        }
         public async Task<List<DoctorAppointment>> GetByDoctorIdAsync(int doctorId)
         {
             return await _appointments

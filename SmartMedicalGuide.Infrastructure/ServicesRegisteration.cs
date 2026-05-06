@@ -68,7 +68,7 @@ namespace SmartMedicalGuide.Infrastructure
             //Swagger Gn
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BedoonSarf Project", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Smart Medical Guide API", Version = "v1" });
                 c.EnableAnnotations();
 
                 c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme

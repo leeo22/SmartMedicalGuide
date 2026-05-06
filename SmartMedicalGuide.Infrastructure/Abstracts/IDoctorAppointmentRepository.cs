@@ -22,6 +22,8 @@ namespace SmartMedicalGuide.Infrastructure.Abstracts
         Task<int> GetDoctorAppointmentsCountAsync(int doctorId);
         Task<bool> CheckDoctorAvailabilityAsync(int doctorId, DateTime appointmentDate);
         Task<object> GetAppointmentsReportAsync(DateTime? fromDate, DateTime? toDate);
+        // أضف هذه الدالة
+        Task<int> GetTotalTreatedPatientsCountAsync(int doctorId);
         #endregion
     }
 }

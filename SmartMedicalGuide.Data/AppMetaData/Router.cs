@@ -131,6 +131,8 @@
             public const string Delete = Prefix + "Delete/{id}";
 
             // Additional Queries
+
+            public const string GetTotalTreatedPatients = Prefix + "GetTotalTreatedPatients";
             public const string GetByUserId = Prefix + "GetByUserId/{userId}";
             public const string GetBySpecialization = Prefix + "GetBySpecialization/{specializationId}";
             public const string GetVerified = Prefix + "GetVerified";

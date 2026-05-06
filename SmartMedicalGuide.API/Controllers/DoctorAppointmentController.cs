@@ -12,6 +12,7 @@ namespace SmartMedicalGuide.API.Controllers
     [ApiController]
     public class DoctorAppointmentController : AppControllerBase
     {
+
         #region Basic CRUD
         [SwaggerOperation(Summary = "Get all appointments", OperationId = "GetAllAppointments")]
         [HttpGet(Router.DoctorAppointmentRouting.List)]
@@ -53,6 +54,9 @@ namespace SmartMedicalGuide.API.Controllers
             return NewResult(response);
         }
         #endregion
+
+
+
         #region Additional Queries
         [SwaggerOperation(Summary = "Get appointments by Doctor ID", OperationId = "GetAppointmentsByDoctorId")]
         [HttpGet(Router.DoctorAppointmentRouting.GetByDoctorId)]
