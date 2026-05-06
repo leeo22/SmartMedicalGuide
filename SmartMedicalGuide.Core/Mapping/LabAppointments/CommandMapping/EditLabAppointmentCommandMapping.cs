@@ -1,11 +1,5 @@
-﻿using SmartMedicalGuide.Core.Features.DoctorAppointments.Commands.Models;
-using SmartMedicalGuide.Core.Features.LabAppointments.Commands.Models;
+﻿using SmartMedicalGuide.Core.Features.LabAppointments.Commands.Models;
 using SmartMedicalGuide.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Mapping.LabAppointments
 {
@@ -14,10 +8,13 @@ namespace SmartMedicalGuide.Core.Mapping.LabAppointments
         public void EditLabAppointmentCommandMapping()
         {
             CreateMap<EditLabAppointmentCommand, LabAppointment>()
-                .ForMember(dest => dest.PatientId, opt => opt
-                .MapFrom(src => src.PatientId))
-                .ForMember(dest => dest.LabAppointmentId, opt => opt
-                .MapFrom(src => src.LabAppointmentId));
+                .ForMember(dest => dest.LabAppointmentId, opt => opt.MapFrom(src => src.LabAppointmentId))
+                .ForMember(dest => dest.AppointmentDate, opt => opt.MapFrom(src => src.AppointmentDate))
+                .ForMember(dest => dest.TestType, opt => opt.MapFrom(src => src.TestType))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Notes, opt => opt.MapFrom(src => src.Notes))
+                .ForMember(dest => dest.BookingSource, opt => opt.MapFrom(src => src.BookingSource));
         }
     }
 }

@@ -1,29 +1,19 @@
-﻿using SmartMedicalGuide.Core.Features.DoctorAppointments.Queries.Results;
-using SmartMedicalGuide.Core.Features.LabAppointments.Queries.Results;
+﻿using SmartMedicalGuide.Core.Features.LabAppointments.Queries.Results;
 using SmartMedicalGuide.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Mapping.LabAppointments
 {
     public partial class LabAppointmentProfile
     {
-        public void GetLabAppointmentByIDMapping()
+        public void GetSingleLabAppointmentResponseMapping()
         {
             CreateMap<LabAppointment, GetSingleLabAppointmentResponse>()
-                                             .ForMember(dest => dest.FullName, opt => opt
-                                                .MapFrom(src => src.FullName))
-                                            .ForMember(dest => dest.PhoneNumber, opt => opt
-                                                .MapFrom(src => src.PhoneNumber))
-                                            .ForMember(dest => dest.TestType, opt => opt
-                                                .MapFrom(src => src.TestType))
-                                            .ForMember(dest => dest.Status, opt => opt
-                                                .MapFrom(src => src.Status))
-                                            .ForMember(dest => dest.Price, opt => opt
-                                                .MapFrom(src => src.Price));
+                .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.FullName : src.FullName))
+                .ForMember(dest => dest.PatientEmail, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.Email : null))
+                .ForMember(dest => dest.PatientPhone, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.PhoneNumber : src.PhoneNumber))
+                .ForMember(dest => dest.LabName, opt => opt.MapFrom(src => src.Lab != null && src.Lab.User != null ? src.Lab.User.FullName : null))
+                .ForMember(dest => dest.LabEmail, opt => opt.MapFrom(src => src.Lab != null && src.Lab.User != null ? src.Lab.User.Email : null))
+                .ForMember(dest => dest.LabPhone, opt => opt.MapFrom(src => src.Lab != null ? src.Lab.PhoneNumber : null));
         }
     }
 }

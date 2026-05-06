@@ -1,19 +1,24 @@
 ﻿using SmartMedicalGuide.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Services.Abstracts
 {
     public interface ILabAppointmentServices
     {
-        public Task<List<LabAppointment>> GetLabAppointmentsListAsync();
-        public Task<string> AddAsync(LabAppointment labAppointment);
-        public Task<LabAppointment> GetLabAppointmentsByIDAsync(int id);
-        public Task<string> EditAsync(LabAppointment labAppointment);
-        public Task<string> DeleteAsync(LabAppointment labAppointment);
+        #region Basic CRUD - 5 Functions
+        Task<List<LabAppointment>> GetListAsync();
+        Task<LabAppointment?> GetByIDAsync(int id);
+        Task<string> AddAsync(LabAppointment appointment);
+        Task<string> EditAsync(LabAppointment appointment);
+        Task<string> DeleteAsync(LabAppointment appointment);
+        #endregion
 
+        #region Additional Important Functions - 6 Functions
+        Task<List<LabAppointment>> GetByLabIdAsync(int labId);
+        Task<List<LabAppointment>> GetByPatientIdAsync(int patientId);
+        Task<List<LabAppointment>> GetByStatusAsync(string status);
+        Task<List<LabAppointment>> GetLabUpcomingAppointmentsAsync(int labId);
+        Task<List<LabAppointment>> GetPatientUpcomingAppointmentsAsync(int patientId);
+        Task<bool> CheckLabAvailabilityAsync(int labId, DateTime appointmentDate);
+        #endregion
     }
 }

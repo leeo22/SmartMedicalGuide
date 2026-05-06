@@ -1,15 +1,16 @@
 ﻿using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Infrastructure.InfrastuctureBases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Infrastructure.Abstracts
 {
     public interface ILabServiceRepository : IGenericRepositoryAsync<LabService>
     {
-        public Task<List<LabService>> GetLabServicesListAsync();
+        Task<LabService?> GetServiceByIdWithIncludesAsync(int id);
+        Task<List<LabService>> GetAllServicesWithIncludesAsync();
+        Task<List<LabService>> GetByLabIdAsync(int labId);
+        Task<List<LabService>> GetByPriceRangeAsync(decimal minPrice, decimal maxPrice);
+        Task<List<LabService>> SearchServicesAsync(string keyword);
+        Task<List<LabService>> GetActiveServicesAsync();
+        Task<List<LabService>> GetLabServicesWithLabAsync(int labId);
     }
 }

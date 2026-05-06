@@ -1,53 +1,111 @@
 ﻿using AutoMapper;
 using MediatR;
 using SmartMedicalGuide.Core.Bases;
-using SmartMedicalGuide.Core.Features.LabsServices.Queries.Models;
-using SmartMedicalGuide.Core.Features.LabsServices.Queries.Results;
+using SmartMedicalGuide.Core.Features.LabServices.Queries.Models;
+using SmartMedicalGuide.Core.Features.LabServices.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
 
-namespace SmartMedicalGuide.Core.Features.LabsServices.Queries.Handlers
+namespace SmartMedicalGuide.Core.Features.LabServices.Queries.Handlers
 {
     public class LabServiceQueryHandler : ResponseHandler,
-                                       IRequestHandler<GetLabServiceListQuery, Response<List<GetLabServiceListResponse>>>,
-                                       IRequestHandler<GetLabServiceByIDQuery, Response<GetSingleLabServiceResponse>>
+        IRequestHandler<GetLabServiceListQuery, Response<List<GetLabServiceListResponse>>>,
+        IRequestHandler<GetLabServiceByIdQuery, Response<GetSingleLabServiceResponse>>,
+        IRequestHandler<GetLabServicesWithLabQuery, Response<List<GetLabServiceListResponse>>>
     {
-        #region Fields
-        private readonly ILabServiceServices _labServiceServices;
+        private readonly ILabServiceServices _serviceServices;
         private readonly IMapper _mapper;
-        #endregion
 
-        #region Constructors
-        public LabServiceQueryHandler(ILabServiceServices labServiceServices, IMapper mapper)
+        public LabServiceQueryHandler(ILabServiceServices serviceServices, IMapper mapper)
         {
-            _labServiceServices = labServiceServices;
+            _serviceServices = serviceServices;
             _mapper = mapper;
         }
-        #endregion
 
-        #region Handlers Functions
         public async Task<Response<List<GetLabServiceListResponse>>> Handle(GetLabServiceListQuery request, CancellationToken cancellationToken)
         {
-            var resultList = await _labServiceServices.GetLabServicesListAsync();
+            List<LabService> services;
 
-            // فلترة حسب LabId إذا تم توفيره
             if (request.LabId.HasValue)
             {
-                resultList = resultList.Where(l => l.LabId == request.LabId.Value).ToList();
+                services = await _serviceServices.GetByLabIdAsync(request.LabId.Value);
+            }
+            else if (request.MinPrice.HasValue && request.MaxPrice.HasValue)
+            {
+                services = await _serviceServices.GetByPriceRangeAsync(request.MinPrice.Value, request.MaxPrice.Value);
+            }
+            else if (!string.IsNullOrWhiteSpace(request.SearchKeyword))
+            {
+                services = await _serviceServices.SearchServicesAsync(request.SearchKeyword);
+            }
+            else if (!string.IsNullOrWhiteSpace(request.Category))
+            {
+                services = await _serviceServices.GetListAsync();
+                services = services.Where(x => x.Category == request.Category).ToList();
+            }
+            else
+            {
+                services = await _serviceServices.GetListAsync();
             }
 
-            var resultListMapper = _mapper.Map<List<GetLabServiceListResponse>>(resultList);
-            return Success(resultListMapper);
+            var result = _mapper.Map<List<GetLabServiceListResponse>>(services);
+
+            // Calculate final price after discount
+            foreach (var item in result)
+            {
+                if (item.DiscountPercentage.HasValue && item.DiscountPercentage.Value > 0)
+                {
+                    item.FinalPrice = item.Price - (item.Price * (item.DiscountPercentage.Value / 100));
+                }
+                else
+                {
+                    item.FinalPrice = item.Price;
+                }
+            }
+
+            return Success(result);
         }
 
-        public async Task<Response<GetSingleLabServiceResponse>> Handle(GetLabServiceByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetSingleLabServiceResponse>> Handle(GetLabServiceByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _labServiceServices.GetLabByIDAsync(request.Id);
-            if (result == null)
-                return NotFound<GetSingleLabServiceResponse>("No lab service found with this ID");
+            var service = await _serviceServices.GetByIDAsync(request.Id);
+            if (service == null)
+                return NotFound<GetSingleLabServiceResponse>("Service not found");
 
-            var result1 = _mapper.Map<GetSingleLabServiceResponse>(result);
-            return Success(result1);
+            var result = _mapper.Map<GetSingleLabServiceResponse>(service);
+
+            // Calculate final price after discount
+            if (result.DiscountPercentage.HasValue && result.DiscountPercentage.Value > 0)
+            {
+                result.FinalPrice = result.Price - (result.Price * (result.DiscountPercentage.Value / 100));
+            }
+            else
+            {
+                result.FinalPrice = result.Price;
+            }
+
+            return Success(result);
         }
-        #endregion
+
+        public async Task<Response<List<GetLabServiceListResponse>>> Handle(GetLabServicesWithLabQuery request, CancellationToken cancellationToken)
+        {
+            var services = await _serviceServices.GetLabServicesWithLabAsync(request.LabId);
+            var result = _mapper.Map<List<GetLabServiceListResponse>>(services);
+
+            // Calculate final price after discount
+            foreach (var item in result)
+            {
+                if (item.DiscountPercentage.HasValue && item.DiscountPercentage.Value > 0)
+                {
+                    item.FinalPrice = item.Price - (item.Price * (item.DiscountPercentage.Value / 100));
+                }
+                else
+                {
+                    item.FinalPrice = item.Price;
+                }
+            }
+
+            return Success(result);
+        }
     }
 }

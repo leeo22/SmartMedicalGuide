@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SmartMedicalGuide.Data.Entities.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartMedicalGuide.Data.Entities
 {
@@ -24,6 +26,26 @@ namespace SmartMedicalGuide.Data.Entities
         public decimal? Price { get; set; }
 
         public Payment? Payment { get; set; }
+
+        // حذف منطقي
+        public bool IsDeleted { get; set; } = false;
+
+        // مصدر الحجز (Online, Phone, Walk-in)
+        [MaxLength(50)]
+        public string? BookingSource { get; set; }
+
+        // ملاحظات إضافية على الموعد
+        public string? Notes { get; set; }
+
+        // سبب إلغاء الموعد
+        public string? CancellationReason { get; set; }
+
+        // معرف المستخدم الذي قام بإعادة الجدولة
+        public int? RescheduledByUserId { get; set; }
+
+        // Navigation Property للمستخدم الذي قام بإعادة الجدولة
+        [ForeignKey("RescheduledByUserId")]
+        public virtual User? RescheduledByUser { get; set; }
     }
 
 }

@@ -209,32 +209,52 @@
         public static class LabRouting
         {
             public const string Prefix = Rule + "Lab/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoints
+            public const string GetByUserId = Prefix + "GetByUserId/{userId}";
+            public const string GetWithServices = Prefix + "GetWithServices/{id}";
+            public const string Search = Prefix + "Search";
+            public const string GetVerified = Prefix + "GetVerified";
+            public const string UpdateVerification = Prefix + "UpdateVerificationStatus";
         }
         public static class LabAppointmentRouting
         {
             public const string Prefix = Rule + "LabAppointment/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoints
+            public const string Cancel = Prefix + "Cancel";
+            public const string Confirm = Prefix + "Confirm";
+            public const string Complete = Prefix + "Complete";
+            public const string CheckAvailability = Prefix + "CheckAvailability";
         }
         public static class LabServiceRouting
         {
             public const string Prefix = Rule + "LabService/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoints
+            public const string GetWithLab = Prefix + "GetWithLab/{labId}";
+            public const string Search = Prefix + "Search";
         }
         public static class MedicalReportRouting
         {

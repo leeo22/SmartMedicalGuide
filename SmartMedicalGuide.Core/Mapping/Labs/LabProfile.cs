@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SmartMedicalGuide.Core.Mapping.Labs
 {
@@ -6,10 +7,10 @@ namespace SmartMedicalGuide.Core.Mapping.Labs
     {
         public LabProfile()
         {
-            EditLabCommandMapping();
             AddLabCommandMapping();
-            GetLabByIDMapping();
-            GetLabListMapping();
+            EditLabCommandMapping();
+            GetLabListResponseMapping();
+            GetSingleLabResponseMapping();
         }
     }
 }

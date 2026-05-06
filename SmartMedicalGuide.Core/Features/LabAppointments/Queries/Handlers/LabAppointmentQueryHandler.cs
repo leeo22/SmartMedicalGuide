@@ -1,57 +1,75 @@
 ﻿using AutoMapper;
 using MediatR;
 using SmartMedicalGuide.Core.Bases;
-using SmartMedicalGuide.Core.Features.DoctorAppointments.Queries.Results;
 using SmartMedicalGuide.Core.Features.LabAppointments.Queries.Models;
 using SmartMedicalGuide.Core.Features.LabAppointments.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
-using SmartMedicalGuide.Services.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Features.LabAppointments.Queries.Handlers
 {
     public class LabAppointmentQueryHandler : ResponseHandler,
-                                        IRequestHandler<GetLabAppointmentListQuery, Response<List<GetLabAppointmentListRespones>>>,
-                                        IRequestHandler<GetLabAppointmentByIDQuery, Response<GetSingleLabAppointmentResponse>>
+        IRequestHandler<GetLabAppointmentListQuery, Response<List<GetLabAppointmentListResponse>>>,
+        IRequestHandler<GetLabAppointmentByIdQuery, Response<GetSingleLabAppointmentResponse>>,
+        IRequestHandler<CheckLabAvailabilityQuery, Response<bool>>
     {
-
-        #region Fields
-        private readonly ILabAppointmentServices _labServices;
+        private readonly ILabAppointmentServices _appointmentServices;
         private readonly IMapper _mapper;
 
-        #endregion
-
-
-
-        #region Constructors
-        public LabAppointmentQueryHandler(ILabAppointmentServices labServices, IMapper mapper)
+        public LabAppointmentQueryHandler(ILabAppointmentServices appointmentServices, IMapper mapper)
         {
-            _labServices = labServices;
+            _appointmentServices = appointmentServices;
             _mapper = mapper;
         }
-        #endregion
 
-
-
-        #region Handels Functions
-        public async Task<Response<GetSingleLabAppointmentResponse>> Handle(GetLabAppointmentByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<List<GetLabAppointmentListResponse>>> Handle(GetLabAppointmentListQuery request, CancellationToken cancellationToken)
         {
-            var appointment = await _labServices.GetLabAppointmentsByIDAsync(request.Id);
-            if (appointment == null) return NotFound<GetSingleLabAppointmentResponse>("No Patient same ID");
+            List<LabAppointment> appointments;
+
+            if (request.Upcoming.HasValue && request.Upcoming.Value && request.LabId.HasValue)
+            {
+                appointments = await _appointmentServices.GetLabUpcomingAppointmentsAsync(request.LabId.Value);
+            }
+            else if (request.LabId.HasValue)
+            {
+                appointments = await _appointmentServices.GetByLabIdAsync(request.LabId.Value);
+            }
+            else if (request.PatientId.HasValue)
+            {
+                appointments = await _appointmentServices.GetByPatientIdAsync(request.PatientId.Value);
+            }
+            else if (!string.IsNullOrWhiteSpace(request.Status))
+            {
+                appointments = await _appointmentServices.GetByStatusAsync(request.Status);
+            }
+            else if (request.Date.HasValue)
+            {
+                appointments = await _appointmentServices.GetListAsync();
+                appointments = appointments.Where(x => x.AppointmentDate.Date == request.Date.Value.Date).ToList();
+            }
+            else
+            {
+                appointments = await _appointmentServices.GetListAsync();
+            }
+
+            var result = _mapper.Map<List<GetLabAppointmentListResponse>>(appointments);
+            return Success(result);
+        }
+
+        public async Task<Response<GetSingleLabAppointmentResponse>> Handle(GetLabAppointmentByIdQuery request, CancellationToken cancellationToken)
+        {
+            var appointment = await _appointmentServices.GetByIDAsync(request.Id);
+            if (appointment == null)
+                return NotFound<GetSingleLabAppointmentResponse>("Appointment not found");
+
             var result = _mapper.Map<GetSingleLabAppointmentResponse>(appointment);
             return Success(result);
         }
 
-        public async Task<Response<List<GetLabAppointmentListRespones>>> Handle(GetLabAppointmentListQuery request, CancellationToken cancellationToken)
+        public async Task<Response<bool>> Handle(CheckLabAvailabilityQuery request, CancellationToken cancellationToken)
         {
-            var labList = await _labServices.GetLabAppointmentsListAsync();
-            var labListMapper = _mapper.Map<List<GetLabAppointmentListRespones>>(labList);
-            return Success(labListMapper);
+            var isAvailable = await _appointmentServices.CheckLabAvailabilityAsync(request.LabId, request.AppointmentDate);
+            return Success(isAvailable);
         }
-        #endregion
     }
 }

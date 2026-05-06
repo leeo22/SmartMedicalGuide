@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartMedicalGuide.Core.Features.LabAppointments.Queries.Results
+﻿namespace SmartMedicalGuide.Core.Features.LabAppointments.Queries.Results
 {
-    public class GetLabAppointmentListRespones
+    public class GetLabAppointmentListResponse
     {
         public int LabAppointmentId { get; set; }
-        public string FullName { get; set; }
-        public string PhoneNumber { get; set; }
-        public int Age { get; set; }
-        public string Gender { get; set; }
-
+        public int PatientId { get; set; }
+        public string PatientName { get; set; }
+        public int LabId { get; set; }
+        public string LabName { get; set; }
+        public string? TestType { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public string TestType { get; set; }
+        public decimal? Price { get; set; }
         public string Status { get; set; }
-        public decimal Price { get; set; }
+        public string? BookingSource { get; set; }
     }
 }

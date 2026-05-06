@@ -4,9 +4,8 @@ using SmartMedicalGuide.Core.Features.LabServices.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.LabServices.Queries.Models
 {
-    public class GetLabServiceByIdQuery : IRequest<Response<GetSingleLabServiceResponse>>
+    public class GetLabServicesWithLabQuery : IRequest<Response<List<GetLabServiceListResponse>>>
     {
-        public int Id { get; set; }
-        public GetLabServiceByIdQuery(int id) => Id = id;
+        public int LabId { get; set; }
     }
 }

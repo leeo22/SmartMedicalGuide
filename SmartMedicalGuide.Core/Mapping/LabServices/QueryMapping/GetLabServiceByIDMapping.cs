@@ -1,21 +1,17 @@
-﻿using SmartMedicalGuide.Core.Features.LabsServices.Queries.Results;
+﻿using SmartMedicalGuide.Core.Features.LabServices.Queries.Results;
 using SmartMedicalGuide.Data.Entities;
 
 namespace SmartMedicalGuide.Core.Mapping.LabServices
 {
     public partial class LabServiceProfile
     {
-        public void GetLabServiceByIDMapping()
+        public void GetSingleLabServiceResponseMapping()
         {
             CreateMap<LabService, GetSingleLabServiceResponse>()
-                .ForMember(dest => dest.ServiceId, opt => opt.MapFrom(src => src.ServiceId))
-                .ForMember(dest => dest.LabId, opt => opt.MapFrom(src => src.LabId))
-                .ForMember(dest => dest.LabName, opt => opt.MapFrom(src => src.Lab != null ? src.Lab.CenterName : null))
-                .ForMember(dest => dest.LabCenterName, opt => opt.MapFrom(src => src.Lab != null ? src.Lab.CenterName : null))
-                .ForMember(dest => dest.LabPhoneNumber, opt => opt.MapFrom(src => src.Lab != null ? src.Lab.PhoneNumber : null))
-                .ForMember(dest => dest.ServiceName, opt => opt.MapFrom(src => src.ServiceName))
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
+                .ForMember(dest => dest.LabName, opt => opt.MapFrom(src => src.Lab != null && src.Lab.User != null ? src.Lab.User.FullName : null))
+                .ForMember(dest => dest.LabEmail, opt => opt.MapFrom(src => src.Lab != null && src.Lab.User != null ? src.Lab.User.Email : null))
+                .ForMember(dest => dest.LabPhone, opt => opt.MapFrom(src => src.Lab != null ? src.Lab.PhoneNumber : null))
+                .ForMember(dest => dest.FinalPrice, opt => opt.Ignore()); // يتم حسابه في الـ Handler
         }
     }
 }

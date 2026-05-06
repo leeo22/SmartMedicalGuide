@@ -1,75 +1,58 @@
 ﻿using AutoMapper;
 using MediatR;
 using SmartMedicalGuide.Core.Bases;
-using SmartMedicalGuide.Core.Features.LabsServices.Commands.Models;
+using SmartMedicalGuide.Core.Features.LabServices.Commands.Models;
 using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
 
-namespace SmartMedicalGuide.Core.Features.LabsServices.Commands.Handlers
+namespace SmartMedicalGuide.Core.Features.LabServices.Commands.Handlers
 {
     public class LabServiceCommandHandler : ResponseHandler,
-                                       IRequestHandler<AddLabServiceCommand, Response<string>>,
-                                       IRequestHandler<EditLabServiceCommand, Response<string>>,
-                                       IRequestHandler<DeleteLabServiceCommand, Response<string>>
+        IRequestHandler<AddLabServiceCommand, Response<string>>,
+        IRequestHandler<EditLabServiceCommand, Response<string>>,
+        IRequestHandler<DeleteLabServiceCommand, Response<string>>
     {
-        #region Fields
-        private readonly ILabServiceServices _labServiceServices;
+        private readonly ILabServiceServices _serviceServices;
         private readonly IMapper _mapper;
-        #endregion
 
-        #region Constructors
-        public LabServiceCommandHandler(ILabServiceServices labServiceServices, IMapper mapper)
+        public LabServiceCommandHandler(ILabServiceServices serviceServices, IMapper mapper)
         {
-            _labServiceServices = labServiceServices;
+            _serviceServices = serviceServices;
             _mapper = mapper;
         }
-        #endregion
 
-        #region Handlers Functions
         public async Task<Response<string>> Handle(AddLabServiceCommand request, CancellationToken cancellationToken)
         {
-            // التحقق من وجود المختبر
-            //var labExists = await _labServiceServices.DoesLabExistAsync(request.LabId);
-            //if (!labExists)
-            //    return BadRequest<string>("Lab not found");
+            var service = _mapper.Map<LabService>(request);
+            var result = await _serviceServices.AddAsync(service);
 
-            var resultMapper = _mapper.Map<LabService>(request);
-            var result = await _labServiceServices.AddAsync(resultMapper);
+            if (result != "Success")
+                return BadRequest<string>(result);
 
-            if (result == "Success")
-                return Created("Lab service added successfully");
-            else
-                return BadRequest<string>();
+            return Created("Lab service added successfully");
         }
 
         public async Task<Response<string>> Handle(EditLabServiceCommand request, CancellationToken cancellationToken)
         {
-            var result = await _labServiceServices.GetLabByIDAsync(request.ServiceId);
-            if (result == null)
-                return NotFound<string>("Lab service not found");
+            var service = _mapper.Map<LabService>(request);
+            var result = await _serviceServices.EditAsync(service);
 
-            var resultMapper = _mapper.Map<LabService>(request);
-            var result1 = await _labServiceServices.EditAsync(resultMapper);
+            if (result == "Service not found")
+                return NotFound<string>("Service not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
 
-            if (result1 == "Success")
-                return Success("Lab service edited successfully");
-            else
-                return BadRequest<string>();
+            return Success("Lab service edited successfully");
         }
 
         public async Task<Response<string>> Handle(DeleteLabServiceCommand request, CancellationToken cancellationToken)
         {
-            var result = await _labServiceServices.GetLabByIDAsync(request.Id);
-            if (result == null)
-                return NotFound<string>("Lab service not found");
+            var service = await _serviceServices.GetByIDAsync(request.Id);
+            if (service == null)
+                return NotFound<string>("Service not found");
 
-            var result1 = await _labServiceServices.DeleteAsync(result);
-
-            if (result1 == "Success")
-                return Deleted<string>($"Lab service deleted successfully: {request.Id}");
-            else
-                return BadRequest<string>();
+            var result = await _serviceServices.DeleteAsync(service);
+            return result == "Success" ? Deleted<string>("Lab service deleted successfully") : BadRequest<string>(result);
         }
-        #endregion
     }
 }

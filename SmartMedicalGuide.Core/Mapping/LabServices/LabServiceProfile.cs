@@ -8,8 +8,8 @@ namespace SmartMedicalGuide.Core.Mapping.LabServices
         {
             AddLabServiceCommandMapping();
             EditLabServiceCommandMapping();
-            GetLabServiceByIDMapping();
-            GetLabServiceListMapping();
+            GetLabServiceListResponseMapping();
+            GetSingleLabServiceResponseMapping();
         }
     }
 }

@@ -5,13 +5,11 @@ namespace SmartMedicalGuide.Core.Mapping.Labs
 {
     public partial class LabProfile
     {
-        public void GetLabListMapping()
+        public void GetLabListResponseMapping()
         {
-            CreateMap<Lab, GetLabListRespones>()
-                .ForMember(dest => dest.RoleName, opt => opt
-                //.MapFrom(src => src.User.Role.RoleName))
-                //.ForMember(dest => dest.UserName, opt => opt
-                .MapFrom(src => src.User.FullName));
+            CreateMap<Lab, GetLabListResponse>()
+                .ForMember(dest => dest.LabName, opt => opt.MapFrom(src => src.User != null ? src.User.FullName : null))
+                .ForMember(dest => dest.ServicesCount, opt => opt.MapFrom(src => src.LabServices != null ? src.LabServices.Count : 0));
         }
     }
 }

@@ -1,30 +1,15 @@
-﻿using SmartMedicalGuide.Core.Features.DoctorAppointments.Queries.Results;
-using SmartMedicalGuide.Core.Features.LabAppointments.Queries.Results;
+﻿using SmartMedicalGuide.Core.Features.LabAppointments.Queries.Results;
 using SmartMedicalGuide.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Mapping.LabAppointments
 {
     public partial class LabAppointmentProfile
     {
-        public void GetLabAppointmentListMapping()
+        public void GetLabAppointmentListResponseMapping()
         {
-            CreateMap<LabAppointment, GetLabAppointmentListRespones>()
-                .ForMember(dest => dest.FullName, opt => opt
-                                                .MapFrom(src => src.FullName))
-                                            .ForMember(dest => dest.PhoneNumber, opt => opt
-                                                .MapFrom(src => src.PhoneNumber))
-                                            .ForMember(dest => dest.TestType, opt => opt
-                                                .MapFrom(src => src.TestType))
-                                            .ForMember(dest => dest.Status, opt => opt
-                                                .MapFrom(src => src.Status))
-                                            .ForMember(dest => dest.Price, opt => opt
-                                                .MapFrom(src => src.Price));
+            CreateMap<LabAppointment, GetLabAppointmentListResponse>()
+                .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.FullName : src.FullName))
+                .ForMember(dest => dest.LabName, opt => opt.MapFrom(src => src.Lab != null && src.Lab.User != null ? src.Lab.User.FullName : null));
         }
-
     }
 }

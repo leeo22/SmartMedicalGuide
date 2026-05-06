@@ -1,9 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartMedicalGuide.Core.Mapping.LabAppointments
 {
@@ -11,10 +6,10 @@ namespace SmartMedicalGuide.Core.Mapping.LabAppointments
     {
         public LabAppointmentProfile()
         {
-            GetLabAppointmentListMapping();
             AddLabAppointmentCommandMapping();
             EditLabAppointmentCommandMapping();
-            GetLabAppointmentByIDMapping();
+            GetLabAppointmentListResponseMapping();
+            GetSingleLabAppointmentResponseMapping();
         }
     }
 }
