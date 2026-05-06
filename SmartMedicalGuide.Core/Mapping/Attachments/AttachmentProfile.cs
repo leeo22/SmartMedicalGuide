@@ -8,8 +8,8 @@ namespace SmartMedicalGuide.Core.Mapping.Attachments
         {
             AddAttachmentCommandMapping();
             EditAttachmentCommandMapping();
-            GetAttachmentByIDMapping();
-            GetAttachmentListMapping();
+            GetAttachmentListResponseMapping();
+            GetSingleAttachmentResponseMapping();
         }
     }
 }

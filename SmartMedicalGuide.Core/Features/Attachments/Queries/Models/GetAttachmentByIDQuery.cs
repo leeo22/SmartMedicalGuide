@@ -4,9 +4,9 @@ using SmartMedicalGuide.Core.Features.Attachments.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Attachments.Queries.Models
 {
-    public class GetAttachmentByIDQuery : IRequest<Response<GetSingleAttachmentResponse>>
+    public class GetAttachmentByIdQuery : IRequest<Response<GetSingleAttachmentResponse>>
     {
         public int Id { get; set; }
-        public GetAttachmentByIDQuery(int id) => Id = id;
+        public GetAttachmentByIdQuery(int id) => Id = id;
     }
 }

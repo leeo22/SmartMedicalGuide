@@ -7,7 +7,7 @@ namespace SmartMedicalGuide.Core.Features.Attachments.Queries.Models
     public class GetAttachmentListQuery : IRequest<Response<List<GetAttachmentListResponse>>>
     {
         public int? UserId { get; set; }
-        public GetAttachmentListQuery() { }
-        public GetAttachmentListQuery(int? userId) => UserId = userId;
+        public string? RelatedEntityType { get; set; }
+        public int? RelatedEntityId { get; set; }
     }
 }

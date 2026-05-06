@@ -2,6 +2,8 @@
 using SmartMedicalGuide.Service.Abstracts;
 using SmartMedicalGuide.Service.Implementations;
 using SmartMedicalGuide.Services.Abstracts;
+using SmartMedicalGuide.Services.AuthServices.Implementations;
+using SmartMedicalGuide.Services.AuthServices.Interfaces;
 using SmartMedicalGuide.Services.Implementations;
 
 namespace SmartMedicalGuide.Services
@@ -34,6 +36,7 @@ namespace SmartMedicalGuide.Services
             services.AddTransient<IAuditLogServices, AuditLogServices>();
             services.AddTransient<ITransactionServices, TransactionServices>();
             services.AddTransient<IChatServices, ChatServices>();
+            services.AddTransient<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IChatParticipantServices, ChatParticipantServices>();
             services.AddTransient<ILabServiceServices, LabServiceServices>();
             services.AddTransient<IMedicalReportServices, MedicalReportServices>();

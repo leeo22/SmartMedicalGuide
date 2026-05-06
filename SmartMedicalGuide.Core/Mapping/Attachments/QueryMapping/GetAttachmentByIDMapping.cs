@@ -5,15 +5,11 @@ namespace SmartMedicalGuide.Core.Mapping.Attachments
 {
     public partial class AttachmentProfile
     {
-        public void GetAttachmentByIDMapping()
+        public void GetSingleAttachmentResponseMapping()
         {
             CreateMap<Attachment, GetSingleAttachmentResponse>()
-                .ForMember(dest => dest.AttachmentId, opt => opt.MapFrom(src => src.AttachmentId))
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.FullName : null))
-                .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User != null ? src.User.Email : null))
-                .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src => src.FilePath))
-                .ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => src.UploadedAt));
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.UserName : null))
+                .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User != null ? src.User.Email : null));
         }
     }
 }

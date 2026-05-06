@@ -105,13 +105,13 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name,user.UserName),
-                new Claim(ClaimTypes.NameIdentifier,user.UserName),
-                new Claim(ClaimTypes.Email,user.Email),
-                new Claim(nameof(UserClaimModel.PhoneNumber), user.PhoneNumber),
-                new Claim(nameof(UserClaimModel.Id), user.Id.ToString())
-            };
+    {
+        new Claim(ClaimTypes.Name, user.UserName),
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),  // ✅ التصحيح هنا
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(nameof(UserClaimModel.PhoneNumber), user.PhoneNumber ?? ""),
+        new Claim(nameof(UserClaimModel.Id), user.Id.ToString())
+    };
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
@@ -126,21 +126,26 @@ namespace SmartMedicalGuide.Services.Implementations
             var (jwtSecurityToken, newToken) = await GenerateJWTToken(user);
             var response = new JwtAuthResult();
             response.AccessToken = newToken;
-            var refreshTokenResult = new RefreshToken();
-            var userNameClaim = jwtToken.Claims;
-            userNameClaim.FirstOrDefault(x => x.Type == nameof(UserClaimModel.UserName));
 
-            ////        if (userNameClaim == null)
-            ////            throw new Exception("UserName claim not found");
+            // إنشاء RefreshToken جديد
+            var newRefreshToken = GetRefreshToken(user.UserName);
 
-            ////        refreshTokenResult.UserName = userNameClaim.Value;
-            //refreshTokenResult.UserName = user.UserName;
-            refreshTokenResult.UserName = jwtToken.Claims.FirstOrDefault(x => x.Type == nameof(UserClaimModel.UserName)).Value;
-            refreshTokenResult.TokenString = refreshToken;
-            refreshTokenResult.ExpireAt = (DateTime)expiryDate;
-            response.refreshToken = refreshTokenResult;
+            // حفظ RefreshToken الجديد في قاعدة البيانات
+            var userRefreshToken = new UserRefreshToken
+            {
+                AddedTime = DateTime.Now,
+                ExpiryDate = DateTime.Now.AddDays(_jwtSettings.RefreshTokenExpireDate),
+                IsUsed = true,
+                IsRevoked = false,
+                JwtId = jwtSecurityToken.Id,
+                RefreshToken = newRefreshToken.TokenString,
+                Token = newToken,
+                UserId = user.Id
+            };
+            await _refreshTokenRepository.AddAsync(userRefreshToken);
+
+            response.refreshToken = newRefreshToken;
             return response;
-
         }
         public JwtSecurityToken ReadJWTToken(string accessToken)
         {

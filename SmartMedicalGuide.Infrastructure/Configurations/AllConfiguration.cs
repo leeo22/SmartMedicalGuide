@@ -77,16 +77,7 @@ namespace SmartMedicalGuide.Infrastructure.Configurations
                  .OnDelete(DeleteBehavior.Cascade);
         }
     }
-    public class FavoriteConfiguration : IEntityTypeConfiguration<Favorite>
-    {
-        public void Configure(EntityTypeBuilder<Favorite> builder)
-        {
-            // Favorite (Unique Constraint)
-            builder
-                 .HasIndex(f => new { f.PatientId, f.DoctorId })
-                 .IsUnique();
-        }
-    }
+
     public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
     {
         public void Configure(EntityTypeBuilder<Notification> builder)

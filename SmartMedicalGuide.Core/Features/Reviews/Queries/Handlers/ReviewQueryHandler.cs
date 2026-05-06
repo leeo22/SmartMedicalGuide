@@ -3,13 +3,19 @@ using MediatR;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Reviews.Queries.Models;
 using SmartMedicalGuide.Core.Features.Reviews.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.Reviews.Queries.Handlers
 {
     public class ReviewQueryHandler : ResponseHandler,
         IRequestHandler<GetReviewListQuery, Response<List<GetReviewListResponse>>>,
-        IRequestHandler<GetReviewByIDQuery, Response<GetSingleReviewResponse>>
+        IRequestHandler<GetReviewByIdQuery, Response<GetSingleReviewResponse>>,
+        IRequestHandler<GetAverageRatingQuery, Response<double>>,
+        IRequestHandler<GetRatingDistributionQuery, Response<object>>,
+        IRequestHandler<GetRecentReviewsQuery, Response<List<GetReviewListResponse>>>,
+        IRequestHandler<CheckPatientReviewedQuery, Response<bool>>,
+        IRequestHandler<GetReviewStatisticsQuery, Response<object>>
     {
         private readonly IReviewServices _reviewServices;
         private readonly IMapper _mapper;
@@ -22,25 +28,73 @@ namespace SmartMedicalGuide.Core.Features.Reviews.Queries.Handlers
 
         public async Task<Response<List<GetReviewListResponse>>> Handle(GetReviewListQuery request, CancellationToken cancellationToken)
         {
-            var resultList = await _reviewServices.GetListAsync();
-            if (request.PatientId.HasValue)
-                resultList = resultList.Where(r => r.PatientId == request.PatientId.Value).ToList();
-            if (!string.IsNullOrEmpty(request.TargetType))
-                resultList = resultList.Where(r => r.TargetType == request.TargetType).ToList();
-            if (request.TargetId.HasValue)
-                resultList = resultList.Where(r => r.TargetId == request.TargetId.Value).ToList();
-            if (request.Rating.HasValue)
-                resultList = resultList.Where(r => r.Rating == request.Rating.Value).ToList();
-            var resultListMapper = _mapper.Map<List<GetReviewListResponse>>(resultList);
-            return Success(resultListMapper);
+            List<Review> reviews;
+
+            if (!string.IsNullOrWhiteSpace(request.TargetType) && request.TargetId.HasValue)
+            {
+                reviews = await _reviewServices.GetByTargetAsync(request.TargetType, request.TargetId.Value);
+            }
+            else if (request.PatientId.HasValue)
+            {
+                reviews = await _reviewServices.GetByPatientIdAsync(request.PatientId.Value);
+            }
+            else
+            {
+                reviews = await _reviewServices.GetListAsync();
+            }
+
+            if (request.MinRating.HasValue)
+            {
+                reviews = reviews.Where(x => x.Rating >= request.MinRating.Value).ToList();
+            }
+            if (request.MaxRating.HasValue)
+            {
+                reviews = reviews.Where(x => x.Rating <= request.MaxRating.Value).ToList();
+            }
+
+            var result = _mapper.Map<List<GetReviewListResponse>>(reviews);
+            return Success(result);
         }
 
-        public async Task<Response<GetSingleReviewResponse>> Handle(GetReviewByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetSingleReviewResponse>> Handle(GetReviewByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _reviewServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<GetSingleReviewResponse>("No review found");
-            var result1 = _mapper.Map<GetSingleReviewResponse>(result);
-            return Success(result1);
+            var review = await _reviewServices.GetByIDAsync(request.Id);
+            if (review == null)
+                return NotFound<GetSingleReviewResponse>("Review not found");
+
+            var result = _mapper.Map<GetSingleReviewResponse>(review);
+            return Success(result);
+        }
+
+        public async Task<Response<double>> Handle(GetAverageRatingQuery request, CancellationToken cancellationToken)
+        {
+            var average = await _reviewServices.GetAverageRatingAsync(request.TargetType, request.TargetId);
+            return Success(Math.Round(average, 1));
+        }
+
+        public async Task<Response<object>> Handle(GetRatingDistributionQuery request, CancellationToken cancellationToken)
+        {
+            var distribution = await _reviewServices.GetRatingDistributionAsync(request.TargetType, request.TargetId);
+            return Success(distribution);
+        }
+
+        public async Task<Response<List<GetReviewListResponse>>> Handle(GetRecentReviewsQuery request, CancellationToken cancellationToken)
+        {
+            var reviews = await _reviewServices.GetRecentReviewsAsync(request.TargetType, request.TargetId, request.Page, request.PageSize);
+            var result = _mapper.Map<List<GetReviewListResponse>>(reviews);
+            return Success(result);
+        }
+
+        public async Task<Response<bool>> Handle(CheckPatientReviewedQuery request, CancellationToken cancellationToken)
+        {
+            var reviewed = await _reviewServices.CheckPatientReviewedAsync(request.PatientId, request.TargetType, request.TargetId);
+            return Success(reviewed);
+        }
+
+        public async Task<Response<object>> Handle(GetReviewStatisticsQuery request, CancellationToken cancellationToken)
+        {
+            var statistics = await _reviewServices.GetReviewStatisticsAsync();
+            return Success(statistics);
         }
     }
 }

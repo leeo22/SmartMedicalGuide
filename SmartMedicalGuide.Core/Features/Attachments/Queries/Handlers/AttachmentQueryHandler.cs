@@ -3,13 +3,16 @@ using MediatR;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Attachments.Queries.Models;
 using SmartMedicalGuide.Core.Features.Attachments.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.Attachments.Queries.Handlers
 {
     public class AttachmentQueryHandler : ResponseHandler,
         IRequestHandler<GetAttachmentListQuery, Response<List<GetAttachmentListResponse>>>,
-        IRequestHandler<GetAttachmentByIDQuery, Response<GetSingleAttachmentResponse>>
+        IRequestHandler<GetAttachmentByIdQuery, Response<GetSingleAttachmentResponse>>,
+        IRequestHandler<DownloadFileQuery, Response<(string filePath, string fileName, string contentType)>>,
+        IRequestHandler<GetTotalFileSizeQuery, Response<long>>
     {
         private readonly IAttachmentServices _attachmentServices;
         private readonly IMapper _mapper;
@@ -22,19 +25,57 @@ namespace SmartMedicalGuide.Core.Features.Attachments.Queries.Handlers
 
         public async Task<Response<List<GetAttachmentListResponse>>> Handle(GetAttachmentListQuery request, CancellationToken cancellationToken)
         {
-            var resultList = await _attachmentServices.GetListAsync();
-            if (request.UserId.HasValue)
-                resultList = resultList.Where(a => a.UserId == request.UserId.Value).ToList();
-            var resultListMapper = _mapper.Map<List<GetAttachmentListResponse>>(resultList);
-            return Success(resultListMapper);
+            List<Attachment> attachments;
+
+            if (request.UserId.HasValue && !string.IsNullOrWhiteSpace(request.RelatedEntityType) && request.RelatedEntityId.HasValue)
+            {
+                attachments = await _attachmentServices.GetByUserIdAndEntityAsync(
+                    request.UserId.Value, request.RelatedEntityType, request.RelatedEntityId.Value);
+            }
+            else if (request.UserId.HasValue)
+            {
+                attachments = await _attachmentServices.GetByUserIdAsync(request.UserId.Value);
+            }
+            else if (!string.IsNullOrWhiteSpace(request.RelatedEntityType) && request.RelatedEntityId.HasValue)
+            {
+                attachments = await _attachmentServices.GetByEntityAsync(request.RelatedEntityType, request.RelatedEntityId.Value);
+            }
+            else
+            {
+                attachments = await _attachmentServices.GetListAsync();
+            }
+
+            var result = _mapper.Map<List<GetAttachmentListResponse>>(attachments);
+            return Success(result);
         }
 
-        public async Task<Response<GetSingleAttachmentResponse>> Handle(GetAttachmentByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetSingleAttachmentResponse>> Handle(GetAttachmentByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _attachmentServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<GetSingleAttachmentResponse>("No attachment found");
-            var result1 = _mapper.Map<GetSingleAttachmentResponse>(result);
-            return Success(result1);
+            var attachment = await _attachmentServices.GetByIDAsync(request.Id);
+            if (attachment == null)
+                return NotFound<GetSingleAttachmentResponse>("Attachment not found");
+
+            var result = _mapper.Map<GetSingleAttachmentResponse>(attachment);
+            return Success(result);
+        }
+
+        public async Task<Response<(string filePath, string fileName, string contentType)>> Handle(DownloadFileQuery request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var result = await _attachmentServices.DownloadFileAsync(request.AttachmentId);
+                return Success(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest<(string filePath, string fileName, string contentType)>(ex.Message);
+            }
+        }
+
+        public async Task<Response<long>> Handle(GetTotalFileSizeQuery request, CancellationToken cancellationToken)
+        {
+            var totalSize = await _attachmentServices.GetTotalFileSizeByUserAsync(request.UserId);
+            return Success(totalSize);
         }
     }
 }

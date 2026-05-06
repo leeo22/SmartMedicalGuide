@@ -9,8 +9,13 @@ namespace SmartMedicalGuide.Core.Mapping.Attachments
         {
             CreateMap<AddAttachmentCommand, Attachment>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-                .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src => src.FilePath))
-                .ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => src.UploadedAt));
+                .ForMember(dest => dest.RelatedEntityType, opt => opt.MapFrom(src => src.RelatedEntityType))
+                .ForMember(dest => dest.RelatedEntityId, opt => opt.MapFrom(src => src.RelatedEntityId))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.FilePath, opt => opt.Ignore())
+                .ForMember(dest => dest.FileName, opt => opt.Ignore())
+                .ForMember(dest => dest.FileSize, opt => opt.Ignore())
+                .ForMember(dest => dest.ContentType, opt => opt.Ignore());
         }
     }
 }

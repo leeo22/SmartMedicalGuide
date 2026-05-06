@@ -3,6 +3,7 @@ using MediatR;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.Clinics.Queries.Models;
 using SmartMedicalGuide.Core.Features.Clinics.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.Clinics.Queries.Handlers

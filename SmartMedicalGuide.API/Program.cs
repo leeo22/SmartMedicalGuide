@@ -53,12 +53,32 @@ builder.Services.AddInfrastuctureDependecies()
                 .AddServicesRegisteration(builder.Configuration);
 #endregion
 var app = builder.Build();
+// ?????? ?? ???? ???? ??? ???????
+var webRoot = app.Environment.WebRootPath;
+if (string.IsNullOrEmpty(webRoot))
+{
+    webRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+    app.Environment.WebRootPath = webRoot;
+}
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dbContext = scope.ServiceProvider.GetRequiredService<MedicalGuideDbContext>();
-//    dbContext.Database.EnsureCreated();
-//}
+// ????? ???????? ??? ?? ??? ?????? (?????? ??? ???????)
+var uploadsFolder = Path.Combine(webRoot, "uploads", "attachments");
+if (!Directory.Exists(uploadsFolder))
+{
+    Directory.CreateDirectory(uploadsFolder);
+}
+
+var profilesFolder = Path.Combine(webRoot, "uploads", "profiles");
+if (!Directory.Exists(profilesFolder))
+{
+    Directory.CreateDirectory(profilesFolder);
+}
+
+var reportsFolder = Path.Combine(webRoot, "uploads", "medical-reports");
+if (!Directory.Exists(reportsFolder))
+{
+    Directory.CreateDirectory(reportsFolder);
+}
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();

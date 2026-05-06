@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.Wallets.Commands.Models
 {
-    internal class EditWalletCommand
+    public class EditWalletCommand : IRequest<Response<string>>
     {
+        public int WalletId { get; set; }
+        public string? DoctorAccountNumber { get; set; }
+        public string? AccountHolderName { get; set; }
+        public string? BankName { get; set; }
+        public string? Currency { get; set; }
+        public bool IsActive { get; set; }
     }
 }

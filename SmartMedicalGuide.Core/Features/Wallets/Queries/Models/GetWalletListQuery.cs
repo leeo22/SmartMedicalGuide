@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
+using SmartMedicalGuide.Core.Features.Wallets.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Wallets.Queries.Models
 {
-    internal class GetWalletListQuery
+    public class GetWalletListQuery : IRequest<Response<List<GetWalletListResponse>>>
     {
+        public bool? OnlyDoctors { get; set; }
+        public bool? OnlyActive { get; set; }
     }
 }

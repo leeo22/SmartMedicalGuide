@@ -70,12 +70,20 @@
         public static class AttachmentRouting
         {
             public const string Prefix = Rule + "Attachment/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // File Operations
+            public const string UploadFile = Prefix + "UploadFile";
+            public const string DownloadFile = Prefix + "DownloadFile/{attachmentId}";
+            public const string DeleteFile = Prefix + "DeleteFile/{attachmentId}";
+            public const string UpdateFile = Prefix + "UpdateFile";
+            public const string GetTotalFileSize = Prefix + "GetTotalFileSize";
         }
         public static class AuditLogRouting
         {
@@ -380,12 +388,22 @@
         public static class ReviewRouting
         {
             public const string Prefix = Rule + "Review/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoints
+            public const string GetByTarget = Prefix + "GetByTarget";
+            public const string GetMyReviews = Prefix + "GetMyReviews";
+            public const string GetAverageRating = Prefix + "GetAverageRating";
+            public const string GetRatingDistribution = Prefix + "GetRatingDistribution";
+            public const string GetRecentReviews = Prefix + "GetRecentReviews";
+            public const string CheckReviewed = Prefix + "CheckReviewed";
+            public const string GetStatistics = Prefix + "GetStatistics";
         }
 
 
@@ -481,12 +499,19 @@
         public static class WalletRouting
         {
             public const string Prefix = Rule + "Wallet/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
+            public const string GetByUserId = Prefix + "GetByUserId";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Endpoints
+            public const string UpdateBalance = Prefix + "UpdateBalance";
+            public const string Transfer = Prefix + "Transfer";
+            public const string GetStatistics = Prefix + "GetStatistics";
         }
 
 

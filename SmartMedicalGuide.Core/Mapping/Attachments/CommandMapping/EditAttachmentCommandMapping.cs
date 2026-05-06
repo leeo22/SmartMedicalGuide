@@ -9,9 +9,9 @@ namespace SmartMedicalGuide.Core.Mapping.Attachments
         {
             CreateMap<EditAttachmentCommand, Attachment>()
                 .ForMember(dest => dest.AttachmentId, opt => opt.MapFrom(src => src.AttachmentId))
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-                .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src => src.FilePath))
-                .ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => src.UploadedAt));
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.RelatedEntityType, opt => opt.MapFrom(src => src.RelatedEntityType))
+                .ForMember(dest => dest.RelatedEntityId, opt => opt.MapFrom(src => src.RelatedEntityId));
         }
     }
 }

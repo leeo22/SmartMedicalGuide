@@ -23,26 +23,38 @@ namespace SmartMedicalGuide.Core.Features.Reviews.Commands.Handlers
 
         public async Task<Response<string>> Handle(AddReviewCommand request, CancellationToken cancellationToken)
         {
-            var resultMapper = _mapper.Map<Review>(request);
-            var result = await _reviewServices.AddAsync(resultMapper);
-            return result == "Success" ? Created("Review added successfully") : BadRequest<string>();
+            var review = _mapper.Map<Review>(request);
+            var result = await _reviewServices.AddAsync(review);
+
+            if (result == "Patient has already reviewed this target")
+                return BadRequest<string>("You have already reviewed this doctor/lab");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Created("Review added successfully");
         }
 
         public async Task<Response<string>> Handle(EditReviewCommand request, CancellationToken cancellationToken)
         {
-            var result = await _reviewServices.GetByIDAsync(request.ReviewId);
-            if (result == null) return NotFound<string>("Review not found");
-            var resultMapper = _mapper.Map<Review>(request);
-            var result1 = await _reviewServices.EditAsync(resultMapper);
-            return result1 == "Success" ? Success("Review edited successfully") : BadRequest<string>();
+            var review = _mapper.Map<Review>(request);
+            var result = await _reviewServices.EditAsync(review);
+
+            if (result == "Review not found")
+                return NotFound<string>("Review not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success("Review edited successfully");
         }
 
         public async Task<Response<string>> Handle(DeleteReviewCommand request, CancellationToken cancellationToken)
         {
-            var result = await _reviewServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<string>("Review not found");
-            var result1 = await _reviewServices.DeleteAsync(result);
-            return result1 == "Success" ? Deleted<string>($"Review deleted successfully: {request.Id}") : BadRequest<string>();
+            var review = await _reviewServices.GetByIDAsync(request.Id);
+            if (review == null)
+                return NotFound<string>("Review not found");
+
+            var result = await _reviewServices.DeleteAsync(review);
+            return result == "Success" ? Deleted<string>("Review deleted successfully") : BadRequest<string>(result);
         }
     }
 }

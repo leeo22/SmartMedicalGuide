@@ -8,8 +8,8 @@ namespace SmartMedicalGuide.Core.Mapping.Reviews
         {
             AddReviewCommandMapping();
             EditReviewCommandMapping();
-            GetReviewByIDMapping();
-            GetReviewListMapping();
+            GetReviewListResponseMapping();
+            GetSingleReviewResponseMapping();
         }
     }
 }

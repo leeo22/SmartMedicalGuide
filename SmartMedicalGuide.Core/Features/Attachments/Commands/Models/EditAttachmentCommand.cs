@@ -6,8 +6,8 @@ namespace SmartMedicalGuide.Core.Features.Attachments.Commands.Models
     public class EditAttachmentCommand : IRequest<Response<string>>
     {
         public int AttachmentId { get; set; }
-        public int UserId { get; set; }
-        public string FilePath { get; set; }
-        public DateTime UploadedAt { get; set; }
+        public string? Description { get; set; }
+        public string? RelatedEntityType { get; set; }
+        public int? RelatedEntityId { get; set; }
     }
 }

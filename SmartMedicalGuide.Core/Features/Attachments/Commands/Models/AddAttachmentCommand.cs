@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.Attachments.Commands.Models
@@ -6,7 +7,9 @@ namespace SmartMedicalGuide.Core.Features.Attachments.Commands.Models
     public class AddAttachmentCommand : IRequest<Response<string>>
     {
         public int UserId { get; set; }
-        public string FilePath { get; set; }
-        public DateTime UploadedAt { get; set; } = DateTime.Now;
+        public IFormFile File { get; set; }
+        public string? RelatedEntityType { get; set; }
+        public int? RelatedEntityId { get; set; }
+        public string? Description { get; set; }
     }
 }

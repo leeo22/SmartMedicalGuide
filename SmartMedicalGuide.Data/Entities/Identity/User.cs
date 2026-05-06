@@ -11,6 +11,7 @@ namespace SmartMedicalGuide.Data.Entities.Identity
         }
 
         public string? FullName { get; set; }
+        public string? ProfileImageUrl { get; set; }
         public bool IsVerified { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }
