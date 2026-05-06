@@ -5,7 +5,7 @@ namespace SmartMedicalGuide.Core.Mapping.PrescriptionItems
 {
     public partial class PrescriptionItemProfile
     {
-        public void AddPrescriptionItemCommandMapping()
+        public void BulkAddPrescriptionItemsMapping()
         {
             CreateMap<AddPrescriptionItemCommand, PrescriptionItem>()
                 .ForMember(dest => dest.PrescriptionId, opt => opt.MapFrom(src => src.PrescriptionId))

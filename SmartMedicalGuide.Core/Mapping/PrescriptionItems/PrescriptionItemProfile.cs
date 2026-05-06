@@ -8,8 +8,10 @@ namespace SmartMedicalGuide.Core.Mapping.PrescriptionItems
         {
             AddPrescriptionItemCommandMapping();
             EditPrescriptionItemCommandMapping();
-            GetPrescriptionItemByIDMapping();
-            GetPrescriptionItemListMapping();
+            GetPrescriptionItemListResponseMapping();
+            GetSinglePrescriptionItemResponseMapping();
+            GetPrescriptionItemWithDetailsResponseMapping();
+            BulkAddPrescriptionItemsMapping();
         }
     }
 }

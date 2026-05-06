@@ -13,5 +13,15 @@ namespace SmartMedicalGuide.Data.Entities
         public string? MedicineName { get; set; }
         public string? Dosage { get; set; }
         public string? Duration { get; set; }
+
+
+        public bool IsDeleted { get; set; } = false;
+
+        [MaxLength(100)]
+        public string? Frequency { get; set; }
+
+        public string? Instructions { get; set; }
+
+        public int? Quantity { get; set; }
     }
 }

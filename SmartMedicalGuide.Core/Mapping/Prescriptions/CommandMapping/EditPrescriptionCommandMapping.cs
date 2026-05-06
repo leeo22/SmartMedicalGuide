@@ -9,17 +9,10 @@ namespace SmartMedicalGuide.Core.Mapping.Prescriptions
         {
             CreateMap<EditPrescriptionCommand, Prescription>()
                 .ForMember(dest => dest.PrescriptionId, opt => opt.MapFrom(src => src.PrescriptionId))
-                .ForMember(dest => dest.DoctorAppointmentId, opt => opt.MapFrom(src => src.DoctorAppointmentId))
-                .ForMember(dest => dest.DoctorId, opt => opt.MapFrom(src => src.DoctorId))
-                .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.PatientId))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
-
-            CreateMap<EditPrescriptionItemDto, PrescriptionItem>()
-                .ForMember(dest => dest.ItemId, opt => opt.MapFrom(src => src.ItemId))
-                .ForMember(dest => dest.MedicineName, opt => opt.MapFrom(src => src.MedicineName))
-                .ForMember(dest => dest.Dosage, opt => opt.MapFrom(src => src.Dosage))
-                .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.Duration));
+                .ForMember(dest => dest.Notes, opt => opt.MapFrom(src => src.Notes))
+                .ForMember(dest => dest.FollowUpDate, opt => opt.MapFrom(src => src.FollowUpDate))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
         }
     }
 }

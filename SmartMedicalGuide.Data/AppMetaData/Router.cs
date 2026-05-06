@@ -377,22 +377,34 @@
         public static class PrescriptionRouting
         {
             public const string Prefix = Rule + "Prescription/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoints
+            public const string GetWithItems = Prefix + "GetWithItems/{id}";
+            public const string UpdateStatus = Prefix + "UpdateStatus";
+            public const string GetStatistics = Prefix + "GetStatistics";
         }
         public static class PrescriptionItemRouting
         {
             public const string Prefix = Rule + "PrescriptionItem/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoints
+            public const string GetWithDetails = Prefix + "GetWithDetails";
+            public const string BulkAdd = Prefix + "BulkAdd";
+            public const string UpdateQuantity = Prefix + "UpdateQuantity";
         }
         public static class ReportRouting
         {

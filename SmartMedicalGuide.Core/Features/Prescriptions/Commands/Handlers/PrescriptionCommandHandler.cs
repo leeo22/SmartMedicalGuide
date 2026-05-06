@@ -10,7 +10,8 @@ namespace SmartMedicalGuide.Core.Features.Prescriptions.Commands.Handlers
     public class PrescriptionCommandHandler : ResponseHandler,
         IRequestHandler<AddPrescriptionCommand, Response<string>>,
         IRequestHandler<EditPrescriptionCommand, Response<string>>,
-        IRequestHandler<DeletePrescriptionCommand, Response<string>>
+        IRequestHandler<DeletePrescriptionCommand, Response<string>>,
+        IRequestHandler<UpdatePrescriptionStatusCommand, Response<string>>
     {
         private readonly IPrescriptionServices _prescriptionServices;
         private readonly IMapper _mapper;
@@ -23,26 +24,48 @@ namespace SmartMedicalGuide.Core.Features.Prescriptions.Commands.Handlers
 
         public async Task<Response<string>> Handle(AddPrescriptionCommand request, CancellationToken cancellationToken)
         {
-            var resultMapper = _mapper.Map<Prescription>(request);
-            var result = await _prescriptionServices.AddAsync(resultMapper);
-            return result == "Success" ? Created("Prescription added successfully") : BadRequest<string>();
+            var prescription = _mapper.Map<Prescription>(request);
+            var result = await _prescriptionServices.AddAsync(prescription);
+
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Created("Prescription added successfully");
         }
 
         public async Task<Response<string>> Handle(EditPrescriptionCommand request, CancellationToken cancellationToken)
         {
-            var result = await _prescriptionServices.GetByIDAsync(request.PrescriptionId);
-            if (result == null) return NotFound<string>("Prescription not found");
-            var resultMapper = _mapper.Map<Prescription>(request);
-            var result1 = await _prescriptionServices.EditAsync(resultMapper);
-            return result1 == "Success" ? Success("Prescription edited successfully") : BadRequest<string>();
+            var prescription = _mapper.Map<Prescription>(request);
+            var result = await _prescriptionServices.EditAsync(prescription);
+
+            if (result == "Prescription not found")
+                return NotFound<string>("Prescription not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success("Prescription edited successfully");
         }
 
         public async Task<Response<string>> Handle(DeletePrescriptionCommand request, CancellationToken cancellationToken)
         {
-            var result = await _prescriptionServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<string>("Prescription not found");
-            var result1 = await _prescriptionServices.DeleteAsync(result);
-            return result1 == "Success" ? Deleted<string>($"Prescription deleted successfully: {request.Id}") : BadRequest<string>();
+            var prescription = await _prescriptionServices.GetByIDAsync(request.Id);
+            if (prescription == null)
+                return NotFound<string>("Prescription not found");
+
+            var result = await _prescriptionServices.DeleteAsync(prescription);
+            return result == "Success" ? Deleted<string>("Prescription deleted successfully") : BadRequest<string>(result);
+        }
+
+        public async Task<Response<string>> Handle(UpdatePrescriptionStatusCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _prescriptionServices.UpdatePrescriptionStatusAsync(request.PrescriptionId, request.Status);
+
+            if (result == "Prescription not found")
+                return NotFound<string>("Prescription not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success($"Prescription status updated to {request.Status}");
         }
     }
 }

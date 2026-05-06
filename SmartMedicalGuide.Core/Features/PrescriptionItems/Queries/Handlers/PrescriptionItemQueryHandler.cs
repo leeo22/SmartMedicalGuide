@@ -3,38 +3,61 @@ using MediatR;
 using SmartMedicalGuide.Core.Bases;
 using SmartMedicalGuide.Core.Features.PrescriptionItems.Queries.Models;
 using SmartMedicalGuide.Core.Features.PrescriptionItems.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 using SmartMedicalGuide.Services.Abstracts;
 
 namespace SmartMedicalGuide.Core.Features.PrescriptionItems.Queries.Handlers
 {
     public class PrescriptionItemQueryHandler : ResponseHandler,
         IRequestHandler<GetPrescriptionItemListQuery, Response<List<GetPrescriptionItemListResponse>>>,
-        IRequestHandler<GetPrescriptionItemByIDQuery, Response<GetSinglePrescriptionItemResponse>>
+        IRequestHandler<GetPrescriptionItemByIdQuery, Response<GetSinglePrescriptionItemResponse>>,
+        IRequestHandler<GetPrescriptionItemsWithDetailsQuery, Response<List<GetPrescriptionItemWithDetailsResponse>>>
     {
-        private readonly IPrescriptionItemServices _prescriptionItemServices;
+        private readonly IPrescriptionItemServices _itemServices;
         private readonly IMapper _mapper;
 
-        public PrescriptionItemQueryHandler(IPrescriptionItemServices prescriptionItemServices, IMapper mapper)
+        public PrescriptionItemQueryHandler(IPrescriptionItemServices itemServices, IMapper mapper)
         {
-            _prescriptionItemServices = prescriptionItemServices;
+            _itemServices = itemServices;
             _mapper = mapper;
         }
 
         public async Task<Response<List<GetPrescriptionItemListResponse>>> Handle(GetPrescriptionItemListQuery request, CancellationToken cancellationToken)
         {
-            var resultList = await _prescriptionItemServices.GetListAsync();
+            List<PrescriptionItem> items;
+
             if (request.PrescriptionId.HasValue)
-                resultList = resultList.Where(pi => pi.PrescriptionId == request.PrescriptionId.Value).ToList();
-            var resultListMapper = _mapper.Map<List<GetPrescriptionItemListResponse>>(resultList);
-            return Success(resultListMapper);
+            {
+                items = await _itemServices.GetByPrescriptionIdAsync(request.PrescriptionId.Value);
+            }
+            else if (!string.IsNullOrWhiteSpace(request.MedicineName))
+            {
+                items = await _itemServices.GetByMedicineNameAsync(request.MedicineName);
+            }
+            else
+            {
+                items = await _itemServices.GetListAsync();
+            }
+
+            var result = _mapper.Map<List<GetPrescriptionItemListResponse>>(items);
+            return Success(result);
         }
 
-        public async Task<Response<GetSinglePrescriptionItemResponse>> Handle(GetPrescriptionItemByIDQuery request, CancellationToken cancellationToken)
+        public async Task<Response<GetSinglePrescriptionItemResponse>> Handle(GetPrescriptionItemByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _prescriptionItemServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<GetSinglePrescriptionItemResponse>("No prescription item found");
-            var result1 = _mapper.Map<GetSinglePrescriptionItemResponse>(result);
-            return Success(result1);
+            var item = await _itemServices.GetByIDAsync(request.Id);
+            if (item == null)
+                return NotFound<GetSinglePrescriptionItemResponse>("Item not found");
+
+            var result = _mapper.Map<GetSinglePrescriptionItemResponse>(item);
+            return Success(result);
+        }
+
+        public async Task<Response<List<GetPrescriptionItemWithDetailsResponse>>> Handle(GetPrescriptionItemsWithDetailsQuery request, CancellationToken cancellationToken)
+        {
+            var items = await _itemServices.GetPrescriptionItemsWithDetailsAsync(request.PrescriptionId);
+            var result = _mapper.Map<List<GetPrescriptionItemWithDetailsResponse>>(items);
+            return Success(result);
         }
     }
 }

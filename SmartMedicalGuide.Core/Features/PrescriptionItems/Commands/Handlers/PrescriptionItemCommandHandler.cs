@@ -10,39 +10,64 @@ namespace SmartMedicalGuide.Core.Features.PrescriptionItems.Commands.Handlers
     public class PrescriptionItemCommandHandler : ResponseHandler,
         IRequestHandler<AddPrescriptionItemCommand, Response<string>>,
         IRequestHandler<EditPrescriptionItemCommand, Response<string>>,
-        IRequestHandler<DeletePrescriptionItemCommand, Response<string>>
+        IRequestHandler<DeletePrescriptionItemCommand, Response<string>>,
+        IRequestHandler<BulkAddPrescriptionItemsCommand, Response<bool>>,
+        IRequestHandler<UpdateItemQuantityCommand, Response<bool>>
     {
-        private readonly IPrescriptionItemServices _prescriptionItemServices;
+        private readonly IPrescriptionItemServices _itemServices;
         private readonly IMapper _mapper;
 
-        public PrescriptionItemCommandHandler(IPrescriptionItemServices prescriptionItemServices, IMapper mapper)
+        public PrescriptionItemCommandHandler(IPrescriptionItemServices itemServices, IMapper mapper)
         {
-            _prescriptionItemServices = prescriptionItemServices;
+            _itemServices = itemServices;
             _mapper = mapper;
         }
 
         public async Task<Response<string>> Handle(AddPrescriptionItemCommand request, CancellationToken cancellationToken)
         {
-            var resultMapper = _mapper.Map<PrescriptionItem>(request);
-            var result = await _prescriptionItemServices.AddAsync(resultMapper);
-            return result == "Success" ? Created("Prescription item added successfully") : BadRequest<string>();
+            var item = _mapper.Map<PrescriptionItem>(request);
+            var result = await _itemServices.AddAsync(item);
+
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Created("Prescription item added successfully");
         }
 
         public async Task<Response<string>> Handle(EditPrescriptionItemCommand request, CancellationToken cancellationToken)
         {
-            var result = await _prescriptionItemServices.GetByIDAsync(request.ItemId);
-            if (result == null) return NotFound<string>("Prescription item not found");
-            var resultMapper = _mapper.Map<PrescriptionItem>(request);
-            var result1 = await _prescriptionItemServices.EditAsync(resultMapper);
-            return result1 == "Success" ? Success("Prescription item edited successfully") : BadRequest<string>();
+            var item = _mapper.Map<PrescriptionItem>(request);
+            var result = await _itemServices.EditAsync(item);
+
+            if (result == "Item not found")
+                return NotFound<string>("Item not found");
+            if (result != "Success")
+                return BadRequest<string>(result);
+
+            return Success("Prescription item edited successfully");
         }
 
         public async Task<Response<string>> Handle(DeletePrescriptionItemCommand request, CancellationToken cancellationToken)
         {
-            var result = await _prescriptionItemServices.GetByIDAsync(request.Id);
-            if (result == null) return NotFound<string>("Prescription item not found");
-            var result1 = await _prescriptionItemServices.DeleteAsync(result);
-            return result1 == "Success" ? Deleted<string>($"Prescription item deleted successfully: {request.Id}") : BadRequest<string>();
+            var item = await _itemServices.GetByIDAsync(request.Id);
+            if (item == null)
+                return NotFound<string>("Item not found");
+
+            var result = await _itemServices.DeleteAsync(item);
+            return result == "Success" ? Deleted<string>("Prescription item deleted successfully") : BadRequest<string>(result);
+        }
+
+        public async Task<Response<bool>> Handle(BulkAddPrescriptionItemsCommand request, CancellationToken cancellationToken)
+        {
+            var items = _mapper.Map<List<PrescriptionItem>>(request.Items);
+            var result = await _itemServices.BulkAddItemsAsync(items);
+            return result ? Success(true) : BadRequest<bool>("Failed to bulk add items");
+        }
+
+        public async Task<Response<bool>> Handle(UpdateItemQuantityCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _itemServices.UpdateItemQuantityAsync(request.ItemId, request.Quantity);
+            return result ? Success(true) : BadRequest<bool>("Failed to update quantity");
         }
     }
 }

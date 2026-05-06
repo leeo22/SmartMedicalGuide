@@ -4,9 +4,8 @@ using SmartMedicalGuide.Core.Features.PrescriptionItems.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.PrescriptionItems.Queries.Models
 {
-    public class GetPrescriptionItemListQuery : IRequest<Response<List<GetPrescriptionItemListResponse>>>
+    public class GetPrescriptionItemsWithDetailsQuery : IRequest<Response<List<GetPrescriptionItemWithDetailsResponse>>>
     {
-        public int? PrescriptionId { get; set; }
-        public string? MedicineName { get; set; }
+        public int PrescriptionId { get; set; }
     }
 }

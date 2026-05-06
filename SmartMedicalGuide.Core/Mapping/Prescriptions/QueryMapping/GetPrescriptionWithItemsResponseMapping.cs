@@ -5,13 +5,12 @@ namespace SmartMedicalGuide.Core.Mapping.Prescriptions
 {
     public partial class PrescriptionProfile
     {
-        public void GetSinglePrescriptionResponseMapping()
+        public void GetPrescriptionWithItemsResponseMapping()
         {
-            CreateMap<Prescription, GetSinglePrescriptionResponse>()
+            CreateMap<Prescription, GetPrescriptionWithItemsResponse>()
                 .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor != null && src.Doctor.User != null ? src.Doctor.User.FullName : null))
-                .ForMember(dest => dest.DoctorEmail, opt => opt.MapFrom(src => src.Doctor != null && src.Doctor.User != null ? src.Doctor.User.Email : null))
                 .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.FullName : null))
-                .ForMember(dest => dest.PatientEmail, opt => opt.MapFrom(src => src.Patient != null && src.Patient.User != null ? src.Patient.User.Email : null));
+                .ForMember(dest => dest.PrescriptionItems, opt => opt.Ignore());
         }
     }
 }

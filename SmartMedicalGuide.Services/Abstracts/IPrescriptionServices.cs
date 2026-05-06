@@ -4,13 +4,22 @@ namespace SmartMedicalGuide.Services.Abstracts
 {
     public interface IPrescriptionServices
     {
-        public Task<List<Prescription>> GetListAsync();
-        public Task<Prescription> GetByIDAsync(int id);
-        public Task<string> AddAsync(Prescription prescription);
-        public Task<string> EditAsync(Prescription prescription);
-        public Task<string> DeleteAsync(Prescription prescription);
-        public Task<List<Prescription>> GetByPatientIdAsync(int patientId);
-        public Task<List<Prescription>> GetByDoctorIdAsync(int doctorId);
-        public Task<List<Prescription>> GetByAppointmentIdAsync(int appointmentId);
+        #region Basic CRUD - 5 Functions
+        Task<List<Prescription>> GetListAsync();
+        Task<Prescription?> GetByIDAsync(int id);
+        Task<string> AddAsync(Prescription prescription);
+        Task<string> EditAsync(Prescription prescription);
+        Task<string> DeleteAsync(Prescription prescription);
+        #endregion
+
+        #region Additional Important Functions - 7 Functions
+        Task<List<Prescription>> GetByPatientIdAsync(int patientId);
+        Task<List<Prescription>> GetByDoctorIdAsync(int doctorId);
+        Task<Prescription?> GetByAppointmentIdAsync(int appointmentId);
+        Task<List<Prescription>> GetByDateRangeAsync(DateTime fromDate, DateTime toDate);
+        Task<Prescription?> GetPrescriptionWithItemsAsync(int id);
+        Task<object> GetPrescriptionStatisticsAsync();
+        Task<string> UpdatePrescriptionStatusAsync(int prescriptionId, string status);
+        #endregion
     }
 }

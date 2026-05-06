@@ -8,8 +8,9 @@ namespace SmartMedicalGuide.Core.Mapping.Prescriptions
         {
             AddPrescriptionCommandMapping();
             EditPrescriptionCommandMapping();
-            GetPrescriptionByIDMapping();
-            GetPrescriptionListMapping();
+            GetPrescriptionListResponseMapping();
+            GetSinglePrescriptionResponseMapping();
+            GetPrescriptionWithItemsResponseMapping();
         }
     }
 }

@@ -8,13 +8,9 @@ namespace SmartMedicalGuide.Core.Features.Prescriptions.Queries.Models
     {
         public int? PatientId { get; set; }
         public int? DoctorId { get; set; }
-        public int? DoctorAppointmentId { get; set; }
-        public GetPrescriptionListQuery() { }
-        public GetPrescriptionListQuery(int? patientId, int? doctorId, int? doctorAppointmentId)
-        {
-            PatientId = patientId;
-            DoctorId = doctorId;
-            DoctorAppointmentId = doctorAppointmentId;
-        }
+        public int? AppointmentId { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+        public string? Status { get; set; }
     }
 }
