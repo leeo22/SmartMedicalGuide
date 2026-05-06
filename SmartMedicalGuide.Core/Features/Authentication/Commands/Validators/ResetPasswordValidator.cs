@@ -22,13 +22,13 @@ namespace SmartMedicalGuide.Core.Features.Authentication.Commands.Validators
         public void ApplyValidationsRules()
         {
             RuleFor(x => x.Email)
-                 .NotEmpty().WithMessage("")
-                 .NotNull().WithMessage("");
+                 .NotEmpty().WithMessage("email can not be empty")
+                 .NotNull().WithMessage("email can not be null");
             RuleFor(x => x.Password)
-                 .NotEmpty().WithMessage("")
-                 .NotNull().WithMessage("");
+                 .NotEmpty().WithMessage("password can not be empty")
+                 .NotNull().WithMessage("password can not be null");
             RuleFor(x => x.ConfirmPassword)
-                 .Equal(x => x.Password).WithMessage("");
+                 .Equal(x => x.Password).WithMessage("password not equal");
 
         }
 

@@ -256,7 +256,7 @@ namespace SmartMedicalGuide.Services.Implementations
                 var updateResult = await _userManager.UpdateAsync(user);
                 if (!updateResult.Succeeded)
                     return "ErrorInUpdateUser";
-                var message = "Code To Reset Passsword : " + user;
+                var message = "Code To Reset Passsword : " + user.Code;
                 //Send Code To  Email 
                 await _emailsService.SendEmail(user.Email, message, "Reset Password");
                 await trans.CommitAsync();
