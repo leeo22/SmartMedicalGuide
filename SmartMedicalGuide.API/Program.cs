@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -6,10 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using SmartMedicalGuide.API.Hubs;
 using SmartMedicalGuide.Core;
 using SmartMedicalGuide.Core.MiddleWare;
-using SmartMedicalGuide.Data.Entities.Identity;
 using SmartMedicalGuide.Infrastructure;
 using SmartMedicalGuide.Infrastructure.Context;
-using SmartMedicalGuide.Infrustructure.Seeder;
 using SmartMedicalGuide.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -79,13 +76,13 @@ if (!Directory.Exists(reportsFolder))
 {
     Directory.CreateDirectory(reportsFolder);
 }
-using (var scope = app.Services.CreateScope())
-{
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
-    await RoleSeeder.SeedAsync(roleManager);
-    await UserSeeder.SeedAsync(userManager);
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+//    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+//    await RoleSeeder.SeedAsync(roleManager);
+//    await UserSeeder.SeedAsync(userManager);
+//}
 
 
 #region Map Hubs
@@ -98,14 +95,11 @@ app.UseCors("AllowAll");
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 

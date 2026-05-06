@@ -49,7 +49,7 @@ namespace SmartMedicalGuide.Core.Features.Authentication.Queries.Handlers
             var result = await _authenticationService.ConfirmResetPassword(request.Code, request.Email);
             switch (result)
             {
-                case "UserNotFound": return BadRequest<string>("_stringLocalizer[SharedResourcesKeys.UserIsNotFound]");
+                case "UserNotFound": return BadRequest<string>("UserIsNotFound]");
                 case "Failed": return BadRequest<string>("_stringLocalizer[SharedResourcesKeys.InvaildCode]");
                 case "Success": return Success<string>("");
                 default: return BadRequest<string>("_stringLocalizer[SharedResourcesKeys.InvaildCode]");
