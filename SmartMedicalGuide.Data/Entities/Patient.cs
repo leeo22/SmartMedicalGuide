@@ -19,8 +19,9 @@ namespace SmartMedicalGuide.Data.Entities
         [MaxLength(250)]
         public string? Address { get; set; }
         public bool IsDeleted { get; set; } = false;
-        public ICollection<DoctorAppointment>? DoctorAppointments { get; set; }
-        public ICollection<LabAppointment>? LabAppointments { get; set; }
+        public virtual ICollection<DoctorAppointment>? DoctorAppointments { get; set; }
+        public virtual ICollection<LabAppointment>? LabAppointments { get; set; }
+        public virtual ICollection<Prescription>? Prescriptions { get; set; }
     }
 
 

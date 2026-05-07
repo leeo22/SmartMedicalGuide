@@ -27,6 +27,7 @@ namespace SmartMedicalGuide.Services
             services.AddTransient<IWalletServices, WalletServices>();
             services.AddTransient<IDoctorAppointmentServices, DoctorAppointmentServices>();
             services.AddTransient<IPaymentServices, PaymentServices>();
+            services.AddScoped<IDiagnosisService, DiagnosisService>();
             services.AddTransient<IClinicServices, ClinicServices>();
             services.AddTransient<ILabAppointmentServices, LabAppointmentServices>();
             services.AddTransient<ISpecializationServices, SpecializationServices>();

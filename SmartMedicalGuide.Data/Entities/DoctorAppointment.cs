@@ -54,6 +54,7 @@ namespace SmartMedicalGuide.Data.Entities
         public string? Status { get; set; }
 
         public Payment? Payment { get; set; }
+        public virtual ICollection<Prescription>? Prescriptions { get; set; }
 
     }
 

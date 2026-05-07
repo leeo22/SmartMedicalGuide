@@ -57,12 +57,29 @@ namespace SmartMedicalGuide.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Prescription> builder)
         {
-            // Prescription → DoctorAppointment
-            builder
-                 .HasOne(p => p.DoctorAppointment)
-                 .WithMany()
-                 .HasForeignKey(p => p.DoctorAppointmentId)
-                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasKey(x => x.PrescriptionId);
+
+            // العلاقة مع DoctorAppointment (مع Cascade)
+            builder.HasOne(x => x.DoctorAppointment)
+                .WithMany(x => x.Prescriptions)
+                .HasForeignKey(x => x.DoctorAppointmentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // العلاقة مع Doctor
+            builder.HasOne(x => x.Doctor)
+                .WithMany(x => x.Prescriptions)
+                .HasForeignKey(x => x.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ✅ العلاقة مع Patient - استخدام Restrict بدلاً من Cascade
+            builder.HasOne(x => x.Patient)
+                .WithMany(x => x.Prescriptions)
+                .HasForeignKey(x => x.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);  // ← هنا الحل
+
+            builder.HasIndex(x => x.IsDeleted);
+            builder.HasIndex(x => x.Status);
+
         }
     }
     public class PrescriptionItemConfiguration : IEntityTypeConfiguration<PrescriptionItem>

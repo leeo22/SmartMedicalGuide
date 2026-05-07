@@ -41,8 +41,7 @@ namespace SmartMedicalGuide.Infrastructure.Repositories
         public async Task<Specialization?> GetByNameAsync(string name)
         {
             return await _specializations
-                .Where(x => x.Name == name && !x.IsDeleted)
-                .FirstOrDefaultAsync();
+         .FirstOrDefaultAsync(x => x.Name == name && !x.IsDeleted);
         }
 
         public async Task<List<Specialization>> SearchSpecializationsAsync(string keyword)

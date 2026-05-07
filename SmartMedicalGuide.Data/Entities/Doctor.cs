@@ -17,7 +17,7 @@ namespace SmartMedicalGuide.Data.Entities
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal? ConsultationPrice { get; set; }
-
+        public int? YearOfExp { get; set; }
         public string? VerificationStatus { get; set; }
 
         public string? AvailableTimes { get; set; }

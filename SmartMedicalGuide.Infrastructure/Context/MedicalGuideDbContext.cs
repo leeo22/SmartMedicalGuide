@@ -50,6 +50,7 @@ namespace SmartMedicalGuide.Infrastructure.Context
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<DiagnosisHistory> DiagnosisHistories { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
         public DbSet<DoctorCapacitySetting> DoctorCapacitySettings { get; set; }

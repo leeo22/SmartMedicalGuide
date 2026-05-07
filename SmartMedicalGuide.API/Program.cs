@@ -8,6 +8,8 @@ using SmartMedicalGuide.Core.MiddleWare;
 using SmartMedicalGuide.Infrastructure;
 using SmartMedicalGuide.Infrastructure.Context;
 using SmartMedicalGuide.Services;
+using SmartMedicalGuide.Services.Abstracts;
+using SmartMedicalGuide.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+builder.Services.AddMemoryCache();
+builder.Services.AddHttpClient<IDr7AiService, Dr7AiService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(60);
+});
 builder.Services.AddDbContext<MedicalGuideDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
