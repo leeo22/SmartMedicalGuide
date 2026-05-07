@@ -64,7 +64,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             try
             {
-                var existing = await _prescriptionRepository.GetByIdAsync()
+                var existing = await _prescriptionRepository.GetTableAsTracking()
                     .FirstOrDefaultAsync(x => x.PrescriptionId == prescription.PrescriptionId && !x.IsDeleted);
 
                 if (existing == null)

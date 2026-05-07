@@ -68,7 +68,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             try
             {
-                var existing = await _scheduleRepository.GetByIdAsync()
+                var existing = await _scheduleRepository.GetTableAsTracking()
                     .FirstOrDefaultAsync(x => x.ScheduleId == schedule.ScheduleId && !x.IsDeleted);
 
                 if (existing == null)

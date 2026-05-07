@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SmartMedicalGuide.API.Base;
 using SmartMedicalGuide.Core.Features.DoctorCapacitySettings.Commands.Models;
 using SmartMedicalGuide.Core.Features.DoctorCapacitySettings.Queries.Models;
@@ -9,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace SmartMedicalGuide.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class DoctorCapacitySettingController : AppControllerBase
     {

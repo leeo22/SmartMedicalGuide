@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SmartMedicalGuide.API.Base;
 using SmartMedicalGuide.Core.Features.Attachments.Commands.Models;
 using SmartMedicalGuide.Core.Features.Attachments.Queries.Models;
@@ -9,7 +8,7 @@ using System.Security.Claims;
 
 namespace SmartMedicalGuide.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class AttachmentController : AppControllerBase
     {

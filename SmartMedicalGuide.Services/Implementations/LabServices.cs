@@ -64,7 +64,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             try
             {
-                var existing = await _labRepository.GetByIdAsync()
+                var existing = await _labRepository.GetTableAsTracking()
                     .FirstOrDefaultAsync(x => x.LabId == lab.LabId && !x.IsDeleted);
 
                 if (existing == null)

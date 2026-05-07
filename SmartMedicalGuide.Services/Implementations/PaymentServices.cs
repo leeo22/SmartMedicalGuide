@@ -50,7 +50,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             try
             {
-                var existing = await _paymentRepository.GetByIdAsync()
+                var existing = await _paymentRepository.GetTableAsTracking()
                     .FirstOrDefaultAsync(x => x.PaymentId == payment.PaymentId && !x.IsDeleted);
 
                 if (existing == null)

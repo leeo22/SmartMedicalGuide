@@ -64,7 +64,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             try
             {
-                var existing = await _notificationRepository.GetByIdAsync()
+                var existing = await _notificationRepository.GetTableAsTracking()
                     .FirstOrDefaultAsync(x => x.NotificationId == notification.NotificationId && !x.IsDeleted);
 
                 if (existing == null)

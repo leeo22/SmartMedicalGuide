@@ -39,7 +39,7 @@ namespace SmartMedicalGuide.Services.Implementations
 
         public async Task<string> EditAsync(DoctorAppointment appointment)
         {
-            var existing = await _appointmentRepository.GetByIdAsync()
+            var existing = await _appointmentRepository.GetTableAsTracking()
                 .FirstOrDefaultAsync(x => x.AppointmentId == appointment.AppointmentId && !x.IsDeleted);
 
             if (existing == null)

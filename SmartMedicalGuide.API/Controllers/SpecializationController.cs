@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace SmartMedicalGuide.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class SpecializationController : AppControllerBase
     {

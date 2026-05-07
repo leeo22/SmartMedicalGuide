@@ -69,7 +69,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             try
             {
-                var existing = await _attachmentRepository.GetByIdAsync()
+                var existing = await _attachmentRepository.GetTableAsTracking()
                     .FirstOrDefaultAsync(x => x.AttachmentId == attachment.AttachmentId && !x.IsDeleted);
 
                 if (existing == null)

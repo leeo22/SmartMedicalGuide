@@ -71,7 +71,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             try
             {
-                var existing = await _reviewRepository.GetByIdAsync()
+                var existing = await _reviewRepository.GetTableAsTracking()
                     .FirstOrDefaultAsync(x => x.ReviewId == review.ReviewId && !x.IsDeleted);
 
                 if (existing == null)

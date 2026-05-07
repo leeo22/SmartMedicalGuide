@@ -66,7 +66,7 @@ namespace SmartMedicalGuide.Services.Implementations
 
         public async Task<string> EditAsync(Patient patient)
         {
-            var existingPatient = await _patientRepository.GetByIdAsync()
+            var existingPatient = await _patientRepository.GetTableAsTracking()
                 .FirstOrDefaultAsync(x => x.PatientId == patient.PatientId && !x.IsDeleted);
 
             if (existingPatient == null)

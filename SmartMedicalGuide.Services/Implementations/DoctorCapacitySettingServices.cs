@@ -51,7 +51,7 @@ namespace SmartMedicalGuide.Services.Implementations
 
         public async Task<string> EditAsync(DoctorCapacitySetting setting)
         {
-            var existing = await _repository.GetByIdAsync(setting.Id);
+            var existing = await _repository.GetTableAsTracking(setting.Id);
             if (existing == null)
                 return "Setting not found";
 

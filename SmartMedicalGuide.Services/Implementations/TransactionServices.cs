@@ -64,7 +64,7 @@ namespace SmartMedicalGuide.Services.Implementations
         {
             try
             {
-                var existing = await _transactionRepository.GetByIdAsync()
+                var existing = await _transactionRepository.GetTableAsTracking()
                     .FirstOrDefaultAsync(x => x.TransactionId == transaction.TransactionId && !x.IsDeleted);
 
                 if (existing == null)
