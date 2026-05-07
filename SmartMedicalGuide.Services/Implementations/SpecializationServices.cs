@@ -93,26 +93,24 @@ namespace SmartMedicalGuide.Services.Implementations
                 if (specialization.SpecializationId <= 0)
                     return "Invalid specialization ID";
 
-                var existing = await _specializationRepository.GetByIdAsync()
-                    .FirstOrDefaultAsync(x => x.SpecializationId == specialization.SpecializationId && !x.IsDeleted);
+                // ✅ فقط تحقق من وجوده (بدون جلب الكائن)
+                var exists = await _specializationRepository.GetByIdAsync()
+                    .AnyAsync(x => x.SpecializationId == specialization.SpecializationId && !x.IsDeleted);
 
-                if (existing == null)
+                if (!exists)
                     return "Specialization not found";
 
-                // Check for duplicate name (excluding current)
+                // Check for duplicate name
                 var duplicate = await _specializationRepository.GetTableAsTracking()
-                    .FirstOrDefaultAsync(x => x.Name == specialization.Name &&
-                                              x.SpecializationId != specialization.SpecializationId &&
-                                              !x.IsDeleted);
+                    .AnyAsync(x => x.Name == specialization.Name &&
+                                   x.SpecializationId != specialization.SpecializationId &&
+                                   !x.IsDeleted);
 
-                if (duplicate != null)
+                if (duplicate)
                     return $"Another specialization with name '{specialization.Name}' already exists";
 
-                // Update fields
-                existing.Name = specialization.Name;
-                existing.Description = specialization.Description;
-
-                await _specializationRepository.UpdateAsync(existing);
+                // ✅ تعديل مباشرة
+                await _specializationRepository.UpdateAsync(specialization);
                 return "Success";
             }
             catch (Exception ex)
