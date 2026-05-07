@@ -4,9 +4,8 @@ using SmartMedicalGuide.Core.Features.Transactions.Queries.Results;
 
 namespace SmartMedicalGuide.Core.Features.Transactions.Queries.Models
 {
-    public class GetTransactionByIdQuery : IRequest<Response<GetSingleTransactionResponse>>
+    public class GetUserTransactionHistoryQuery : IRequest<Response<List<GetTransactionListResponse>>>
     {
-        public int Id { get; set; }
-        public GetTransactionByIdQuery(int id) => Id = id;
+        public int UserId { get; set; }
     }
 }

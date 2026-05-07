@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SmartMedicalGuide.Core.Bases;
 
 namespace SmartMedicalGuide.Core.Features.Transactions.Commands.Models
 {
-    internal class DeleteTransactionCommand
+    public class DeleteTransactionCommand : IRequest<Response<string>>
     {
+        public int Id { get; set; }
+        public DeleteTransactionCommand(int id) => Id = id;
     }
 }

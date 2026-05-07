@@ -1,12 +1,13 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using SmartMedicalGuide.Core.Features.Transactions.Queries.Results;
+using SmartMedicalGuide.Data.Entities;
 
-//namespace SmartMedicalGuide.Core.Mapping.Chats.QueryMapping
-//{
-//    internal class GetAuditLogListMapping
-//    {
-//    }
-//}
+namespace SmartMedicalGuide.Core.Mapping.Transactions
+{
+    public partial class TransactionProfile
+    {
+        public void GetTransactionListResponseMapping()
+        {
+            CreateMap<Transaction, GetTransactionListResponse>();
+        }
+    }
+}

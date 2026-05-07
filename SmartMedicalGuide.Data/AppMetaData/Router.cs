@@ -493,12 +493,18 @@
         public static class TransactionRouting
         {
             public const string Prefix = Rule + "Transaction/";
+
+            // Basic CRUD
             public const string List = Prefix + "List";
-            public const string GetByID = Prefix + SingleRoute;
+            public const string GetByID = Prefix + "GetById/{id}";
             public const string Create = Prefix + "Create";
             public const string Edit = Prefix + "Edit";
-            public const string Delete = Prefix + "Delete";
+            public const string Delete = Prefix + "Delete/{id}";
 
+            // Additional Important Endpoints
+            public const string GetWalletBalance = Prefix + "GetWalletBalance";
+            public const string GetUserHistory = Prefix + "GetUserHistory/{userId}";
+            public const string GetStatistics = Prefix + "GetStatistics";
         }
         public static class UserRefreshTokenRouting
         {
